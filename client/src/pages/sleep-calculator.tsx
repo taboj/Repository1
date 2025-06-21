@@ -1,15 +1,7 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { useTheme } from "@/components/theme-provider";
-import TimePicker from "@/components/sleep/time-picker";
-import PersonalizationControls from "@/components/sleep/personalization-controls";
-import RecommendationCard from "@/components/sleep/recommendation-card";
-import SleepCycleVisualization from "@/components/sleep/sleep-cycle-visualization";
-import QuickActions from "@/components/sleep/quick-actions";
-import EducationalSection from "@/components/sleep/educational-section";
 import {
   calculateOptimalBedtimes,
   calculateOptimalWakeTimes,
@@ -31,6 +23,7 @@ export default function SleepCalculator() {
     selectedCycles: 5
   });
   const [recommendations, setRecommendations] = useState<SleepRecommendation[]>([]);
+  const [showSettings, setShowSettings] = useState(false);
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
@@ -55,192 +48,182 @@ export default function SleepCalculator() {
     updateRecommendations();
   }, [calculationMode, selectedTime, settings]);
 
-  const handleModeChange = (mode: CalculationMode) => {
-    setCalculationMode(mode);
-  };
+  const hours = Array.from({ length: 12 }, (_, i) => i + 1);
+  const minutes = [0, 15, 30, 45];
 
-  const handleTimeChange = (time: typeof selectedTime) => {
-    setSelectedTime(time);
+  const getQualityColor = (quality: SleepRecommendation['quality']) => {
+    switch (quality) {
+      case 'EXCELLENT': return 'text-green-600 dark:text-green-400';
+      case 'GOOD': return 'text-blue-600 dark:text-blue-400';
+      case 'FAIR': return 'text-yellow-600 dark:text-yellow-400';
+      case 'POOR': return 'text-red-600 dark:text-red-400';
+    }
   };
-
-  const handleSettingsChange = (newSettings: Partial<SleepSettings>) => {
-    setSettings(prev => ({ ...prev, ...newSettings }));
-  };
-
-  const showWarning = shouldShowSleepWarning(recommendations);
 
   return (
-    <div className="min-h-screen px-4 py-8 bg-background text-foreground transition-colors duration-300">
-      {/* Theme Toggle */}
-      <div className="fixed top-4 right-4 z-50">
-        <Button
-          onClick={toggleTheme}
-          variant="outline"
-          size="icon"
-          className="rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-        >
-          <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 dark:text-mint-400" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
+    <div className="min-h-screen bg-background text-foreground">
+      {/* Header */}
+      <div className="border-b border-border">
+        <div className="max-w-2xl mx-auto px-4 py-6 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Moon className="h-6 w-6 text-primary dark:text-mint-400" />
+            <h1 className="text-2xl font-semibold">Sleep Calculator</h1>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setShowSettings(!showSettings)}
+            >
+              <Settings className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleTheme}
+            >
+              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            </Button>
+          </div>
+        </div>
       </div>
 
-      <div className="max-w-2xl mx-auto">
-        {/* Header */}
-        <motion.header 
-          className="text-center mb-8"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="flex items-center justify-center mb-4">
-            <Moon className="text-4xl text-primary dark:text-mint-400 mr-3 h-10 w-10" />
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-mint-400 dark:to-mint-500 bg-clip-text text-transparent">
-              Sleep Calculator
-            </h1>
-          </div>
-          <p className="text-lg text-muted-foreground">
-            Optimize your sleep cycles for better rest and wake up refreshed
-          </p>
-        </motion.header>
+      <div className="max-w-2xl mx-auto px-4 py-8 space-y-8">
+        {/* Mode Selection */}
+        <div className="grid grid-cols-2 gap-3">
+          <Button
+            variant={calculationMode === 'wakeUp' ? 'default' : 'outline'}
+            className="h-20 flex flex-col gap-2"
+            onClick={() => setCalculationMode('wakeUp')}
+          >
+            <Sun className="h-5 w-5" />
+            <span className="text-sm">Wake up at</span>
+          </Button>
+          <Button
+            variant={calculationMode === 'bedTime' ? 'default' : 'outline'}
+            className="h-20 flex flex-col gap-2"
+            onClick={() => setCalculationMode('bedTime')}
+          >
+            <Moon className="h-5 w-5" />
+            <span className="text-sm">Sleep now</span>
+          </Button>
+        </div>
 
-        {/* Main Calculator Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <Card className="mb-8 shadow-xl">
-            <CardContent className="p-6">
-              {/* Calculation Mode Toggle */}
-              <div className="flex flex-col md:flex-row gap-4 mb-6">
-                <Button
-                  variant={calculationMode === 'wakeUp' ? 'default' : 'outline'}
-                  className={`flex-1 p-6 h-auto flex flex-col items-center space-y-2 transition-all duration-300 ${
-                    calculationMode === 'wakeUp' 
-                      ? 'bg-primary hover:bg-primary/90 dark:bg-mint-500 dark:hover:bg-mint-600' 
-                      : 'hover:border-primary dark:hover:border-mint-400'
-                  }`}
-                  onClick={() => handleModeChange('wakeUp')}
-                >
-                  <Sun className="h-6 w-6" />
-                  <div className="text-center">
-                    <h3 className="font-semibold text-lg">I want to wake up at...</h3>
-                    <p className="text-sm opacity-70">Calculate ideal bedtime</p>
-                  </div>
-                </Button>
-                
-                <Button
-                  variant={calculationMode === 'bedTime' ? 'default' : 'outline'}
-                  className={`flex-1 p-6 h-auto flex flex-col items-center space-y-2 transition-all duration-300 ${
-                    calculationMode === 'bedTime' 
-                      ? 'bg-primary hover:bg-primary/90 dark:bg-mint-500 dark:hover:bg-mint-600' 
-                      : 'hover:border-primary dark:hover:border-mint-400'
-                  }`}
-                  onClick={() => handleModeChange('bedTime')}
-                >
-                  <Moon className="h-6 w-6" />
-                  <div className="text-center">
-                    <h3 className="font-semibold text-lg">I want to go to bed now...</h3>
-                    <p className="text-sm opacity-70">Calculate wake up times</p>
-                  </div>
-                </Button>
-              </div>
-
-              {/* Time Picker */}
-              <TimePicker
-                selectedTime={selectedTime}
-                onTimeChange={handleTimeChange}
-                label={calculationMode === 'wakeUp' ? 'Select your desired wake up time:' : 'Current time (going to bed now):'}
-              />
-
-              {/* Personalization Controls */}
-              <PersonalizationControls
-                settings={settings}
-                onSettingsChange={handleSettingsChange}
-              />
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        {/* Results Section */}
-        <AnimatePresence>
-          {recommendations.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+        {/* Time Picker */}
+        <div className="space-y-3">
+          <h2 className="text-lg font-medium">
+            {calculationMode === 'wakeUp' ? 'When do you want to wake up?' : 'What time is it now?'}
+          </h2>
+          <div className="flex items-center justify-center gap-4 bg-muted rounded-lg p-6">
+            <select
+              value={selectedTime.hour}
+              onChange={(e) => setSelectedTime(prev => ({ ...prev, hour: parseInt(e.target.value) }))}
+              className="text-3xl font-mono bg-transparent border-none outline-none text-center w-16"
             >
-              <Card className="mb-8 shadow-xl">
-                <CardContent className="p-6">
-                  <h3 className="text-2xl font-bold mb-6 text-center">
-                    {calculationMode === 'wakeUp' ? 'Recommended Bedtimes' : 'Recommended Wake Times'}
-                  </h3>
-                  
-                  {/* Sleep Warning */}
-                  {showWarning && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      className="bg-orange-50 dark:bg-orange-900/30 border border-orange-200 dark:border-orange-700 rounded-lg p-4 mb-6"
-                    >
-                      <div className="flex items-center">
-                        <div className="text-orange-500 mr-3">⚠️</div>
-                        <p className="text-orange-700 dark:text-orange-300">
-                          <strong>Warning:</strong> This schedule may result in insufficient sleep. Consider adjusting your schedule for better rest.
-                        </p>
-                      </div>
-                    </motion.div>
-                  )}
+              {hours.map(hour => (
+                <option key={hour} value={hour}>{hour.toString().padStart(2, '0')}</option>
+              ))}
+            </select>
+            <span className="text-3xl font-mono">:</span>
+            <select
+              value={selectedTime.minute}
+              onChange={(e) => setSelectedTime(prev => ({ ...prev, minute: parseInt(e.target.value) }))}
+              className="text-3xl font-mono bg-transparent border-none outline-none text-center w-16"
+            >
+              {minutes.map(minute => (
+                <option key={minute} value={minute}>{minute.toString().padStart(2, '0')}</option>
+              ))}
+            </select>
+            <select
+              value={selectedTime.period}
+              onChange={(e) => setSelectedTime(prev => ({ ...prev, period: e.target.value as 'AM' | 'PM' }))}
+              className="text-3xl font-mono bg-transparent border-none outline-none text-center w-16"
+            >
+              <option value="AM">AM</option>
+              <option value="PM">PM</option>
+            </select>
+          </div>
+        </div>
 
-                  {/* Recommendations */}
-                  <div className="grid gap-4 mb-6">
-                    {recommendations.map((recommendation, index) => (
-                      <motion.div
-                        key={`${recommendation.time}-${recommendation.cycles}`}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.1 }}
-                      >
-                        <RecommendationCard recommendation={recommendation} />
-                      </motion.div>
-                    ))}
+        {/* Settings */}
+        {showSettings && (
+          <div className="space-y-4 p-4 bg-muted rounded-lg">
+            <h3 className="font-medium">Settings</h3>
+            
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <span className="text-sm">Fall asleep time</span>
+                <span className="text-sm">{settings.fallAsleepTime} min</span>
+              </div>
+              <input
+                type="range"
+                min="5"
+                max="30"
+                value={settings.fallAsleepTime}
+                onChange={(e) => setSettings(prev => ({ ...prev, fallAsleepTime: parseInt(e.target.value) }))}
+                className="w-full"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <span className="text-sm">Cycle length</span>
+                <span className="text-sm">{settings.cycleLength} min</span>
+              </div>
+              <input
+                type="range"
+                min="80"
+                max="100"
+                value={settings.cycleLength}
+                onChange={(e) => setSettings(prev => ({ ...prev, cycleLength: parseInt(e.target.value) }))}
+                className="w-full"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Results */}
+        {recommendations.length > 0 && (
+          <div className="space-y-4">
+            <h2 className="text-lg font-medium">
+              {calculationMode === 'wakeUp' ? 'Go to bed at:' : 'Wake up at:'}
+            </h2>
+            
+            {shouldShowSleepWarning(recommendations) && (
+              <div className="p-3 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg text-sm">
+                ⚠️ This may result in insufficient sleep
+              </div>
+            )}
+
+            <div className="space-y-3">
+              {recommendations.map((rec, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors"
+                >
+                  <div>
+                    <div className="text-2xl font-mono font-bold">{rec.time}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {rec.cycles} cycles • {rec.totalSleep}
+                    </div>
                   </div>
+                  <div className={`text-sm font-medium ${getQualityColor(rec.quality)}`}>
+                    {rec.quality}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
-                  {/* Sleep Cycle Visualization */}
-                  <SleepCycleVisualization 
-                    selectedTime={selectedTime}
-                    calculationMode={calculationMode}
-                    bestRecommendation={recommendations[0]}
-                  />
-                </CardContent>
-              </Card>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Quick Actions */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <QuickActions
-            recommendations={recommendations}
-            calculationMode={calculationMode}
-            onReverseCalculate={() => handleModeChange(calculationMode === 'wakeUp' ? 'bedTime' : 'wakeUp')}
-          />
-        </motion.div>
-
-        {/* Educational Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          <EducationalSection />
-        </motion.div>
+        {/* Sleep Tips */}
+        <div className="p-4 bg-muted rounded-lg text-sm space-y-2">
+          <h3 className="font-medium">Sleep Tips</h3>
+          <p className="text-muted-foreground">
+            Sleep cycles last ~90 minutes. Waking up at the end of a cycle helps you feel more refreshed.
+          </p>
+        </div>
       </div>
     </div>
   );
