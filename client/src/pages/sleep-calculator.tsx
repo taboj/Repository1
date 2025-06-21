@@ -63,73 +63,79 @@ export default function SleepCalculator() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
-      <div className="border-b border-border">
-        <div className="max-w-2xl mx-auto px-4 py-6 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Moon className="h-6 w-6 text-primary dark:text-mint-400" />
-            <h1 className="text-2xl font-semibold">Sleep Calculator</h1>
-          </div>
-          <div className="flex items-center gap-2">
+      <div className="max-w-4xl mx-auto px-6 py-12">
+        <div className="flex items-center justify-between mb-16">
+          <h1 className="text-3xl font-light tracking-wide">Sleep Calculator</h1>
+          <div className="flex items-center gap-4">
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setShowSettings(!showSettings)}
+              className="text-muted-foreground hover:text-foreground"
             >
-              <Settings className="h-4 w-4" />
+              <Settings className="h-5 w-5" />
             </Button>
             <Button
               variant="ghost"
               size="icon"
               onClick={toggleTheme}
+              className="text-muted-foreground hover:text-foreground"
             >
-              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
             </Button>
           </div>
         </div>
-      </div>
 
-      <div className="max-w-2xl mx-auto px-4 py-8 space-y-8">
         {/* Mode Selection */}
-        <div className="grid grid-cols-2 gap-3">
-          <Button
-            variant={calculationMode === 'wakeUp' ? 'default' : 'outline'}
-            className="h-20 flex flex-col gap-2"
+        <div className="grid grid-cols-2 gap-8 mb-20">
+          <button
             onClick={() => setCalculationMode('wakeUp')}
+            className={`text-left p-8 rounded-none border-b-2 transition-all duration-200 ${
+              calculationMode === 'wakeUp' 
+                ? 'border-foreground text-foreground' 
+                : 'border-transparent text-muted-foreground hover:text-foreground'
+            }`}
           >
-            <Sun className="h-5 w-5" />
-            <span className="text-sm">Wake up at</span>
-          </Button>
-          <Button
-            variant={calculationMode === 'bedTime' ? 'default' : 'outline'}
-            className="h-20 flex flex-col gap-2"
+            <div className="space-y-3">
+              <Sun className="h-6 w-6" />
+              <h2 className="text-xl font-light">I want to wake up at</h2>
+              <p className="text-sm text-muted-foreground">Calculate ideal bedtime</p>
+            </div>
+          </button>
+          <button
             onClick={() => setCalculationMode('bedTime')}
+            className={`text-left p-8 rounded-none border-b-2 transition-all duration-200 ${
+              calculationMode === 'bedTime' 
+                ? 'border-foreground text-foreground' 
+                : 'border-transparent text-muted-foreground hover:text-foreground'
+            }`}
           >
-            <Moon className="h-5 w-5" />
-            <span className="text-sm">Sleep now</span>
-          </Button>
+            <div className="space-y-3">
+              <Moon className="h-6 w-6" />
+              <h2 className="text-xl font-light">I want to go to bed now</h2>
+              <p className="text-sm text-muted-foreground">Calculate wake up times</p>
+            </div>
+          </button>
         </div>
 
         {/* Time Picker */}
-        <div className="space-y-3">
-          <h2 className="text-lg font-medium">
-            {calculationMode === 'wakeUp' ? 'When do you want to wake up?' : 'What time is it now?'}
-          </h2>
-          <div className="flex items-center justify-center gap-4 bg-muted rounded-lg p-6">
+        <div className="text-center mb-20">
+          <div className="flex items-center justify-center gap-2 mb-8">
             <select
               value={selectedTime.hour}
               onChange={(e) => setSelectedTime(prev => ({ ...prev, hour: parseInt(e.target.value) }))}
-              className="text-3xl font-mono bg-transparent border-none outline-none text-center w-16"
+              className="text-8xl font-thin bg-transparent border-none outline-none text-center w-32 cursor-pointer"
             >
               {hours.map(hour => (
                 <option key={hour} value={hour}>{hour.toString().padStart(2, '0')}</option>
               ))}
             </select>
-            <span className="text-3xl font-mono">:</span>
+            <span className="text-8xl font-thin text-muted-foreground">:</span>
             <select
               value={selectedTime.minute}
               onChange={(e) => setSelectedTime(prev => ({ ...prev, minute: parseInt(e.target.value) }))}
-              className="text-3xl font-mono bg-transparent border-none outline-none text-center w-16"
+              className="text-8xl font-thin bg-transparent border-none outline-none text-center w-32 cursor-pointer"
             >
               {minutes.map(minute => (
                 <option key={minute} value={minute}>{minute.toString().padStart(2, '0')}</option>
@@ -138,77 +144,88 @@ export default function SleepCalculator() {
             <select
               value={selectedTime.period}
               onChange={(e) => setSelectedTime(prev => ({ ...prev, period: e.target.value as 'AM' | 'PM' }))}
-              className="text-3xl font-mono bg-transparent border-none outline-none text-center w-16"
+              className="text-4xl font-thin bg-transparent border-none outline-none text-center w-20 cursor-pointer ml-4"
             >
               <option value="AM">AM</option>
               <option value="PM">PM</option>
             </select>
           </div>
+          <p className="text-muted-foreground font-light">
+            {calculationMode === 'wakeUp' ? 'When do you want to wake up?' : 'What time is it now?'}
+          </p>
         </div>
 
         {/* Settings */}
         {showSettings && (
-          <div className="space-y-4 p-4 bg-muted rounded-lg">
-            <h3 className="font-medium">Settings</h3>
+          <div className="mb-20 p-8 border border-border">
+            <h3 className="text-lg font-light mb-8">Personalization</h3>
             
-            <div className="space-y-2">
-              <div className="flex justify-between">
-                <span className="text-sm">Fall asleep time</span>
-                <span className="text-sm">{settings.fallAsleepTime} min</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <span className="font-light">Fall asleep time</span>
+                  <span className="text-muted-foreground">{settings.fallAsleepTime} min</span>
+                </div>
+                <input
+                  type="range"
+                  min="5"
+                  max="30"
+                  value={settings.fallAsleepTime}
+                  onChange={(e) => setSettings(prev => ({ ...prev, fallAsleepTime: parseInt(e.target.value) }))}
+                  className="w-full h-1 bg-muted appearance-none cursor-pointer"
+                />
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>5 min</span>
+                  <span>30 min</span>
+                </div>
               </div>
-              <input
-                type="range"
-                min="5"
-                max="30"
-                value={settings.fallAsleepTime}
-                onChange={(e) => setSettings(prev => ({ ...prev, fallAsleepTime: parseInt(e.target.value) }))}
-                className="w-full"
-              />
-            </div>
 
-            <div className="space-y-2">
-              <div className="flex justify-between">
-                <span className="text-sm">Cycle length</span>
-                <span className="text-sm">{settings.cycleLength} min</span>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <span className="font-light">Cycle length</span>
+                  <span className="text-muted-foreground">{settings.cycleLength} min</span>
+                </div>
+                <input
+                  type="range"
+                  min="80"
+                  max="100"
+                  value={settings.cycleLength}
+                  onChange={(e) => setSettings(prev => ({ ...prev, cycleLength: parseInt(e.target.value) }))}
+                  className="w-full h-1 bg-muted appearance-none cursor-pointer"
+                />
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>80 min</span>
+                  <span>100 min</span>
+                </div>
               </div>
-              <input
-                type="range"
-                min="80"
-                max="100"
-                value={settings.cycleLength}
-                onChange={(e) => setSettings(prev => ({ ...prev, cycleLength: parseInt(e.target.value) }))}
-                className="w-full"
-              />
             </div>
           </div>
         )}
 
         {/* Results */}
         {recommendations.length > 0 && (
-          <div className="space-y-4">
-            <h2 className="text-lg font-medium">
-              {calculationMode === 'wakeUp' ? 'Go to bed at:' : 'Wake up at:'}
-            </h2>
-            
+          <div className="mb-20">
             {shouldShowSleepWarning(recommendations) && (
-              <div className="p-3 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg text-sm">
-                ⚠️ This may result in insufficient sleep
+              <div className="mb-8 p-6 border-l-4 border-orange-400 bg-orange-50/50 dark:bg-orange-900/20">
+                <p className="text-orange-700 dark:text-orange-300 font-light">
+                  This schedule may result in insufficient sleep. Consider adjusting your timing.
+                </p>
               </div>
             )}
 
-            <div className="space-y-3">
+            <div className="space-y-1">
               {recommendations.map((rec, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors"
+                  className="flex items-center justify-between py-6 border-b border-border last:border-b-0"
                 >
-                  <div>
-                    <div className="text-2xl font-mono font-bold">{rec.time}</div>
-                    <div className="text-sm text-muted-foreground">
-                      {rec.cycles} cycles • {rec.totalSleep}
+                  <div className="space-y-1">
+                    <div className="text-4xl font-thin tracking-wide">{rec.time}</div>
+                    <div className="text-sm text-muted-foreground font-light">
+                      {rec.cycles} sleep cycles • {rec.totalSleep}
                     </div>
                   </div>
-                  <div className={`text-sm font-medium ${getQualityColor(rec.quality)}`}>
+                  <div className={`text-xs uppercase tracking-widest font-medium ${getQualityColor(rec.quality)}`}>
                     {rec.quality}
                   </div>
                 </div>
@@ -217,11 +234,11 @@ export default function SleepCalculator() {
           </div>
         )}
 
-        {/* Sleep Tips */}
-        <div className="p-4 bg-muted rounded-lg text-sm space-y-2">
-          <h3 className="font-medium">Sleep Tips</h3>
-          <p className="text-muted-foreground">
-            Sleep cycles last ~90 minutes. Waking up at the end of a cycle helps you feel more refreshed.
+        {/* Sleep Science */}
+        <div className="pt-8 border-t border-border">
+          <p className="text-muted-foreground font-light leading-relaxed">
+            Sleep occurs in approximately 90-minute cycles. Waking up at the end of a complete cycle 
+            helps you feel more refreshed and alert, rather than groggy from being awakened during deep sleep.
           </p>
         </div>
       </div>
