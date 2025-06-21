@@ -1,0 +1,158 @@
+Core Interface Layout
+Primary Input Section
+The interface should feature dual calculation modes prominently displayed at the top:
+
+"I want to wake up at..." - Large, prominent time picker
+
+"I want to go to bed now..." - Alternative calculation option
+
+Both options should use intuitive time selection controls with smooth scrolling or slider mechanisms rather than traditional dropdown menus. The time picker should be large enough for easy mobile interaction while maintaining desktop usability.
+
+Personalization Controls
+Essential customization options should be easily accessible but not overwhelming:
+
+Fall asleep time slider (5-30 minutes, defaulting to 15 minutes)
+
+Sleep cycle length adjustment (80-100 minutes, defaulting to 90 minutes)
+
+Number of preferred cycles (4-6 cycles for different sleep needs)
+
+These controls should be visually integrated into the main interface rather than hidden in settings menus.
+
+Visual Design Elements
+Color Scheme and Theme
+The interface must include dual theme support:
+
+Dark mode: Black background with mint and soft accent colors to reduce eye strain during nighttime use
+
+Light mode: Clean white background with subtle blue accents for daytime accessibility
+
+The dark theme is absolutely critical since users often access sleep calculators late at night, and bright screens can disrupt circadian rhythms.
+
+Typography and Readability
+Text hierarchy should be clear and scannable:
+
+Large, bold numbers for calculated times
+
+Clean, modern sans-serif fonts (SF Pro or similar)
+
+High contrast ratios for accessibility
+
+Readable font sizes across all devices
+
+Visual Feedback System
+The interface should provide immediate visual feedback:
+
+Real-time calculation updates as users adjust inputs
+
+Color-coded sleep quality indicators for each recommended time
+
+Smooth animations during transitions and calculations
+
+Progress indicators showing sleep cycle completeness
+
+Results Display
+Multiple Time Recommendations
+Rather than showing a single result, display 3-4 optimal wake-up times:
+
+Each time should show the number of complete sleep cycles
+
+Quality indicators (excellent, good, fair) for each option
+
+Time until each wake-up option for quick reference
+
+Sleep Cycle Visualization
+Include a simple graphical representation:
+
+Timeline showing sleep phases (light, deep, REM)
+
+Visual markers indicating recommended wake-up windows
+
+Clean, minimalist charts that don't overwhelm the interface
+
+Interactive Features
+Smart Recommendations
+The calculator should provide contextual advice:
+
+Brief sleep tips based on calculated bedtime
+
+Warnings for insufficient sleep (less than 4 cycles)
+
+Suggestions for sleep schedule optimization
+
+Quick Action Buttons
+Include immediate utility features:
+
+"Set alarm for this time" button
+
+"Remind me to go to bed" notification option
+
+"Calculate reverse" to switch between bedtime/wake time modes
+
+Mobile-First Design Considerations
+Touch-Friendly Controls
+All interactive elements should be optimized for mobile use:
+
+Minimum 44px touch targets
+
+Generous spacing between clickable elements
+
+Swipe gestures for time adjustment
+
+Responsive design that works across all screen sizes
+
+Performance Optimization
+The interface should be lightweight and fast:
+
+Instant calculations without loading delays
+
+Minimal external dependencies
+
+Optimized images and graphics
+
+Progressive web app capabilities for offline use
+
+Advanced Interface Elements
+Educational Integration
+Include subtle educational components:
+
+Brief explanation of sleep cycles
+
+Tips for better sleep hygiene
+
+Scientific backing for recommendations
+
+Links to additional sleep resources
+
+Accessibility Features
+Ensure universal usability:
+
+Screen reader compatibility
+
+Keyboard navigation support
+
+High contrast mode options
+
+Text size adjustment capabilities
+
+Information Architecture
+Logical Flow Design
+The interface should guide users through a natural progression:
+
+Input selection (wake time or bedtime)
+
+Personalization (fall asleep time, cycle length)
+
+Results display with multiple options
+
+Action items (set alarms, save preferences)
+
+Progressive Disclosure
+Advanced features should be easily accessible but not prominent:
+
+Settings panel that slides in when needed
+
+Expandable help sections
+
+Optional detailed explanations
+
