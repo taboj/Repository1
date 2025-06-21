@@ -125,6 +125,13 @@
     @apply border-mint-500 dark:border-mint-400;
   }
   
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+  
   .sleep-slider::-webkit-slider-thumb {
     appearance: none;
     height: 20px;
