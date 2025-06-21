@@ -8,9 +8,20 @@ export interface SleepRecommendation {
 
 export interface SleepSettings {
   fallAsleepTime: number; // minutes
-  cycleLength: number; // minutes
   selectedCycles: number;
-  ageGroup: 'child' | 'teen' | 'adult' | 'senior';
+  age: number; // actual age in years
+}
+
+export function getAgeGroup(age: number): 'child' | 'teen' | 'adult' | 'senior' {
+  if (age >= 6 && age <= 12) return 'child';
+  if (age >= 13 && age <= 18) return 'teen';
+  if (age >= 19 && age <= 64) return 'adult';
+  return 'senior';
+}
+
+export function getCycleLength(age: number): number {
+  const ageGroup = getAgeGroup(age);
+  return AGE_GROUPS[ageGroup].cycleLength;
 }
 
 export interface AgeGroupData {
@@ -80,18 +91,19 @@ export function calculateOptimalBedtimes(
   settings: SleepSettings
 ): SleepRecommendation[] {
   const recommendations: SleepRecommendation[] = [];
-  const cycleOptions = [6, 5, 4, 3]; // Different cycle counts to try
+  const cycleLength = getCycleLength(settings.age);
+  const cycleOptions = calculateOptimalCyclesForAge(settings.age);
   
   cycleOptions.forEach(cycles => {
-    const totalSleepTime = cycles * settings.cycleLength + settings.fallAsleepTime;
+    const totalSleepTime = cycles * cycleLength + settings.fallAsleepTime;
     const bedtime = new Date(wakeTime.getTime() - totalSleepTime * 60 * 1000);
     
     recommendations.push({
       time: formatTime(bedtime),
       quality: getQualityFromCycles(cycles),
       cycles,
-      totalSleep: formatSleepDuration(cycles * settings.cycleLength),
-      totalMinutes: cycles * settings.cycleLength
+      totalSleep: formatSleepDuration(cycles * cycleLength),
+      totalMinutes: cycles * cycleLength
     });
   });
   
@@ -103,18 +115,19 @@ export function calculateOptimalWakeTimes(
   settings: SleepSettings
 ): SleepRecommendation[] {
   const recommendations: SleepRecommendation[] = [];
+  const cycleLength = getCycleLength(settings.age);
   const actualSleepStart = new Date(bedtime.getTime() + settings.fallAsleepTime * 60 * 1000);
-  const cycleOptions = [4, 5, 6]; // Different cycle counts to try
+  const cycleOptions = calculateOptimalCyclesForAge(settings.age);
   
   cycleOptions.forEach(cycles => {
-    const wakeTime = new Date(actualSleepStart.getTime() + cycles * settings.cycleLength * 60 * 1000);
+    const wakeTime = new Date(actualSleepStart.getTime() + cycles * cycleLength * 60 * 1000);
     
     recommendations.push({
       time: formatTime(wakeTime),
       quality: getQualityFromCycles(cycles),
       cycles,
-      totalSleep: formatSleepDuration(cycles * settings.cycleLength),
-      totalMinutes: cycles * settings.cycleLength
+      totalSleep: formatSleepDuration(cycles * cycleLength),
+      totalMinutes: cycles * cycleLength
     });
   });
   
@@ -180,19 +193,20 @@ export const AGE_GROUPS: Record<string, AgeGroupData> = {
   }
 };
 
-export function getAgeGroupRecommendations(ageGroup: string): AgeGroupData {
-  return AGE_GROUPS[ageGroup] || AGE_GROUPS.adult;
+export function getAgeGroupRecommendations(age: number): AgeGroupData {
+  const ageGroup = getAgeGroup(age);
+  return AGE_GROUPS[ageGroup];
 }
 
-export function shouldShowSleepWarning(recommendations: SleepRecommendation[], ageGroup: string): boolean {
-  const ageData = getAgeGroupRecommendations(ageGroup);
+export function shouldShowSleepWarning(recommendations: SleepRecommendation[], age: number): boolean {
+  const ageData = getAgeGroupRecommendations(age);
   const bestRecommendation = recommendations[0];
   const minSleepMinutes = ageData.recommendedHours.min * 60;
   return bestRecommendation?.totalMinutes < minSleepMinutes;
 }
 
-export function calculateOptimalCyclesForAge(ageGroup: string): number[] {
-  const ageData = getAgeGroupRecommendations(ageGroup);
+export function calculateOptimalCyclesForAge(age: number): number[] {
+  const ageData = getAgeGroupRecommendations(age);
   const minCycles = Math.ceil(ageData.recommendedHours.min / 1.5);
   const maxCycles = Math.floor(ageData.recommendedHours.max / 1.5);
   

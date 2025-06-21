@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Moon, Sun, Settings, AlarmClock, Bell, RotateCcw, ChevronUp, ChevronDown } from "lucide-react";
+import { Moon, Sun, AlarmClock, Bell, RotateCcw, ChevronUp, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -13,10 +13,10 @@ import {
   parseTimeString,
   getAgeGroupRecommendations,
   calculateOptimalCyclesForAge,
-  AGE_GROUPS,
+  getCycleLength,
+  getAgeGroup,
   type SleepRecommendation,
-  type SleepSettings,
-  type AgeGroupData
+  type SleepSettings
 } from "@/lib/sleep-calculations";
 
 type CalculationMode = 'wakeUp' | 'bedTime';
@@ -28,9 +28,8 @@ export default function SleepCalculator() {
   const [selectedTime, setSelectedTime] = useState({ hour: 7, minute: 0, period: 'AM' as 'AM' | 'PM' });
   const [settings, setSettings] = useState<SleepSettings>({
     fallAsleepTime: 15,
-    cycleLength: 90,
     selectedCycles: 5,
-    ageGroup: 'adult'
+    age: 25
   });
   const [recommendations, setRecommendations] = useState<SleepRecommendation[]>([]);
 
@@ -162,7 +161,7 @@ export default function SleepCalculator() {
   };
 
   const SleepCycleVisualization = () => {
-    const ageData = getAgeGroupRecommendations(settings.ageGroup);
+    const ageData = getAgeGroupRecommendations(settings.age);
     const phases = ['Light', 'Deep', 'REM', 'Light', 'Deep'];
     
     // Adjust phase heights based on age group percentages
@@ -240,6 +239,9 @@ export default function SleepCalculator() {
     });
   };
 
+  const ageData = getAgeGroupRecommendations(settings.age);
+  const cycleLength = getCycleLength(settings.age);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Fixed Header */}
@@ -314,38 +316,38 @@ export default function SleepCalculator() {
               </div>
             </div>
 
-            {/* Personalization Controls - Always Visible */}
+            {/* Personalization Controls */}
             <div className="space-y-6">
               <h3 className="text-lg font-semibold">Personalization</h3>
               
-              {/* Age Group Selection */}
+              {/* Age Input */}
               <div className="space-y-3">
-                <label className="font-medium">Age Group</label>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                  {Object.entries(AGE_GROUPS).map(([key, ageData]) => (
-                    <Button
-                      key={key}
-                      variant={settings.ageGroup === key ? 'default' : 'outline'}
-                      onClick={() => {
-                        const newAgeData = getAgeGroupRecommendations(key);
-                        setSettings(prev => ({ 
-                          ...prev, 
-                          ageGroup: key as any,
-                          cycleLength: newAgeData.cycleLength,
-                          selectedCycles: calculateOptimalCyclesForAge(key)[0]
-                        }));
-                      }}
-                      className="touch-manipulation text-xs p-2 h-auto"
-                    >
-                      <div className="text-center">
-                        <div className="font-medium">{ageData.name.split(' ')[0]}</div>
-                        <div className="text-xs opacity-70">{ageData.sleepRange}</div>
-                      </div>
-                    </Button>
-                  ))}
+                <div className="flex justify-between items-center">
+                  <label className="font-medium">Your Age</label>
+                  <span className="text-sm text-primary dark:text-mint-400 font-semibold">
+                    {settings.age} years old
+                  </span>
+                </div>
+                <Slider
+                  value={[settings.age]}
+                  onValueChange={([value]) => {
+                    setSettings(prev => ({ 
+                      ...prev, 
+                      age: value,
+                      selectedCycles: calculateOptimalCyclesForAge(value)[0]
+                    }));
+                  }}
+                  min={6}
+                  max={100}
+                  step={1}
+                  className="touch-manipulation"
+                />
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>6 years</span>
+                  <span>100 years</span>
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  {getAgeGroupRecommendations(settings.ageGroup).name}
+                  Age Group: {ageData.name} | Sleep Cycle: {cycleLength} minutes (fixed)
                 </div>
               </div>
               
@@ -372,44 +374,22 @@ export default function SleepCalculator() {
                 </div>
 
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <label className="font-medium">Sleep cycle length</label>
-                    <span className="text-sm text-primary dark:text-mint-400 font-semibold">
-                      {settings.cycleLength} min
-                    </span>
+                  <label className="font-medium">Recommended sleep cycles for your age</label>
+                  <div className="flex flex-wrap gap-2">
+                    {calculateOptimalCyclesForAge(settings.age).map(cycles => (
+                      <Button
+                        key={cycles}
+                        variant={settings.selectedCycles === cycles ? 'default' : 'outline'}
+                        onClick={() => setSettings(prev => ({ ...prev, selectedCycles: cycles }))}
+                        className="touch-manipulation"
+                      >
+                        {cycles} cycles ({(cycles * cycleLength / 60).toFixed(1)}h)
+                      </Button>
+                    ))}
                   </div>
-                  <Slider
-                    value={[settings.cycleLength]}
-                    onValueChange={([value]) => setSettings(prev => ({ ...prev, cycleLength: value }))}
-                    min={75}
-                    max={105}
-                    step={1}
-                    className="touch-manipulation"
-                  />
-                  <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>75 min</span>
-                    <span>105 min</span>
+                  <div className="text-xs text-muted-foreground">
+                    Recommended: {ageData.sleepRange}
                   </div>
-                </div>
-              </div>
-
-              {/* Cycle Preference Buttons */}
-              <div className="space-y-3">
-                <label className="font-medium">Preferred sleep cycles</label>
-                <div className="flex flex-wrap gap-2">
-                  {calculateOptimalCyclesForAge(settings.ageGroup).map(cycles => (
-                    <Button
-                      key={cycles}
-                      variant={settings.selectedCycles === cycles ? 'default' : 'outline'}
-                      onClick={() => setSettings(prev => ({ ...prev, selectedCycles: cycles }))}
-                      className="touch-manipulation"
-                    >
-                      {cycles} cycles ({(cycles * settings.cycleLength / 60).toFixed(1)}h)
-                    </Button>
-                  ))}
-                </div>
-                <div className="text-xs text-muted-foreground">
-                  Recommended for {getAgeGroupRecommendations(settings.ageGroup).sleepRange}
                 </div>
               </div>
             </div>
@@ -436,7 +416,7 @@ export default function SleepCalculator() {
               </div>
 
               {/* Sleep Warning */}
-              {shouldShowSleepWarning(recommendations, settings.ageGroup) && (
+              {shouldShowSleepWarning(recommendations, settings.age) && (
                 <div className="bg-orange-50 dark:bg-orange-900/30 border border-orange-200 dark:border-orange-700 rounded-lg p-4 mb-6">
                   <div className="flex items-center gap-3">
                     <div className="text-orange-500 text-xl">⚠️</div>
@@ -445,7 +425,7 @@ export default function SleepCalculator() {
                         Insufficient Sleep Warning
                       </p>
                       <p className="text-sm text-orange-600 dark:text-orange-400 mt-1">
-                        This schedule may result in less than 6 hours of sleep. Consider adjusting your timing for better rest.
+                        This schedule may result in less than the recommended {ageData.recommendedHours.min} hours of sleep for your age group. Consider adjusting your timing.
                       </p>
                     </div>
                   </div>
@@ -501,23 +481,23 @@ export default function SleepCalculator() {
         {/* Age-Specific Educational Section */}
         <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-slate-800 dark:to-slate-700 border-0">
           <CardContent className="p-6">
-            <h3 className="text-lg font-semibold mb-4">Sleep Science for {getAgeGroupRecommendations(settings.ageGroup).name}</h3>
+            <h3 className="text-lg font-semibold mb-4">Sleep Science for {ageData.name}</h3>
             
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div className="space-y-3">
                 <h4 className="font-semibold">Age-Specific Sleep Patterns</h4>
                 <div className="space-y-2">
                   <div className="text-sm">
-                    <span className="font-medium">Recommended sleep:</span> {getAgeGroupRecommendations(settings.ageGroup).sleepRange}
+                    <span className="font-medium">Recommended sleep:</span> {ageData.sleepRange}
                   </div>
                   <div className="text-sm">
-                    <span className="font-medium">Cycle length:</span> ~{getAgeGroupRecommendations(settings.ageGroup).cycleLength} minutes
+                    <span className="font-medium">Cycle length:</span> {cycleLength} minutes (scientifically determined)
                   </div>
                   <div className="text-sm">
-                    <span className="font-medium">REM sleep:</span> {getAgeGroupRecommendations(settings.ageGroup).remSleepPercentage}% of total sleep
+                    <span className="font-medium">REM sleep:</span> {ageData.remSleepPercentage}% of total sleep
                   </div>
                   <div className="text-sm">
-                    <span className="font-medium">Deep sleep:</span> {getAgeGroupRecommendations(settings.ageGroup).deepSleepPercentage}% of total sleep
+                    <span className="font-medium">Deep sleep:</span> {ageData.deepSleepPercentage}% of total sleep
                   </div>
                 </div>
               </div>
@@ -525,7 +505,7 @@ export default function SleepCalculator() {
               <div className="space-y-3">
                 <h4 className="font-semibold">Key Characteristics</h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
-                  {getAgeGroupRecommendations(settings.ageGroup).characteristics.map((characteristic, index) => (
+                  {ageData.characteristics.map((characteristic, index) => (
                     <li key={index}>• {characteristic}</li>
                   ))}
                 </ul>
@@ -540,8 +520,8 @@ export default function SleepCalculator() {
                   <li>• Create a cool, dark sleeping environment</li>
                   <li>• Limit caffeine intake, especially in afternoon</li>
                   <li>• Avoid screens 1-2 hours before bedtime</li>
-                  {settings.ageGroup === 'teen' && <li>• Consider delayed school start times when possible</li>}
-                  {settings.ageGroup === 'senior' && <li>• Short naps (20-30 min) can be beneficial</li>}
+                  {getAgeGroup(settings.age) === 'teen' && <li>• Consider delayed school start times when possible</li>}
+                  {getAgeGroup(settings.age) === 'senior' && <li>• Short naps (20-30 min) can be beneficial</li>}
                 </ul>
               </div>
 
@@ -552,8 +532,8 @@ export default function SleepCalculator() {
                   <li>• Daytime fatigue or sleepiness</li>
                   <li>• Mood changes or irritability</li>
                   <li>• Difficulty concentrating</li>
-                  {settings.ageGroup === 'child' && <li>• Hyperactivity or behavioral issues</li>}
-                  {settings.ageGroup === 'senior' && <li>• Increased risk of falls due to fatigue</li>}
+                  {getAgeGroup(settings.age) === 'child' && <li>• Hyperactivity or behavioral issues</li>}
+                  {getAgeGroup(settings.age) === 'senior' && <li>• Increased risk of falls due to fatigue</li>}
                 </ul>
               </div>
             </div>
@@ -562,10 +542,10 @@ export default function SleepCalculator() {
               <p className="text-sm text-muted-foreground">
                 <strong>Scientific evidence:</strong> Sleep needs vary significantly by age due to brain development, 
                 hormonal changes, and lifestyle factors. {' '}
-                {settings.ageGroup === 'child' && 'Children require more sleep for proper growth and cognitive development.'}
-                {settings.ageGroup === 'teen' && 'Teenagers experience a natural delay in circadian rhythms, making earlier bedtimes challenging.'}
-                {settings.ageGroup === 'adult' && 'Adults benefit from consistent sleep schedules that align with natural circadian rhythms.'}
-                {settings.ageGroup === 'senior' && 'Older adults often experience changes in sleep architecture and may benefit from strategic napping.'}
+                {getAgeGroup(settings.age) === 'child' && 'Children require more sleep for proper growth and cognitive development.'}
+                {getAgeGroup(settings.age) === 'teen' && 'Teenagers experience a natural delay in circadian rhythms, making earlier bedtimes challenging.'}
+                {getAgeGroup(settings.age) === 'adult' && 'Adults benefit from consistent sleep schedules that align with natural circadian rhythms.'}
+                {getAgeGroup(settings.age) === 'senior' && 'Older adults often experience changes in sleep architecture and may benefit from strategic napping.'}
               </p>
             </div>
           </CardContent>
