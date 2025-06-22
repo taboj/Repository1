@@ -15,6 +15,7 @@ import {
   calculateOptimalCyclesForAge,
   getCycleLength,
   getAgeGroup,
+  formatSleepDuration,
   type SleepRecommendation,
   type SleepSettings
 } from "@/lib/sleep-calculations";
