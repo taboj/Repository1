@@ -696,16 +696,15 @@ export default function SleepCalculator() {
 
             <div className="text-center p-4 bg-background/50 rounded-lg">
               <p className="text-sm text-muted-foreground">
-                <strong>Scientific evidence:</strong> Sleep needs vary significantly by age due to brain development, 
-                hormonal changes, and lifestyle factors. {' '}
-                {getAgeGroup(settings.age) === 'newborn' && 'Newborns have the highest sleep requirements and spend most time in REM sleep for crucial brain development.'}
-                {getAgeGroup(settings.age) === 'infant' && 'Infants begin developing circadian rhythms and longer nighttime sleep periods.'}
-                {getAgeGroup(settings.age) === 'toddler' && 'Toddlers transition to consolidated nighttime sleep with fewer daytime naps.'}
-                {getAgeGroup(settings.age) === 'preschool' && 'Preschoolers develop more adult-like sleep patterns while still requiring substantial sleep for growth.'}
-                {getAgeGroup(settings.age) === 'schoolAge' && 'School-age children require consistent sleep schedules for optimal learning and development.'}
-                {getAgeGroup(settings.age) === 'teen' && 'Teenagers experience a natural delay in circadian rhythms, making earlier bedtimes challenging.'}
-                {getAgeGroup(settings.age) === 'adult' && 'Adults benefit from consistent sleep schedules that align with natural circadian rhythms.'}
-                {getAgeGroup(settings.age) === 'senior' && 'Older adults often experience changes in sleep architecture and may benefit from strategic napping.'}
+                <strong>Research-based insights:</strong> Sleep architecture evolves dramatically across the lifespan. {' '}
+                {getAgeGroup(settings.age) === 'newborn' && 'Newborns enter sleep through REM (unique pattern) with 50% active sleep and 30-60 minute cycles for critical neural development.'}
+                {getAgeGroup(settings.age) === 'infant' && 'By 3 months, circadian rhythms establish and sleep onset shifts to NREM. Cycles lengthen from 60-90 minutes as brain matures.'}
+                {getAgeGroup(settings.age) === 'toddler' && 'Sleep cycles solidify to adult-like 90 minutes with NREM reaching 75-80%. Sleep becomes more consolidated at night.'}
+                {getAgeGroup(settings.age) === 'preschool' && 'Sleep architecture becomes increasingly adult-like while maintaining high N3 deep sleep essential for rapid growth and immune development.'}
+                {getAgeGroup(settings.age) === 'schoolAge' && 'Cycles extend to 90-110 minutes with continued prioritization of deep sleep for physical development and learning consolidation.'}
+                {getAgeGroup(settings.age) === 'teen' && 'Biological circadian shift causes natural 1-2 hour delay in sleepiness. Brain becomes more sensitive to blue light disruption.'}
+                {getAgeGroup(settings.age) === 'adult' && 'Complete 90-110 minute cycles with 75-80% NREM sleep. Deep sleep concentrates in first third, REM increases later in night.'}
+                {getAgeGroup(settings.age) === 'senior' && 'Deep sleep declines 2% per decade after age 20. Sleep becomes fragmented with 3-4 awakenings per night and advanced circadian phase.'}
               </p>
             </div>
           </CardContent>
