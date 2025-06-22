@@ -264,9 +264,20 @@ export default function SleepCalculator() {
                 <Sun className="h-4 w-4 text-green-500" />
               </div>
             </div>
-            <div className="flex justify-between text-xs text-muted-foreground mt-2">
-              <span>{ageGroup === 'newborn' ? 'REM Sleep Onset' : 'NREM Sleep Onset'}</span>
-              <span className="text-green-600 dark:text-green-400">Optimal Wake Window</span>
+            <div className="text-xs text-muted-foreground mt-2 space-y-1">
+              <div className="flex justify-between">
+                <span><strong>Sleep Onset:</strong> {ageGroup === 'newborn' ? 'REM (Active Sleep)' : 'NREM (Light Sleep)'}</span>
+                <span className="text-green-600 dark:text-green-400"><strong>Best Wake Time</strong></span>
+              </div>
+              <p className="text-xs">
+                {ageGroup === 'newborn' 
+                  ? 'Newborns uniquely enter sleep through REM phase - unlike all other ages who start with light NREM sleep.'
+                  : 'Sleep begins with light NREM sleep (N1), then deepens through N2 and N3 before entering REM sleep.'
+                }
+              </p>
+              <p className="text-xs text-green-600 dark:text-green-400">
+                <strong>Wake Window:</strong> The end of each cycle when you're in light sleep - waking here feels natural and refreshed instead of groggy.
+              </p>
             </div>
           </div>
 
@@ -294,16 +305,75 @@ export default function SleepCalculator() {
             </div>
           </div>
 
-          {/* Stage explanations based on research */}
+          {/* Detailed stage explanations based on research */}
           <div className="border-t border-border pt-4">
             <h5 className="font-medium text-sm mb-3">Sleep Stage Functions (Research-Based):</h5>
-            <div className="space-y-3 text-sm">
+            <div className="space-y-4 text-sm">
               {stageData.map((stage, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <div className={`w-4 h-4 rounded ${stage.color} mt-0.5 flex-shrink-0`}></div>
-                  <div>
-                    <span className="font-medium">{stage.name}</span>
-                    <p className="text-xs text-muted-foreground mt-1">{stage.description}</p>
+                <div key={index} className="border border-border rounded-lg p-3">
+                  <div className="flex items-start gap-3 mb-2">
+                    <div className={`w-4 h-4 rounded ${stage.color} mt-0.5 flex-shrink-0`}></div>
+                    <div className="flex-1">
+                      <span className="font-medium">{stage.name}</span>
+                      <p className="text-xs text-muted-foreground mt-1">{stage.description}</p>
+                    </div>
+                    <div className="text-xs font-medium">{stage.percentage}%</div>
+                  </div>
+                  
+                  {/* Detailed explanations based on research */}
+                  <div className="text-xs text-muted-foreground space-y-1 ml-7">
+                    {stage.name.includes('N1') && (
+                      <>
+                        <p><strong>Duration:</strong> 1-7 minutes per cycle (2-5% of total sleep)</p>
+                        <p><strong>Brain Activity:</strong> Shifts from alpha waves to low-voltage, mixed-frequency waves</p>
+                        <p><strong>Physical State:</strong> Muscle relaxation begins, easy to wake up</p>
+                        <p><strong>Experience:</strong> May experience hypnic jerks (muscle twitches), drowsy but aware</p>
+                      </>
+                    )}
+                    {stage.name.includes('N2') && (
+                      <>
+                        <p><strong>Duration:</strong> 10-25 minutes initially, longer in later cycles (45-55% of total sleep)</p>
+                        <p><strong>Brain Activity:</strong> Sleep spindles (12-14 Hz bursts) and K-complexes appear on EEG</p>
+                        <p><strong>Physical State:</strong> Heart rate and breathing slow, body temperature drops</p>
+                        <p><strong>Functions:</strong> Memory consolidation, particularly procedural memories</p>
+                        <p><strong>Research:</strong> Sleep spindles may protect sleep from external disturbances</p>
+                      </>
+                    )}
+                    {stage.name.includes('N3') && (
+                      <>
+                        <p><strong>Duration:</strong> 20-40 minutes in first cycle, decreases in later cycles (10-25% total)</p>
+                        <p><strong>Brain Activity:</strong> High-amplitude, low-frequency delta waves (0.5-2 Hz)</p>
+                        <p><strong>Physical State:</strong> Very difficult to wake, if awakened feel disoriented</p>
+                        <p><strong>Functions:</strong> Physical repair, growth hormone release, immune system strengthening</p>
+                        <p><strong>Age Changes:</strong> Declines 2% per decade after age 20, concentrated in first third of night</p>
+                      </>
+                    )}
+                    {stage.name.includes('REM') && ageGroup !== 'newborn' && (
+                      <>
+                        <p><strong>Duration:</strong> 10-60 minutes, lengthens throughout night (20-25% total sleep)</p>
+                        <p><strong>Brain Activity:</strong> Similar to waking state, theta waves, sawtooth patterns</p>
+                        <p><strong>Physical State:</strong> Muscle atonia (paralysis), rapid eye movements, vivid dreams</p>
+                        <p><strong>Functions:</strong> Memory consolidation, emotional processing, creativity, learning</p>
+                        <p><strong>Timing:</strong> Minimal in early sleep, increases dramatically in morning hours</p>
+                      </>
+                    )}
+                    {stage.name.includes('REM') && ageGroup === 'newborn' && (
+                      <>
+                        <p><strong>Duration:</strong> 25-30 minutes per cycle (50% of total sleep time)</p>
+                        <p><strong>Unique Pattern:</strong> Sleep onset occurs through REM rather than NREM</p>
+                        <p><strong>Brain Activity:</strong> Intense neural activity supporting rapid brain development</p>
+                        <p><strong>Functions:</strong> Critical for neural maturation, synapse formation, brain plasticity</p>
+                        <p><strong>Development:</strong> REM percentage decreases as nervous system matures</p>
+                      </>
+                    )}
+                    {stage.name.includes('NREM') && ageGroup === 'newborn' && (
+                      <>
+                        <p><strong>Duration:</strong> 25-30 minutes per cycle (50% of total sleep time)</p>
+                        <p><strong>Function:</strong> Basic restorative processes and growth</p>
+                        <p><strong>Development:</strong> Less differentiated than older children - no clear N1, N2, N3 stages yet</p>
+                        <p><strong>Characteristics:</strong> Quieter sleep with less movement compared to active REM sleep</p>
+                      </>
+                    )}
                   </div>
                 </div>
               ))}
