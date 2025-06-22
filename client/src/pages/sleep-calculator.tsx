@@ -546,19 +546,32 @@ export default function SleepCalculator() {
                     };
 
                     const getExplanation = (quality: string, cycles: number) => {
+                      const sleepHours = (cycles * cycleLength) / 60;
+                      const ageGroup = getAgeGroup(settings.age);
+                      
                       switch (quality) {
                         case 'EXCELLENT':
-                          return `Perfect! ${cycles} cycles puts you in Light Sleep at wake time - you'll feel refreshed and alert.`;
-                        case 'FAIR':
-                          if (cycles <= 4) {
-                            return `Good timing but only ${cycles} cycles (${formatSleepDuration(cycles * cycleLength)}) - may not provide enough restorative sleep.`;
+                          if (ageGroup === 'newborn') {
+                            return `Optimal for newborns! ${cycles} cycles (${formatSleepDuration(cycles * cycleLength)}) supports critical neural maturation with 50% REM sleep for brain development.`;
+                          } else if (ageGroup === 'infant') {
+                            return `Perfect for infants! ${cycles} cycles aligns with developing circadian rhythms and consolidating sleep patterns.`;
+                          } else if (ageGroup === 'teen') {
+                            return `Ideal for teens! ${cycles} cycles provides sufficient sleep despite natural circadian delay. Research shows teens need 8-10 hours but often get only 6.5-7.5 hours.`;
+                          } else if (ageGroup === 'senior') {
+                            return `Excellent for older adults! ${cycles} cycles accounts for age-related changes including reduced deep sleep and more fragmented sleep patterns.`;
                           } else {
-                            return `Good timing but ${cycles} cycles (${formatSleepDuration(cycles * cycleLength)}) may cause oversleeping grogginess.`;
+                            return `Perfect! ${cycles} cycles (${formatSleepDuration(cycles * cycleLength)}) provides complete sleep architecture with optimal N3 deep sleep early and REM sleep later in cycles.`;
+                          }
+                        case 'FAIR':
+                          if (sleepHours < ageData.recommendedHours.min) {
+                            return `Below optimal range. ${formatSleepDuration(cycles * cycleLength)} may not provide sufficient N3 deep sleep for physical repair and memory consolidation. Research shows sleep debt accumulates with chronic insufficient sleep.`;
+                          } else {
+                            return `Above optimal range. ${formatSleepDuration(cycles * cycleLength)} may cause sleep inertia and grogginess due to waking during deep sleep phases rather than light sleep.`;
                           }
                         case 'POOR':
-                          return `Only ${cycles} cycles = ${formatSleepDuration(cycles * cycleLength)} - severely insufficient sleep that will impact your health and performance.`;
+                          return `Severely insufficient! ${formatSleepDuration(cycles * cycleLength)} provides inadequate time for essential sleep stages. Research links chronic sleep deprivation to impaired cognitive function, weakened immune system, and increased health risks.`;
                         default:
-                          return `${cycles} cycles providing ${formatSleepDuration(cycles * cycleLength)} of sleep.`;
+                          return `${cycles} cycles providing ${formatSleepDuration(cycles * cycleLength)} of sleep for your age group.`;
                       }
                     };
 
@@ -581,19 +594,28 @@ export default function SleepCalculator() {
 
                         {/* Visual cycle blocks */}
                         <div className="mb-3">
-                          <div className="flex items-center gap-1 mb-2">
-                            <span className="text-sm font-medium mr-2">Sleep Cycles:</span>
-                            {Array.from({ length: rec.cycles }, (_, i) => (
-                              <div
-                                key={i}
-                                className={`px-3 py-1 rounded text-xs font-medium border ${colors.border} ${colors.bg} ${colors.text}`}
-                              >
-                                Cycle {i + 1}
+                          <div className="mb-2">
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="text-sm font-medium">Sleep Cycles:</span>
+                              <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                                <Sun className="h-3 w-3 text-green-500" />
+                                <span>Wake Window</span>
                               </div>
-                            ))}
-                            <div className="ml-2 flex items-center gap-1 text-xs text-muted-foreground">
-                              <Sun className="h-3 w-3 text-green-500" />
-                              <span>Wake Window</span>
+                            </div>
+                            <div className="flex flex-wrap gap-1 max-w-full">
+                              {Array.from({ length: Math.min(rec.cycles, 12) }, (_, i) => (
+                                <div
+                                  key={i}
+                                  className={`px-2 py-1 rounded text-xs font-medium border ${colors.border} ${colors.bg} ${colors.text} flex-shrink-0`}
+                                >
+                                  Cycle {i + 1}
+                                </div>
+                              ))}
+                              {rec.cycles > 12 && (
+                                <div className={`px-2 py-1 rounded text-xs font-medium border ${colors.border} ${colors.bg} ${colors.text} flex-shrink-0`}>
+                                  +{rec.cycles - 12} more
+                                </div>
+                              )}
                             </div>
                           </div>
                           
