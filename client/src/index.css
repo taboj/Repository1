@@ -186,3 +186,50 @@
     border-color: var(--mint-500);
   }
 }
+
+@keyframes shimmer {
+  0% {
+    opacity: 0.5;
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateX(0%) skewX(-15deg);
+  }
+  100% {
+    opacity: 0.5;
+    transform: translateX(100%) skewX(-15deg);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.5;
+    box-shadow: 0 0 5px currentColor;
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+}
+
+@keyframes sleep-wave {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-sleep-wave {
+  animation: sleep-wave 3s ease-in-out infinite;
+}

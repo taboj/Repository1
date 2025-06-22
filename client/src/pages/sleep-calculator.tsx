@@ -162,61 +162,295 @@ export default function SleepCalculator() {
 
   const SleepCycleVisualization = () => {
     const ageData = getAgeGroupRecommendations(settings.age);
-    const phases = ['Light', 'Deep', 'REM', 'Light', 'Deep'];
-    
+    const cycleLength = getCycleLength(settings.age);
+    const [currentPhase, setCurrentPhase] = useState(0);
+    const [animationProgress, setAnimationProgress] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(false);
+    const [animationSpeed, setAnimationSpeed] = useState(1); // 1x = realistic timing, 10x = fast demo
+    const [completedCycles, setCompletedCycles] = useState(0);
+
+    // Sleep phases with timing and colors
+    const phases = [
+      { name: 'Light Sleep', duration: 15, color: 'from-blue-400 to-blue-500', bgColor: 'bg-blue-200 dark:bg-blue-700' },
+      { name: 'Deep Sleep', duration: 25, color: 'from-indigo-500 to-indigo-600', bgColor: 'bg-indigo-300 dark:bg-indigo-600' },
+      { name: 'REM Sleep', duration: 20, color: 'from-purple-500 to-purple-600', bgColor: 'bg-purple-300 dark:bg-purple-600' },
+      { name: 'Light Sleep', duration: 20, color: 'from-blue-400 to-blue-500', bgColor: 'bg-blue-200 dark:bg-blue-700' },
+      { name: 'Deep Sleep', duration: 10, color: 'from-indigo-500 to-indigo-600', bgColor: 'bg-indigo-300 dark:bg-indigo-600' }
+    ];
+
     // Adjust phase heights based on age group percentages
-    const getPhaseHeight = (phase: string) => {
-      switch (phase) {
-        case 'Deep':
+    const getPhaseHeight = (phaseName: string) => {
+      switch (phaseName) {
+        case 'Deep Sleep':
           return `${Math.min(100, ageData.deepSleepPercentage * 3)}%`;
-        case 'REM':
+        case 'REM Sleep':
           return `${Math.min(100, ageData.remSleepPercentage * 4)}%`;
         default:
           return '60%';
       }
     };
 
-    const colors = [
-      'bg-blue-200 dark:bg-blue-700',
-      'bg-indigo-300 dark:bg-indigo-600', 
-      'bg-purple-300 dark:bg-purple-600',
-      'bg-blue-200 dark:bg-blue-700',
-      'bg-indigo-300 dark:bg-indigo-600'
-    ];
+    // Start animation
+    const startAnimation = () => {
+      setIsAnimating(true);
+      setCurrentPhase(0);
+      setAnimationProgress(0);
+      setCompletedCycles(0);
+    };
+
+    // Stop animation
+    const stopAnimation = () => {
+      setIsAnimating(false);
+      setCurrentPhase(0);
+      setAnimationProgress(0);
+      setCompletedCycles(0);
+    };
+
+    // Animation effect with realistic timing
+    useEffect(() => {
+      let interval: NodeJS.Timeout;
+      
+      if (isAnimating) {
+        interval = setInterval(() => {
+          setAnimationProgress(prev => {
+            const currentPhaseDuration = phases[currentPhase].duration;
+            const progressIncrement = (100 / currentPhaseDuration) * 0.5 * animationSpeed;
+            const newProgress = prev + progressIncrement;
+            
+            if (newProgress >= 100) {
+              setCurrentPhase(prevPhase => {
+                const nextPhase = (prevPhase + 1) % phases.length;
+                if (nextPhase === 0) {
+                  setCompletedCycles(prev => {
+                    const newCycles = prev + 1;
+                    const targetCycles = recommendations[0]?.cycles || settings.selectedCycles;
+                    if (newCycles >= targetCycles) {
+                      setIsAnimating(false);
+                      return newCycles;
+                    }
+                    return newCycles;
+                  });
+                }
+                return nextPhase;
+              });
+              return 0;
+            }
+            
+            return newProgress;
+          });
+        }, 100);
+      }
+
+      return () => {
+        if (interval) clearInterval(interval);
+      };
+    }, [isAnimating, currentPhase, phases]);
 
     return (
       <Card className="mt-6">
         <CardContent className="p-6">
-          <h4 className="font-semibold mb-4">Sleep Cycle Timeline for {ageData.name}</h4>
-          <div className="relative h-20 bg-muted rounded-lg overflow-hidden mb-4">
+          <div className="flex items-center justify-between mb-4">
+            <h4 className="font-semibold">Sleep Cycle Animation for {ageData.name}</h4>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <label className="text-xs font-medium">Speed:</label>
+                <select 
+                  value={animationSpeed} 
+                  onChange={(e) => setAnimationSpeed(Number(e.target.value))}
+                  className="text-xs px-2 py-1 rounded border border-border bg-background"
+                  disabled={isAnimating}
+                >
+                  <option value={0.5}>0.5x</option>
+                  <option value={1}>1x</option>
+                  <option value={5}>5x</option>
+                  <option value={10}>10x</option>
+                  <option value={20}>20x</option>
+                </select>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={startAnimation}
+                  disabled={isAnimating}
+                  className="gap-2"
+                >
+                  <div className="w-2 h-2 bg-current rounded-full animate-pulse"></div>
+                  Start Animation
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={stopAnimation}
+                  disabled={!isAnimating}
+                >
+                  Stop
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Animated Progress Bar */}
+          <div className="relative h-24 bg-muted rounded-lg overflow-hidden mb-4 border">
+            {/* Phase backgrounds */}
             <div className="absolute inset-0 flex items-end">
               {phases.map((phase, index) => (
-                <div key={index} className="flex-1 flex flex-col justify-end h-full">
+                <div key={index} className="flex-1 flex flex-col justify-end h-full relative">
                   <div
-                    className={`${colors[index]} flex items-center justify-center text-xs font-medium border-r border-background last:border-r-0 transition-all duration-300`}
-                    style={{ height: getPhaseHeight(phase) }}
+                    className={`${phase.bgColor} flex items-center justify-center text-xs font-medium border-r border-background last:border-r-0 transition-all duration-500 relative overflow-hidden`}
+                    style={{ height: getPhaseHeight(phase.name) }}
                   >
-                    {phase}
+                    <span className="relative z-10">{phase.name}</span>
+                    
+                    {/* Animated gradient overlay for current phase */}
+                    {index === currentPhase && isAnimating && (
+                      <>
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-r ${phase.color} opacity-60 animate-shimmer`}
+                          style={{
+                            transform: `translateX(${animationProgress - 100}%)`,
+                          }}
+                        />
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-b ${phase.color} opacity-30 animate-sleep-wave`}
+                        />
+                      </>
+                    )}
+                    
+                    {/* Breathing effect for active phase */}
+                    {index === currentPhase && isAnimating && (
+                      <div
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 animate-pulse"
+                        style={{
+                          animationDuration: phase.name === 'REM Sleep' ? '1s' : '3s'
+                        }}
+                      />
+                    )}
                   </div>
                 </div>
               ))}
             </div>
-            <div className="absolute top-0 right-8 w-1 h-full bg-green-500"></div>
-            <div className="absolute -top-6 right-8 transform -translate-x-1/2">
-              <Sun className="h-4 w-4 text-green-500" />
+
+            {/* Progress indicator */}
+            <div className="absolute top-0 w-full h-full pointer-events-none">
+              <div 
+                className="absolute top-0 w-1 h-full bg-gradient-to-b from-emerald-400 to-emerald-600 shadow-lg transition-all duration-300 ease-out"
+                style={{
+                  left: `${(currentPhase / phases.length) * 100 + (animationProgress / phases.length)}%`,
+                  opacity: isAnimating ? 1 : 0.5,
+                  transform: isAnimating ? 'scaleY(1.1)' : 'scaleY(1)'
+                }}
+              />
+              
+              {/* Wake up indicator */}
+              <div className="absolute top-0 right-8 w-1 h-full bg-gradient-to-b from-green-400 to-green-600"></div>
+              <div className="absolute -top-6 right-8 transform -translate-x-1/2">
+                <Sun className="h-4 w-4 text-green-500" />
+              </div>
             </div>
           </div>
+
+          {/* Current phase indicator and sleep stats */}
+          {isAnimating && (
+            <div className="mb-4 p-4 bg-gradient-to-r from-muted/50 to-muted/30 rounded-lg border">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <div className={`w-4 h-4 rounded-full bg-gradient-to-r ${phases[currentPhase].color} animate-pulse-glow`}></div>
+                  <div>
+                    <span className="font-medium">Current Phase: {phases[currentPhase].name}</span>
+                    <div className="text-xs text-muted-foreground">
+                      Duration: {phases[currentPhase].duration} minutes
+                    </div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-sm font-medium">
+                    {Math.round(animationProgress)}% complete
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    Cycle {completedCycles + 1} of {recommendations[0]?.cycles || settings.selectedCycles}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="space-y-2">
+                <div className="w-full bg-background rounded-full h-3 overflow-hidden shadow-inner">
+                  <div 
+                    className={`h-full bg-gradient-to-r ${phases[currentPhase].color} transition-all duration-300 ease-out relative`}
+                    style={{ width: `${animationProgress}%` }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 animate-pulse"></div>
+                  </div>
+                </div>
+                
+                {/* Overall progress bar */}
+                <div className="w-full bg-muted rounded-full h-1 overflow-hidden">
+                  <div 
+                    className="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 transition-all duration-500"
+                    style={{ 
+                      width: `${((completedCycles * phases.length + currentPhase + (animationProgress / 100)) / ((recommendations[0]?.cycles || settings.selectedCycles) * phases.length)) * 100}%` 
+                    }}
+                  />
+                </div>
+              </div>
+              
+              {/* Sleep quality indicator */}
+              <div className="mt-3 flex items-center justify-between text-xs">
+                <div className="flex items-center gap-4">
+                  <span>Sleep Quality: </span>
+                  <div className="flex gap-1">
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <div 
+                        key={i}
+                        className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                          i < (completedCycles + 1) ? 'bg-emerald-500' : 'bg-muted'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <span className="text-muted-foreground">
+                  Elapsed: {Math.floor((completedCycles * cycleLength + (currentPhase + 1) * phases[currentPhase].duration * (animationProgress / 100)) / 60)}h {Math.floor((completedCycles * cycleLength + (currentPhase + 1) * phases[currentPhase].duration * (animationProgress / 100)) % 60)}m
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Labels */}
           <div className="flex justify-between text-xs text-muted-foreground mb-3">
             <span>Sleep Start</span>
-            <span className="text-green-600 dark:text-green-400">Optimal Wake Window</span>
+            <span className="text-emerald-600 dark:text-emerald-400">
+              {isAnimating ? 'Sleep Progress' : 'Optimal Wake Window'}
+            </span>
             <span>Target Time</span>
           </div>
-          <div className="grid grid-cols-2 gap-4 text-xs">
+
+          {/* Phase breakdown */}
+          <div className="grid grid-cols-2 gap-4 text-xs mb-4">
             <div>
               <span className="font-medium">REM Sleep:</span> {ageData.remSleepPercentage}%
             </div>
             <div>
               <span className="font-medium">Deep Sleep:</span> {ageData.deepSleepPercentage}%
+            </div>
+            <div>
+              <span className="font-medium">Cycle Length:</span> {cycleLength} minutes
+            </div>
+            <div>
+              <span className="font-medium">Total Cycles:</span> {recommendations[0]?.cycles || settings.selectedCycles}
+            </div>
+          </div>
+
+          {/* Phase timing breakdown */}
+          <div className="border-t border-border pt-3">
+            <h5 className="font-medium text-sm mb-2">Phase Timing (one {cycleLength}-minute cycle):</h5>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs">
+              {phases.map((phase, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${phase.color}`}></div>
+                  <span>{phase.name}: {phase.duration}min</span>
+                </div>
+              ))}
             </div>
           </div>
         </CardContent>
