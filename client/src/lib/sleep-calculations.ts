@@ -14,13 +14,13 @@ export interface SleepSettings {
 
 export function getAgeGroup(age: number): 'newborn' | 'infant' | 'toddler' | 'preschool' | 'schoolAge' | 'teen' | 'adult' | 'senior' {
   if (age < 0.25) return 'newborn'; // 0-3 months
-  if (age < 1) return 'infant'; // 4-12 months
-  if (age < 3) return 'toddler'; // 1-2 years
-  if (age < 6) return 'preschool'; // 3-5 years
+  if (age < 1) return 'infant'; // 3-12 months  
+  if (age < 2) return 'toddler'; // 1-2 years
+  if (age < 6) return 'preschool'; // 2-5 years
   if (age < 13) return 'schoolAge'; // 6-12 years
-  if (age < 19) return 'teen'; // 13-18 years
-  if (age < 65) return 'adult'; // 18-64 years
-  return 'senior'; // 65+ years
+  if (age < 19) return 'teen'; // 10-18 years (research shows adolescence starts at 10)
+  if (age < 60) return 'adult'; // 18-60 years
+  return 'senior'; // 60+ years (research shows age-related changes begin around 60)
 }
 
 export function getCycleLength(age: number): number {
@@ -93,23 +93,34 @@ export function calculateOptimalBedtimes(
   const cycleLength = getCycleLength(settings.age);
   const ageData = getAgeGroupRecommendations(settings.age);
   
-  // Generate 5 recommendations with different cycle counts
-  const cycleOptions = [3, 4, 5, 6, 7]; // Standard range for different sleep needs
+  // Use age-appropriate cycle options based on research
+  const cycleOptions = calculateOptimalCyclesForAge(settings.age);
   
   cycleOptions.forEach(cycles => {
     const totalSleepTime = cycles * cycleLength + settings.fallAsleepTime;
     const bedtime = new Date(wakeTime.getTime() - totalSleepTime * 60 * 1000);
     
-    // Determine quality based on age-appropriate sleep duration
-    let quality: SleepRecommendation['quality'] = 'GOOD';
+    // Determine quality based on age-appropriate sleep duration and research
     const sleepHours = (cycles * cycleLength) / 60;
+    let quality: SleepRecommendation['quality'] = 'GOOD';
     
-    if (sleepHours >= ageData.recommendedHours.min && sleepHours <= ageData.recommendedHours.max) {
-      quality = cycles >= 5 ? 'EXCELLENT' : 'GOOD';
-    } else if (sleepHours < ageData.recommendedHours.min) {
-      quality = sleepHours < (ageData.recommendedHours.min - 1) ? 'POOR' : 'FAIR';
+    // Calculate optimal cycle range for this age group
+    const optimalMinCycles = Math.ceil((ageData.recommendedHours.min * 60) / cycleLength);
+    const optimalMaxCycles = Math.floor((ageData.recommendedHours.max * 60) / cycleLength);
+    
+    if (cycles >= optimalMinCycles && cycles <= optimalMaxCycles) {
+      // Within optimal range
+      if (cycles >= optimalMinCycles && cycles <= optimalMaxCycles) {
+        quality = 'EXCELLENT';
+      }
+    } else if (cycles < optimalMinCycles) {
+      // Insufficient sleep
+      const deficitHours = ageData.recommendedHours.min - sleepHours;
+      quality = deficitHours > 2 ? 'POOR' : 'FAIR';
     } else {
-      quality = 'FAIR'; // Too much sleep
+      // Excessive sleep
+      const excessHours = sleepHours - ageData.recommendedHours.max;
+      quality = excessHours > 2 ? 'FAIR' : 'GOOD';
     }
     
     recommendations.push({
@@ -122,9 +133,15 @@ export function calculateOptimalBedtimes(
   });
   
   return recommendations.sort((a, b) => {
-    // Sort by quality first, then by optimal cycles for age
+    // Sort by quality first, then by how close to optimal range
     const qualityOrder = { 'EXCELLENT': 4, 'GOOD': 3, 'FAIR': 2, 'POOR': 1 };
-    return qualityOrder[b.quality] - qualityOrder[a.quality];
+    const qualityDiff = qualityOrder[b.quality] - qualityOrder[a.quality];
+    if (qualityDiff !== 0) return qualityDiff;
+    
+    // If same quality, prefer cycles closer to the middle of optimal range
+    const optimalMid = (Math.ceil((ageData.recommendedHours.min * 60) / cycleLength) + 
+                      Math.floor((ageData.recommendedHours.max * 60) / cycleLength)) / 2;
+    return Math.abs(a.cycles - optimalMid) - Math.abs(b.cycles - optimalMid);
   });
 }
 
@@ -137,22 +154,31 @@ export function calculateOptimalWakeTimes(
   const ageData = getAgeGroupRecommendations(settings.age);
   const actualSleepStart = new Date(bedtime.getTime() + settings.fallAsleepTime * 60 * 1000);
   
-  // Generate 5 recommendations with different cycle counts
-  const cycleOptions = [3, 4, 5, 6, 7];
+  // Use age-appropriate cycle options based on research
+  const cycleOptions = calculateOptimalCyclesForAge(settings.age);
   
   cycleOptions.forEach(cycles => {
     const wakeTime = new Date(actualSleepStart.getTime() + cycles * cycleLength * 60 * 1000);
     
-    // Determine quality based on age-appropriate sleep duration
-    let quality: SleepRecommendation['quality'] = 'GOOD';
+    // Determine quality based on age-appropriate sleep duration and research
     const sleepHours = (cycles * cycleLength) / 60;
+    let quality: SleepRecommendation['quality'] = 'GOOD';
     
-    if (sleepHours >= ageData.recommendedHours.min && sleepHours <= ageData.recommendedHours.max) {
-      quality = cycles >= 5 ? 'EXCELLENT' : 'GOOD';
-    } else if (sleepHours < ageData.recommendedHours.min) {
-      quality = sleepHours < (ageData.recommendedHours.min - 1) ? 'POOR' : 'FAIR';
+    // Calculate optimal cycle range for this age group
+    const optimalMinCycles = Math.ceil((ageData.recommendedHours.min * 60) / cycleLength);
+    const optimalMaxCycles = Math.floor((ageData.recommendedHours.max * 60) / cycleLength);
+    
+    if (cycles >= optimalMinCycles && cycles <= optimalMaxCycles) {
+      // Within optimal range
+      quality = 'EXCELLENT';
+    } else if (cycles < optimalMinCycles) {
+      // Insufficient sleep
+      const deficitHours = ageData.recommendedHours.min - sleepHours;
+      quality = deficitHours > 2 ? 'POOR' : 'FAIR';
     } else {
-      quality = 'FAIR'; // Too much sleep
+      // Excessive sleep
+      const excessHours = sleepHours - ageData.recommendedHours.max;
+      quality = excessHours > 2 ? 'FAIR' : 'GOOD';
     }
     
     recommendations.push({
@@ -165,122 +191,129 @@ export function calculateOptimalWakeTimes(
   });
   
   return recommendations.sort((a, b) => {
+    // Sort by quality first, then by how close to optimal range
     const qualityOrder = { 'EXCELLENT': 4, 'GOOD': 3, 'FAIR': 2, 'POOR': 1 };
-    return qualityOrder[b.quality] - qualityOrder[a.quality];
+    const qualityDiff = qualityOrder[b.quality] - qualityOrder[a.quality];
+    if (qualityDiff !== 0) return qualityDiff;
+    
+    // If same quality, prefer cycles closer to the middle of optimal range
+    const optimalMid = (Math.ceil((ageData.recommendedHours.min * 60) / cycleLength) + 
+                      Math.floor((ageData.recommendedHours.max * 60) / cycleLength)) / 2;
+    return Math.abs(a.cycles - optimalMid) - Math.abs(b.cycles - optimalMid);
   });
 }
 
 export const AGE_GROUPS: Record<string, AgeGroupData> = {
   newborn: {
     name: 'Newborn (0-3 months)',
-    sleepRange: '14-17 hours',
-    recommendedHours: { min: 14, max: 17 },
-    cycleLength: 50,
-    remSleepPercentage: 50,
-    deepSleepPercentage: 25,
+    sleepRange: '16-18 hours',
+    recommendedHours: { min: 16, max: 18 },
+    cycleLength: 50, // 30-60 minutes from research, using 50 as average
+    remSleepPercentage: 50, // Research shows 50% REM sleep
+    deepSleepPercentage: 50, // Remaining 50% is quiet sleep (NREM)
     characteristics: [
-      'Sleep occurs in 2-4 hour periods throughout day and night',
-      'Highest proportion of REM sleep for brain development',
-      'No established circadian rhythm yet',
-      'Sleep is divided equally between day and night'
+      'Sleep onset occurs through REM (active sleep) rather than NREM',
+      'Sleep cycles are 30-60 minutes, significantly shorter than adults',
+      'Longest continuous sleep episode typically 2.5-4 hours',
+      'Circadian rhythms not yet developed - emerge around 2-3 months'
     ]
   },
   infant: {
-    name: 'Infant (4-12 months)',
+    name: 'Infant (3-12 months)',
     sleepRange: '12-16 hours (including naps)',
     recommendedHours: { min: 12, max: 16 },
-    cycleLength: 60,
-    remSleepPercentage: 40,
-    deepSleepPercentage: 30,
+    cycleLength: 75, // 60-90 minutes from research, using 75 as average
+    remSleepPercentage: 25, // 20-30% from research table
+    deepSleepPercentage: 75, // 70-80% NREM from research table
     characteristics: [
-      'Longer sleep periods at night develop',
-      'Regular nap schedule begins to form',
-      'Sleep consolidation improves',
-      'May experience sleep regressions'
+      'Sleep onset shifts to NREM sleep by 3 months',
+      'Circadian rhythms establish with melatonin and cortisol cycling',
+      'By 6 months: longest sleep episode extends to 6 hours',
+      'By 12 months: sleep cycles solidify to ~90 minutes like adults'
     ]
   },
   toddler: {
     name: 'Toddler (1-2 years)',
     sleepRange: '11-14 hours (including naps)',
     recommendedHours: { min: 11, max: 14 },
-    cycleLength: 70,
-    remSleepPercentage: 30,
-    deepSleepPercentage: 25,
+    cycleLength: 90, // Research shows cycles solidify to ~90 minutes by 12+ months
+    remSleepPercentage: 22, // 20-25% from research table
+    deepSleepPercentage: 78, // 75-80% NREM from research table
     characteristics: [
-      'Transition from 2 naps to 1 nap',
-      'Bedtime resistance may increase',
-      'Nighttime sleep becomes more consolidated',
-      'Dreams and nightmares may begin'
+      'Sleep cycles now mirror adult length at 90 minutes',
+      'NREM sleep proportion reaches 75-80% like adults',
+      'Total sleep decreases from 13 to 11 hours during this period',
+      'More consolidated nighttime sleep with fewer awakenings'
     ]
   },
   preschool: {
-    name: 'Preschool (3-5 years)',
+    name: 'Preschool (2-5 years)',
     sleepRange: '10-13 hours (including naps)',
     recommendedHours: { min: 10, max: 13 },
-    cycleLength: 80,
-    remSleepPercentage: 25,
-    deepSleepPercentage: 22,
+    cycleLength: 90, // Adult-like 90 minute cycles established
+    remSleepPercentage: 22, // 20-25% maintained
+    deepSleepPercentage: 78, // 75-80% NREM maintained
     characteristics: [
-      'Most children stop napping by age 5',
-      'Bedtime fears and anxiety may emerge',
-      'Sleep patterns becoming more adult-like',
-      'Sleepwalking and night terrors may occur'
+      'Sleep patterns become increasingly adult-like',
+      'High proportion of N3 (deep sleep) supports rapid growth',
+      'Children spend more time in N3 compared to adolescents',
+      'Sleep architecture prioritizes physical repair and immune development'
     ]
   },
   schoolAge: {
     name: 'School Age (6-12 years)',
-    sleepRange: '9-12 hours',
-    recommendedHours: { min: 9, max: 12 },
-    cycleLength: 90,
-    remSleepPercentage: 25,
-    deepSleepPercentage: 20,
+    sleepRange: '9-11 hours',
+    recommendedHours: { min: 9, max: 11 },
+    cycleLength: 100, // 90-110 minutes similar to adult from research
+    remSleepPercentage: 22, // ~20-25% maintained
+    deepSleepPercentage: 78, // ~75-80% NREM maintained
     characteristics: [
-      'Peak deep sleep for growth and development',
-      'More consistent sleep patterns',
-      'Academic and social pressures may affect sleep',
-      'Screen time can impact sleep quality'
+      'Sleep cycle length now 90-110 minutes, similar to adults',
+      'Continued high N3 deep sleep for growth and development',
+      'More consistent sleep patterns than younger children',
+      'Sleep efficiency and consolidation continue to improve'
     ]
   },
   teen: {
-    name: 'Teen (13-18 years)',
+    name: 'Teen (10-18 years)',
     sleepRange: '8-10 hours',
     recommendedHours: { min: 8, max: 10 },
-    cycleLength: 90,
-    remSleepPercentage: 23,
-    deepSleepPercentage: 18,
+    cycleLength: 100, // 90-110 minutes, adult-like cycles
+    remSleepPercentage: 22, // Adult-like proportions
+    deepSleepPercentage: 78, // Adult-like proportions
     characteristics: [
-      'Natural shift to later bedtimes (delayed circadian rhythm)',
-      'High sleep pressure due to brain development',
-      'Often experience chronic sleep deprivation',
-      'REM sleep important for emotional regulation'
+      'Natural circadian shift - feel tired 1-2 hours later in evening',
+      'Biological "night owl" preference conflicts with early school times',
+      'Despite needing 8-10 hours, most get only 6.5-7.5 hours',
+      'Increased sensitivity to blue light from electronic devices'
     ]
   },
   adult: {
     name: 'Adult (18-60 years)',
     sleepRange: '7-9 hours',
     recommendedHours: { min: 7, max: 9 },
-    cycleLength: 90,
-    remSleepPercentage: 20,
-    deepSleepPercentage: 15,
+    cycleLength: 100, // 90-110 minutes from research
+    remSleepPercentage: 22, // 20-25% from research
+    deepSleepPercentage: 78, // 75-80% NREM from research
     characteristics: [
-      'Stable circadian rhythms',
-      'Sleep efficiency typically 85-90%',
-      'Work and life stress can impact sleep',
-      'Career and family responsibilities affect schedule'
+      'Complete sleep cycles typically 90-110 minutes',
+      'NREM sleep: 75-80% (N1: 2-5%, N2: 45-55%, N3: 10-25%)',
+      'REM sleep: 20-25%, increases in duration through the night',
+      'Deep sleep (N3) concentrated in first third of night'
     ]
   },
   senior: {
-    name: 'Senior (65+ years)',
+    name: 'Senior (60+ years)',
     sleepRange: '7-8 hours',
     recommendedHours: { min: 7, max: 8 },
-    cycleLength: 85,
-    remSleepPercentage: 18,
-    deepSleepPercentage: 12,
+    cycleLength: 100, // Cycle length remains similar, but quality changes
+    remSleepPercentage: 18, // Reduced REM sleep with aging
+    deepSleepPercentage: 62, // Significantly reduced N3, more N1 and N2
     characteristics: [
-      'Earlier bedtime and wake time preferences',
-      'More fragmented sleep with frequent awakenings',
-      'Reduced deep sleep and REM sleep',
-      'Increased daytime napping tendency'
+      'Significant decline in N3 (deep sleep) - decreases 2% per decade after age 20',
+      'More fragmented sleep with 3-4 awakenings per night',
+      'Advanced circadian phase - earlier bedtime and wake time',
+      'Reduced sleep efficiency despite similar time in bed'
     ]
   }
 };
@@ -299,12 +332,27 @@ export function shouldShowSleepWarning(recommendations: SleepRecommendation[], a
 
 export function calculateOptimalCyclesForAge(age: number): number[] {
   const ageData = getAgeGroupRecommendations(age);
-  const minCycles = Math.ceil(ageData.recommendedHours.min / 1.5);
-  const maxCycles = Math.floor(ageData.recommendedHours.max / 1.5);
+  const cycleLength = ageData.cycleLength;
+  
+  // Calculate cycles based on actual cycle length for each age group
+  const minCycles = Math.ceil((ageData.recommendedHours.min * 60) / cycleLength);
+  const maxCycles = Math.floor((ageData.recommendedHours.max * 60) / cycleLength);
   
   const cycles = [];
-  for (let i = minCycles; i <= maxCycles; i++) {
+  
+  // Generate a range of cycle options around the optimal range
+  const startCycle = Math.max(1, minCycles - 1);
+  const endCycle = Math.min(maxCycles + 2, 20); // Cap at 20 cycles for very young children
+  
+  for (let i = startCycle; i <= endCycle; i++) {
     cycles.push(i);
   }
-  return cycles.length > 0 ? cycles : [5, 6, 7];
+  
+  // Ensure we always have at least 5 options for the calculator
+  if (cycles.length < 5) {
+    const midPoint = Math.floor((startCycle + endCycle) / 2);
+    return [midPoint - 2, midPoint - 1, midPoint, midPoint + 1, midPoint + 2].filter(c => c > 0);
+  }
+  
+  return cycles.slice(0, 7); // Limit to 7 options for UI clarity
 }
