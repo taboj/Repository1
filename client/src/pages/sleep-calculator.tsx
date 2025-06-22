@@ -241,16 +241,53 @@ export default function SleepCalculator() {
             </div>
           </div>
 
-          {/* Phase breakdown */}
+          {/* Phase breakdown with detailed explanations */}
           <div className="mt-4 border-t border-border pt-4">
-            <h5 className="font-medium text-sm mb-3">One Complete Sleep Cycle ({cycleLength} minutes):</h5>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-xs">
-              {phaseData.map((phase, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <div className={`w-3 h-3 rounded ${phase.color}`}></div>
-                  <span>{phase.name}: {phase.duration}min</span>
+            <h5 className="font-medium text-sm mb-3">Understanding Your Sleep Cycle ({cycleLength} minutes):</h5>
+            
+            <div className="space-y-3 text-sm">
+              <div className="flex items-start gap-3">
+                <div className="w-4 h-4 rounded bg-blue-200 dark:bg-blue-700 mt-0.5 flex-shrink-0"></div>
+                <div>
+                  <span className="font-medium text-blue-700 dark:text-blue-300">Light Sleep (Stage 1 & 2)</span>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    The transition from awake to sleep. Your muscles relax, heart rate slows, and you can be easily awakened. 
+                    This is when you might experience hypnic jerks (sudden muscle twitches).
+                  </p>
                 </div>
-              ))}
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="w-4 h-4 rounded bg-indigo-300 dark:bg-indigo-600 mt-0.5 flex-shrink-0"></div>
+                <div>
+                  <span className="font-medium text-indigo-700 dark:text-indigo-300">Deep Sleep (Stage 3)</span>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    The most restorative phase. Your body repairs tissues, strengthens immune system, and consolidates memories. 
+                    Very difficult to wake up during this phase - you'll feel groggy if awakened.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="w-4 h-4 rounded bg-purple-300 dark:bg-purple-600 mt-0.5 flex-shrink-0"></div>
+                <div>
+                  <span className="font-medium text-purple-700 dark:text-purple-300">REM Sleep</span>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Rapid Eye Movement sleep - when most vivid dreams occur. Critical for emotional processing, 
+                    creativity, and memory consolidation. Brain activity similar to being awake.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-4 p-3 bg-muted/30 rounded-lg">
+              <h6 className="font-medium text-xs mb-2">How to Read the Chart:</h6>
+              <ul className="text-xs text-muted-foreground space-y-1">
+                <li>• <strong>Height</strong> = How much time you spend in each phase</li>
+                <li>• <strong>Width</strong> = Duration of each phase within one cycle</li>
+                <li>• <strong>Green line</strong> = Optimal wake-up window (end of light sleep)</li>
+                <li>• You cycle through these phases 4-6 times per night</li>
+              </ul>
             </div>
           </div>
         </CardContent>
