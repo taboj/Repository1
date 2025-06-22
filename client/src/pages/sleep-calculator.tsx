@@ -165,65 +165,113 @@ export default function SleepCalculator() {
   const SleepCycleVisualization = () => {
     const ageData = getAgeGroupRecommendations(settings.age);
     const cycleLength = getCycleLength(settings.age);
-    const phases = ['Light Sleep', 'Deep Sleep', 'REM Sleep', 'Light Sleep', 'Deep Sleep'];
+    const ageGroup = getAgeGroup(settings.age);
     
-    // Phase colors and timing
-    const phaseData = [
-      { name: 'Light Sleep', duration: 15, color: 'bg-blue-200 dark:bg-blue-700', gradient: 'from-blue-400 to-blue-500' },
-      { name: 'Deep Sleep', duration: 25, color: 'bg-indigo-300 dark:bg-indigo-600', gradient: 'from-indigo-500 to-indigo-600' },
-      { name: 'REM Sleep', duration: 20, color: 'bg-purple-300 dark:bg-purple-600', gradient: 'from-purple-500 to-purple-600' },
-      { name: 'Light Sleep', duration: 20, color: 'bg-blue-200 dark:bg-blue-700', gradient: 'from-blue-400 to-blue-500' },
-      { name: 'Deep Sleep', duration: 10, color: 'bg-indigo-300 dark:bg-indigo-600', gradient: 'from-indigo-500 to-indigo-600' }
-    ];
-
-    // Adjust phase heights based on age group percentages
-    const getPhaseHeight = (phaseName: string) => {
-      switch (phaseName) {
-        case 'Deep Sleep':
-          return `${Math.min(100, ageData.deepSleepPercentage * 3)}%`;
-        case 'REM Sleep':
-          return `${Math.min(100, ageData.remSleepPercentage * 4)}%`;
-        default:
-          return '60%';
+    // Research-based sleep stage data according to the article
+    const getStageData = () => {
+      if (ageGroup === 'newborn') {
+        return [
+          { name: 'REM (Active Sleep)', percentage: 50, color: 'bg-purple-300 dark:bg-purple-600', description: 'Critical for neural maturation and brain development' },
+          { name: 'NREM (Quiet Sleep)', percentage: 50, color: 'bg-blue-300 dark:bg-blue-600', description: 'Basic restorative functions' }
+        ];
+      } else {
+        // For all other age groups, use NREM breakdown from research
+        const n1Percentage = ageGroup === 'senior' ? 8 : 4; // Seniors have more N1
+        const n2Percentage = ageGroup === 'senior' ? 50 : 50; // N2 accounts for 45-55% in adults
+        const n3Percentage = ageGroup === 'senior' ? 12 : (ageGroup === 'teen' ? 18 : 20); // N3 decreases with age
+        const remPercentage = ageData.remSleepPercentage;
+        
+        return [
+          { name: 'N1 (Light Sleep)', percentage: n1Percentage, color: 'bg-cyan-200 dark:bg-cyan-700', description: 'Transition from wake to sleep, 1-7 minutes' },
+          { name: 'N2 (Light Sleep)', percentage: n2Percentage, color: 'bg-blue-300 dark:bg-blue-600', description: 'Sleep spindles and K-complexes, memory consolidation' },
+          { name: 'N3 (Deep Sleep)', percentage: n3Percentage, color: 'bg-indigo-400 dark:bg-indigo-500', description: 'Slow-wave sleep, physical repair, immune function' },
+          { name: 'REM Sleep', percentage: remPercentage, color: 'bg-purple-400 dark:bg-purple-500', description: 'Rapid eye movement, vivid dreams, memory processing' }
+        ];
       }
     };
+
+    const stageData = getStageData();
+
+    // Calculate cycle progression based on research
+    const getCycleProgression = () => {
+      if (ageGroup === 'newborn') {
+        // Newborns start with REM sleep (unique pattern)
+        return [
+          { stage: 'REM (Active Sleep)', duration: 50, order: 1 },
+          { stage: 'NREM (Quiet Sleep)', duration: 50, order: 2 }
+        ];
+      } else {
+        // All other ages start with NREM and progress through stages
+        return [
+          { stage: 'N1', duration: 5, order: 1 },
+          { stage: 'N2', duration: 25, order: 2 },
+          { stage: 'N3', duration: 40, order: 3 },
+          { stage: 'N2', duration: 15, order: 4 },
+          { stage: 'REM', duration: 15, order: 5 }
+        ];
+      }
+    };
+
+    const cycleProgression = getCycleProgression();
 
     return (
       <Card className="mt-6">
         <CardContent className="p-6">
-          <h4 className="font-semibold mb-4">Sleep Cycle Phases for {ageData.name}</h4>
+          <h4 className="font-semibold mb-4">Sleep Architecture for {ageData.name}</h4>
           
-          {/* Visual sleep cycle representation */}
-          <div className="relative h-24 bg-muted rounded-lg overflow-hidden mb-4 border">
-            <div className="absolute inset-0 flex items-end">
-              {phaseData.map((phase, index) => (
-                <div key={index} className="flex-1 flex flex-col justify-end h-full relative">
-                  <div
-                    className={`${phase.color} flex items-center justify-center text-xs font-medium border-r border-background last:border-r-0 transition-all duration-500 relative overflow-hidden`}
-                    style={{ height: getPhaseHeight(phase.name) }}
-                  >
-                    <span className="relative z-10">{phase.name}</span>
+          {/* Sleep Stage Composition */}
+          <div className="mb-6">
+            <h5 className="font-medium text-sm mb-3">Sleep Stage Composition (One Night's Sleep):</h5>
+            <div className="space-y-2">
+              {stageData.map((stage, index) => (
+                <div key={index} className="flex items-center gap-3">
+                  <div className="flex-1 bg-muted rounded-full h-6 overflow-hidden">
+                    <div 
+                      className={`h-full ${stage.color} flex items-center justify-center text-xs font-medium transition-all duration-500`}
+                      style={{ width: `${stage.percentage}%` }}
+                    >
+                      {stage.percentage >= 15 && <span className="text-white">{stage.name}</span>}
+                    </div>
                   </div>
+                  <div className="text-sm font-medium min-w-[3rem]">{stage.percentage}%</div>
                 </div>
               ))}
             </div>
-            
-            {/* Optimal wake window indicator */}
-            <div className="absolute top-0 right-8 w-1 h-full bg-gradient-to-b from-green-400 to-green-600"></div>
-            <div className="absolute -top-6 right-8 transform -translate-x-1/2">
-              <Sun className="h-4 w-4 text-green-500" />
+          </div>
+
+          {/* Single Cycle Progression */}
+          <div className="mb-6">
+            <h5 className="font-medium text-sm mb-3">One Complete Sleep Cycle ({cycleLength} minutes):</h5>
+            <div className="relative h-16 bg-muted rounded-lg overflow-hidden border">
+              <div className="absolute inset-0 flex">
+                {cycleProgression.map((phase, index) => (
+                  <div 
+                    key={index} 
+                    className="flex items-center justify-center text-xs font-medium border-r border-background last:border-r-0"
+                    style={{ 
+                      width: `${(phase.duration / cycleLength) * 100}%`,
+                      backgroundColor: stageData.find(s => s.name.includes(phase.stage))?.color.replace('bg-', '').replace('dark:', '') || '#6b7280'
+                    }}
+                  >
+                    <span className="text-white font-semibold">{phase.stage}</span>
+                  </div>
+                ))}
+              </div>
+              
+              {/* Wake window indicator */}
+              <div className="absolute top-0 right-2 w-1 h-full bg-green-500"></div>
+              <div className="absolute -top-6 right-2">
+                <Sun className="h-4 w-4 text-green-500" />
+              </div>
+            </div>
+            <div className="flex justify-between text-xs text-muted-foreground mt-2">
+              <span>{ageGroup === 'newborn' ? 'REM Sleep Onset' : 'NREM Sleep Onset'}</span>
+              <span className="text-green-600 dark:text-green-400">Optimal Wake Window</span>
             </div>
           </div>
 
-          {/* Labels and information */}
-          <div className="flex justify-between text-xs text-muted-foreground mb-4">
-            <span>Sleep Start</span>
-            <span className="text-green-600 dark:text-green-400">Optimal Wake Window</span>
-            <span>Cycle End</span>
-          </div>
-
-          {/* Sleep statistics */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+          {/* Research-based sleep statistics */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
             <div>
               <span className="font-medium">Cycle Length:</span>
               <div className="text-primary dark:text-mint-400 font-semibold">{cycleLength} minutes</div>
@@ -233,61 +281,80 @@ export default function SleepCalculator() {
               <div className="text-purple-600 dark:text-purple-400 font-semibold">{ageData.remSleepPercentage}%</div>
             </div>
             <div>
-              <span className="font-medium">Deep Sleep:</span>
-              <div className="text-indigo-600 dark:text-indigo-400 font-semibold">{ageData.deepSleepPercentage}%</div>
+              <span className="font-medium">Deep Sleep (N3):</span>
+              <div className="text-indigo-600 dark:text-indigo-400 font-semibold">
+                {ageGroup === 'newborn' ? 'N/A' : `${stageData.find(s => s.name.includes('N3'))?.percentage || 0}%`}
+              </div>
             </div>
             <div>
-              <span className="font-medium">Total Cycles:</span>
-              <div className="text-primary dark:text-mint-400 font-semibold">{recommendations[0]?.cycles || settings.selectedCycles}</div>
+              <span className="font-medium">Sleep Onset:</span>
+              <div className="text-primary dark:text-mint-400 font-semibold">
+                {ageGroup === 'newborn' ? 'REM' : 'NREM'}
+              </div>
             </div>
           </div>
 
-          {/* Phase breakdown with detailed explanations */}
-          <div className="mt-4 border-t border-border pt-4">
-            <h5 className="font-medium text-sm mb-3">Understanding Your Sleep Cycle ({cycleLength} minutes):</h5>
-            
+          {/* Stage explanations based on research */}
+          <div className="border-t border-border pt-4">
+            <h5 className="font-medium text-sm mb-3">Sleep Stage Functions (Research-Based):</h5>
             <div className="space-y-3 text-sm">
-              <div className="flex items-start gap-3">
-                <div className="w-4 h-4 rounded bg-blue-200 dark:bg-blue-700 mt-0.5 flex-shrink-0"></div>
-                <div>
-                  <span className="font-medium text-blue-700 dark:text-blue-300">Light Sleep (Stage 1 & 2)</span>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    The transition from awake to sleep. Your muscles relax, heart rate slows, and you can be easily awakened. 
-                    This is when you might experience hypnic jerks (sudden muscle twitches).
-                  </p>
+              {stageData.map((stage, index) => (
+                <div key={index} className="flex items-start gap-3">
+                  <div className={`w-4 h-4 rounded ${stage.color} mt-0.5 flex-shrink-0`}></div>
+                  <div>
+                    <span className="font-medium">{stage.name}</span>
+                    <p className="text-xs text-muted-foreground mt-1">{stage.description}</p>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="flex items-start gap-3">
-                <div className="w-4 h-4 rounded bg-indigo-300 dark:bg-indigo-600 mt-0.5 flex-shrink-0"></div>
-                <div>
-                  <span className="font-medium text-indigo-700 dark:text-indigo-300">Deep Sleep (Stage 3)</span>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    The most restorative phase. Your body repairs tissues, strengthens immune system, and consolidates memories. 
-                    Very difficult to wake up during this phase - you'll feel groggy if awakened.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-3">
-                <div className="w-4 h-4 rounded bg-purple-300 dark:bg-purple-600 mt-0.5 flex-shrink-0"></div>
-                <div>
-                  <span className="font-medium text-purple-700 dark:text-purple-300">REM Sleep</span>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Rapid Eye Movement sleep - when most vivid dreams occur. Critical for emotional processing, 
-                    creativity, and memory consolidation. Brain activity similar to being awake.
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
             
+            {/* Age-specific research insights */}
             <div className="mt-4 p-3 bg-muted/30 rounded-lg">
-              <h6 className="font-medium text-xs mb-2">How to Read the Chart:</h6>
+              <h6 className="font-medium text-xs mb-2">Research Insights for {ageData.name}:</h6>
               <ul className="text-xs text-muted-foreground space-y-1">
-                <li>• <strong>Height</strong> = How much time you spend in each phase</li>
-                <li>• <strong>Width</strong> = Duration of each phase within one cycle</li>
-                <li>• <strong>Green line</strong> = Optimal wake-up window (end of light sleep)</li>
-                <li>• You cycle through these phases 4-6 times per night</li>
+                {ageGroup === 'newborn' && (
+                  <>
+                    <li>• Unique sleep onset through REM (active sleep) rather than NREM</li>
+                    <li>• 50% active sleep critical for neural maturation and brain development</li>
+                    <li>• Cycles are 30-60 minutes, much shorter than adult patterns</li>
+                  </>
+                )}
+                {ageGroup === 'infant' && (
+                  <>
+                    <li>• Sleep onset shifts to NREM by 3 months as circadian rhythms develop</li>
+                    <li>• Cycles gradually lengthen from 60-90 minutes approaching adult patterns</li>
+                    <li>• NREM proportion increases to 70-80% supporting consolidated sleep</li>
+                  </>
+                )}
+                {(ageGroup === 'toddler' || ageGroup === 'preschool' || ageGroup === 'schoolAge') && (
+                  <>
+                    <li>• High proportion of N3 deep sleep supports rapid physical growth</li>
+                    <li>• Sleep cycles solidify to adult-like 90-110 minute patterns</li>
+                    <li>• NREM sleep reaches 75-80% supporting immune development</li>
+                  </>
+                )}
+                {ageGroup === 'teen' && (
+                  <>
+                    <li>• Natural circadian delay causes 1-2 hour shift in sleep timing</li>
+                    <li>• Increased sensitivity to blue light disrupts melatonin production</li>
+                    <li>• Often experience chronic sleep debt despite needing 8-10 hours</li>
+                  </>
+                )}
+                {ageGroup === 'adult' && (
+                  <>
+                    <li>• N3 deep sleep concentrated in first third of night</li>
+                    <li>• REM periods lengthen progressively through the night</li>
+                    <li>• Complete 4-6 cycles during typical 7-9 hour sleep period</li>
+                  </>
+                )}
+                {ageGroup === 'senior' && (
+                  <>
+                    <li>• N3 deep sleep declines 2% per decade after age 20</li>
+                    <li>• More fragmented sleep with 3-4 awakenings per night</li>
+                    <li>• Advanced circadian phase leads to earlier sleep timing</li>
+                  </>
+                )}
               </ul>
             </div>
           </div>
