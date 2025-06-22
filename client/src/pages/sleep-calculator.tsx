@@ -3,7 +3,7 @@ import { Moon, Sun, AlarmClock, Bell, RotateCcw, ChevronUp, ChevronDown } from "
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Slider } from "@/components/ui/slider";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useTheme } from "@/components/theme-provider";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -400,24 +400,65 @@ export default function SleepCalculator() {
                     {settings.age} years old
                   </span>
                 </div>
-                <Slider
-                  value={[settings.age]}
-                  onValueChange={([value]) => {
+                <Select 
+                  value={settings.age.toString()} 
+                  onValueChange={(value) => {
+                    const ageValue = parseFloat(value);
                     setSettings(prev => ({ 
                       ...prev, 
-                      age: value,
-                      selectedCycles: calculateOptimalCyclesForAge(value)[0]
+                      age: ageValue,
+                      selectedCycles: calculateOptimalCyclesForAge(ageValue)[0]
                     }));
                   }}
-                  min={0}
-                  max={100}
-                  step={0.25}
-                  className="touch-manipulation"
-                />
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>0 years</span>
-                  <span>100 years</span>
-                </div>
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select your age" />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-60">
+                    {/* Newborns and Infants */}
+                    <SelectItem value="0.08">1 month</SelectItem>
+                    <SelectItem value="0.17">2 months</SelectItem>
+                    <SelectItem value="0.25">3 months</SelectItem>
+                    <SelectItem value="0.5">6 months</SelectItem>
+                    <SelectItem value="0.75">9 months</SelectItem>
+                    <SelectItem value="1">1 year</SelectItem>
+                    
+                    {/* Toddlers and Preschoolers */}
+                    <SelectItem value="1.5">1.5 years</SelectItem>
+                    <SelectItem value="2">2 years</SelectItem>
+                    <SelectItem value="3">3 years</SelectItem>
+                    <SelectItem value="4">4 years</SelectItem>
+                    <SelectItem value="5">5 years</SelectItem>
+                    
+                    {/* School Age */}
+                    {Array.from({ length: 7 }, (_, i) => (
+                      <SelectItem key={i + 6} value={(i + 6).toString()}>
+                        {i + 6} years
+                      </SelectItem>
+                    ))}
+                    
+                    {/* Teens */}
+                    {Array.from({ length: 8 }, (_, i) => (
+                      <SelectItem key={i + 13} value={(i + 13).toString()}>
+                        {i + 13} years
+                      </SelectItem>
+                    ))}
+                    
+                    {/* Adults */}
+                    {Array.from({ length: 41 }, (_, i) => (
+                      <SelectItem key={i + 21} value={(i + 21).toString()}>
+                        {i + 21} years
+                      </SelectItem>
+                    ))}
+                    
+                    {/* Seniors */}
+                    {Array.from({ length: 30 }, (_, i) => (
+                      <SelectItem key={i + 62} value={(i + 62).toString()}>
+                        {i + 62} years
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <div className="text-sm text-muted-foreground">
                   Age Group: {ageData.name} | Sleep Cycle: {cycleLength} minutes
                 </div>
@@ -431,18 +472,28 @@ export default function SleepCalculator() {
                     {settings.fallAsleepTime} min
                   </span>
                 </div>
-                <Slider
-                  value={[settings.fallAsleepTime]}
-                  onValueChange={([value]) => setSettings(prev => ({ ...prev, fallAsleepTime: value }))}
-                  min={5}
-                  max={60}
-                  step={5}
-                  className="touch-manipulation"
-                />
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>5 min</span>
-                  <span>60 min</span>
-                </div>
+                <Select 
+                  value={settings.fallAsleepTime.toString()} 
+                  onValueChange={(value) => setSettings(prev => ({ ...prev, fallAsleepTime: parseInt(value) }))}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select fall asleep time" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="5">5 minutes</SelectItem>
+                    <SelectItem value="10">10 minutes</SelectItem>
+                    <SelectItem value="15">15 minutes</SelectItem>
+                    <SelectItem value="20">20 minutes</SelectItem>
+                    <SelectItem value="25">25 minutes</SelectItem>
+                    <SelectItem value="30">30 minutes</SelectItem>
+                    <SelectItem value="35">35 minutes</SelectItem>
+                    <SelectItem value="40">40 minutes</SelectItem>
+                    <SelectItem value="45">45 minutes</SelectItem>
+                    <SelectItem value="50">50 minutes</SelectItem>
+                    <SelectItem value="55">55 minutes</SelectItem>
+                    <SelectItem value="60">60 minutes</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </CardContent>
