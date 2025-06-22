@@ -92,22 +92,41 @@ export function calculateOptimalBedtimes(
 ): SleepRecommendation[] {
   const recommendations: SleepRecommendation[] = [];
   const cycleLength = getCycleLength(settings.age);
-  const cycleOptions = calculateOptimalCyclesForAge(settings.age);
+  const ageData = getAgeGroupRecommendations(settings.age);
+  
+  // Generate 5 recommendations with different cycle counts
+  const cycleOptions = [3, 4, 5, 6, 7]; // Standard range for different sleep needs
   
   cycleOptions.forEach(cycles => {
     const totalSleepTime = cycles * cycleLength + settings.fallAsleepTime;
     const bedtime = new Date(wakeTime.getTime() - totalSleepTime * 60 * 1000);
     
+    // Determine quality based on age-appropriate sleep duration
+    let quality: SleepRecommendation['quality'] = 'GOOD';
+    const sleepHours = (cycles * cycleLength) / 60;
+    
+    if (sleepHours >= ageData.recommendedHours.min && sleepHours <= ageData.recommendedHours.max) {
+      quality = cycles >= 5 ? 'EXCELLENT' : 'GOOD';
+    } else if (sleepHours < ageData.recommendedHours.min) {
+      quality = sleepHours < (ageData.recommendedHours.min - 1) ? 'POOR' : 'FAIR';
+    } else {
+      quality = 'FAIR'; // Too much sleep
+    }
+    
     recommendations.push({
       time: formatTime(bedtime),
-      quality: getQualityFromCycles(cycles),
+      quality,
       cycles,
       totalSleep: formatSleepDuration(cycles * cycleLength),
       totalMinutes: cycles * cycleLength
     });
   });
   
-  return recommendations;
+  return recommendations.sort((a, b) => {
+    // Sort by quality first, then by optimal cycles for age
+    const qualityOrder = { 'EXCELLENT': 4, 'GOOD': 3, 'FAIR': 2, 'POOR': 1 };
+    return qualityOrder[b.quality] - qualityOrder[a.quality];
+  });
 }
 
 export function calculateOptimalWakeTimes(
