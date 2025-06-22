@@ -525,6 +525,136 @@ export default function SleepCalculator() {
 
               {/* Sleep Cycle Visualization */}
               <SleepCycleVisualization />
+
+              {/* Sleep Cycle Analysis Progress Bars */}
+              <div className="mt-8 pt-6 border-t border-border">
+                <h3 className="text-lg font-semibold mb-4">Sleep Cycle Analysis</h3>
+                <p className="text-sm text-muted-foreground mb-6">
+                  Understanding why each bedtime gets its rating based on sleep cycle completion:
+                </p>
+                
+                <div className="space-y-4">
+                  {recommendations.map((rec, index) => {
+                    const getRatingColor = (quality: string) => {
+                      switch (quality) {
+                        case 'EXCELLENT': return { bg: 'bg-green-100 dark:bg-green-900/30', border: 'border-green-300 dark:border-green-700', text: 'text-green-800 dark:text-green-200' };
+                        case 'FAIR': return { bg: 'bg-yellow-100 dark:bg-yellow-900/30', border: 'border-yellow-300 dark:border-yellow-700', text: 'text-yellow-800 dark:text-yellow-200' };
+                        case 'POOR': return { bg: 'bg-red-100 dark:bg-red-900/30', border: 'border-red-300 dark:border-red-700', text: 'text-red-800 dark:text-red-200' };
+                        default: return { bg: 'bg-blue-100 dark:bg-blue-900/30', border: 'border-blue-300 dark:border-blue-700', text: 'text-blue-800 dark:text-blue-200' };
+                      }
+                    };
+
+                    const getExplanation = (quality: string, cycles: number) => {
+                      switch (quality) {
+                        case 'EXCELLENT':
+                          return `Perfect! ${cycles} cycles puts you in Light Sleep at wake time - you'll feel refreshed and alert.`;
+                        case 'FAIR':
+                          if (cycles <= 4) {
+                            return `Good timing but only ${cycles} cycles (${formatSleepDuration(cycles * cycleLength)}) - may not provide enough restorative sleep.`;
+                          } else {
+                            return `Good timing but ${cycles} cycles (${formatSleepDuration(cycles * cycleLength)}) may cause oversleeping grogginess.`;
+                          }
+                        case 'POOR':
+                          return `Only ${cycles} cycles = ${formatSleepDuration(cycles * cycleLength)} - severely insufficient sleep that will impact your health and performance.`;
+                        default:
+                          return `${cycles} cycles providing ${formatSleepDuration(cycles * cycleLength)} of sleep.`;
+                      }
+                    };
+
+                    const colors = getRatingColor(rec.quality);
+                    
+                    return (
+                      <div key={index} className={`p-4 rounded-lg border ${colors.bg} ${colors.border}`}>
+                        {/* Header with bedtime and rating */}
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-3">
+                            <span className="font-semibold text-lg">{rec.time}</span>
+                            <Badge className={getQualityColor(rec.quality)}>
+                              {rec.quality}
+                            </Badge>
+                          </div>
+                          <span className="text-sm text-muted-foreground">
+                            Wake at: {calculationMode === 'wakeUp' ? `${selectedTime.hour}:${selectedTime.minute.toString().padStart(2, '0')} ${selectedTime.period}` : 'Calculated'}
+                          </span>
+                        </div>
+
+                        {/* Visual cycle blocks */}
+                        <div className="mb-3">
+                          <div className="flex items-center gap-1 mb-2">
+                            <span className="text-sm font-medium mr-2">Sleep Cycles:</span>
+                            {Array.from({ length: rec.cycles }, (_, i) => (
+                              <div
+                                key={i}
+                                className={`px-3 py-1 rounded text-xs font-medium border ${colors.border} ${colors.bg} ${colors.text}`}
+                              >
+                                Cycle {i + 1}
+                              </div>
+                            ))}
+                            <div className="ml-2 flex items-center gap-1 text-xs text-muted-foreground">
+                              <Sun className="h-3 w-3 text-green-500" />
+                              <span>Wake Window</span>
+                            </div>
+                          </div>
+                          
+                          {/* Progress bar visualization */}
+                          <div className="relative h-3 bg-muted rounded-full overflow-hidden">
+                            <div 
+                              className={`h-full transition-all duration-500 ${rec.quality === 'EXCELLENT' ? 'bg-green-500' : rec.quality === 'FAIR' ? 'bg-yellow-500' : 'bg-red-500'}`}
+                              style={{ width: `${Math.min(100, (rec.cycles / 7) * 100)}%` }}
+                            ></div>
+                            <div className="absolute right-2 top-0 w-1 h-full bg-green-600"></div>
+                          </div>
+                        </div>
+
+                        {/* Detailed stats */}
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs mb-3">
+                          <div>
+                            <span className="text-muted-foreground">Total Sleep:</span>
+                            <div className="font-semibold">{rec.totalSleep}</div>
+                          </div>
+                          <div>
+                            <span className="text-muted-foreground">Cycles:</span>
+                            <div className="font-semibold">{rec.cycles}</div>
+                          </div>
+                          <div>
+                            <span className="text-muted-foreground">Cycle Length:</span>
+                            <div className="font-semibold">{cycleLength}min</div>
+                          </div>
+                          <div>
+                            <span className="text-muted-foreground">Time Until:</span>
+                            <div className="font-semibold">{getTimeUntil(rec.time)}</div>
+                          </div>
+                        </div>
+
+                        {/* Explanation */}
+                        <div className={`text-sm p-3 rounded ${colors.bg} border-l-4 ${colors.border}`}>
+                          <span className="font-medium">Why this rating: </span>
+                          {getExplanation(rec.quality, rec.cycles)}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Educational footer */}
+                <div className="mt-6 p-4 bg-muted/30 rounded-lg">
+                  <h4 className="font-semibold text-sm mb-2">Sleep Cycle Science</h4>
+                  <div className="grid md:grid-cols-3 gap-4 text-xs text-muted-foreground">
+                    <div>
+                      <span className="font-medium text-green-600 dark:text-green-400">EXCELLENT (5-6 cycles):</span>
+                      <p>Optimal sleep duration that aligns with natural circadian rhythms and allows complete recovery.</p>
+                    </div>
+                    <div>
+                      <span className="font-medium text-yellow-600 dark:text-yellow-400">FAIR (4 or 7+ cycles):</span>
+                      <p>Either insufficient sleep time or potential oversleeping that may disrupt natural wake cycles.</p>
+                    </div>
+                    <div>
+                      <span className="font-medium text-red-600 dark:text-red-400">POOR (≤3 cycles):</span>
+                      <p>Dangerously insufficient sleep that impairs cognitive function, immune system, and overall health.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </CardContent>
           </Card>
         )}
