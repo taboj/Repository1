@@ -176,9 +176,9 @@ export default function SleepCalculator() {
         ];
       } else {
         // For all other age groups, use NREM breakdown from research
-        const n1Percentage = ageGroup === 'senior' ? 8 : 4; // Seniors have more N1
-        const n2Percentage = ageGroup === 'senior' ? 50 : 50; // N2 accounts for 45-55% in adults
-        const n3Percentage = ageGroup === 'senior' ? 12 : (ageGroup === 'teen' ? 18 : 20); // N3 decreases with age
+        const n1Percentage = ageGroup === 'olderAdult' ? 8 : 4; // Older adults have more N1
+        const n2Percentage = ageGroup === 'olderAdult' ? 50 : 50; // N2 accounts for 45-55% in adults
+        const n3Percentage = ageGroup === 'olderAdult' ? 12 : (ageGroup === 'adolescent' ? 18 : 20); // N3 decreases with age
         const remPercentage = ageData.remSleepPercentage;
         
         return [
@@ -390,21 +390,21 @@ export default function SleepCalculator() {
                     <li>• Cycles are 30-60 minutes, much shorter than adult patterns</li>
                   </>
                 )}
-                {ageGroup === 'infant' && (
+                {(ageGroup === 'earlyInfant' || ageGroup === 'lateInfant') && (
                   <>
                     <li>• Sleep onset shifts to NREM by 3 months as circadian rhythms develop</li>
                     <li>• Cycles gradually lengthen from 60-90 minutes approaching adult patterns</li>
                     <li>• NREM proportion increases to 70-80% supporting consolidated sleep</li>
                   </>
                 )}
-                {(ageGroup === 'toddler' || ageGroup === 'preschool' || ageGroup === 'schoolAge') && (
+                {(ageGroup === 'toddler' || ageGroup === 'preschooler' || ageGroup === 'schoolAge') && (
                   <>
                     <li>• High proportion of N3 deep sleep supports rapid physical growth</li>
                     <li>• Sleep cycles solidify to adult-like 90-110 minute patterns</li>
                     <li>• NREM sleep reaches 75-80% supporting immune development</li>
                   </>
                 )}
-                {ageGroup === 'teen' && (
+                {ageGroup === 'adolescent' && (
                   <>
                     <li>• Natural circadian delay causes 1-2 hour shift in sleep timing</li>
                     <li>• Increased sensitivity to blue light disrupts melatonin production</li>
@@ -418,7 +418,7 @@ export default function SleepCalculator() {
                     <li>• Complete 4-6 cycles during typical 7-9 hour sleep period</li>
                   </>
                 )}
-                {ageGroup === 'senior' && (
+                {ageGroup === 'olderAdult' && (
                   <>
                     <li>• N3 deep sleep declines 2% per decade after age 20</li>
                     <li>• More fragmented sleep with 3-4 awakenings per night</li>
@@ -564,19 +564,12 @@ export default function SleepCalculator() {
                     <SelectItem value="70">65+ years (Older Adult)</SelectItem>
                   </SelectContent>
                 </Select>
-                <div className="text-sm text-muted-foreground">
-                  Age Group: {ageData.name} | Sleep Cycle: {cycleLength} minutes
-                </div>
+
               </div>
               
               {/* Fall Asleep Time Input */}
               <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <label className="font-medium">Fall asleep time</label>
-                  <span className="text-sm text-primary dark:text-mint-400 font-semibold">
-                    {settings.fallAsleepTime} min
-                  </span>
-                </div>
+                <label className="font-medium">Fall asleep time</label>
                 <Select 
                   value={settings.fallAsleepTime.toString()} 
                   onValueChange={(value) => setSettings(prev => ({ ...prev, fallAsleepTime: parseInt(value) }))}
@@ -709,11 +702,11 @@ export default function SleepCalculator() {
                         case 'EXCELLENT':
                           if (ageGroup === 'newborn') {
                             return `Optimal for newborns! ${cycles} cycles (${formatSleepDuration(cycles * cycleLength)}) supports critical neural maturation with 50% REM sleep for brain development.`;
-                          } else if (ageGroup === 'infant') {
+                          } else if (ageGroup === 'earlyInfant' || ageGroup === 'lateInfant') {
                             return `Perfect for infants! ${cycles} cycles aligns with developing circadian rhythms and consolidating sleep patterns.`;
-                          } else if (ageGroup === 'teen') {
+                          } else if (ageGroup === 'adolescent') {
                             return `Ideal for teens! ${cycles} cycles provides sufficient sleep despite natural circadian delay. Research shows teens need 8-10 hours but often get only 6.5-7.5 hours.`;
-                          } else if (ageGroup === 'senior') {
+                          } else if (ageGroup === 'olderAdult') {
                             return `Excellent for older adults! ${cycles} cycles accounts for age-related changes including reduced deep sleep and more fragmented sleep patterns.`;
                           } else {
                             return `Perfect! ${cycles} cycles (${formatSleepDuration(cycles * cycleLength)}) provides complete sleep architecture with optimal N3 deep sleep early and REM sleep later in cycles.`;
@@ -876,13 +869,13 @@ export default function SleepCalculator() {
               <p className="text-sm text-muted-foreground">
                 <strong>Research-based insights:</strong> Sleep architecture evolves dramatically across the lifespan. {' '}
                 {getAgeGroup(settings.age) === 'newborn' && 'Newborns enter sleep through REM (unique pattern) with 50% active sleep and 30-60 minute cycles for critical neural development.'}
-                {getAgeGroup(settings.age) === 'infant' && 'By 3 months, circadian rhythms establish and sleep onset shifts to NREM. Cycles lengthen from 60-90 minutes as brain matures.'}
+                {(getAgeGroup(settings.age) === 'earlyInfant' || getAgeGroup(settings.age) === 'lateInfant') && 'By 3 months, circadian rhythms establish and sleep onset shifts to NREM. Cycles lengthen from 60-90 minutes as brain matures.'}
                 {getAgeGroup(settings.age) === 'toddler' && 'Sleep cycles solidify to adult-like 90 minutes with NREM reaching 75-80%. Sleep becomes more consolidated at night.'}
-                {getAgeGroup(settings.age) === 'preschool' && 'Sleep architecture becomes increasingly adult-like while maintaining high N3 deep sleep essential for rapid growth and immune development.'}
+                {getAgeGroup(settings.age) === 'preschooler' && 'Sleep architecture becomes increasingly adult-like while maintaining high N3 deep sleep essential for rapid growth and immune development.'}
                 {getAgeGroup(settings.age) === 'schoolAge' && 'Cycles extend to 90-110 minutes with continued prioritization of deep sleep for physical development and learning consolidation.'}
-                {getAgeGroup(settings.age) === 'teen' && 'Biological circadian shift causes natural 1-2 hour delay in sleepiness. Brain becomes more sensitive to blue light disruption.'}
-                {getAgeGroup(settings.age) === 'adult' && 'Complete 90-110 minute cycles with 75-80% NREM sleep. Deep sleep concentrates in first third, REM increases later in night.'}
-                {getAgeGroup(settings.age) === 'senior' && 'Deep sleep declines 2% per decade after age 20. Sleep becomes fragmented with 3-4 awakenings per night and advanced circadian phase.'}
+                {getAgeGroup(settings.age) === 'adolescent' && 'Biological circadian shift causes natural 1-2 hour delay in sleepiness. Brain becomes more sensitive to blue light disruption.'}
+                {(getAgeGroup(settings.age) === 'youngAdult' || getAgeGroup(settings.age) === 'adult') && 'Complete 90-110 minute cycles with 75-80% NREM sleep. Deep sleep concentrates in first third, REM increases later in night.'}
+                {getAgeGroup(settings.age) === 'olderAdult' && 'Deep sleep declines 2% per decade after age 20. Sleep becomes fragmented with 3-4 awakenings per night and advanced circadian phase.'}
               </p>
             </div>
           </CardContent>
