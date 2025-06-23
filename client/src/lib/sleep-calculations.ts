@@ -12,15 +12,17 @@ export interface SleepSettings {
   age: number; // actual age in years
 }
 
-export function getAgeGroup(age: number): 'newborn' | 'infant' | 'toddler' | 'preschool' | 'schoolAge' | 'teen' | 'adult' | 'senior' {
-  if (age < 0.25) return 'newborn'; // 0-3 months
-  if (age < 1) return 'infant'; // 3-12 months  
-  if (age < 2) return 'toddler'; // 1-2 years
-  if (age < 6) return 'preschool'; // 2-5 years
-  if (age < 13) return 'schoolAge'; // 6-12 years
-  if (age < 19) return 'teen'; // 10-18 years (research shows adolescence starts at 10)
-  if (age < 60) return 'adult'; // 18-60 years
-  return 'senior'; // 60+ years (research shows age-related changes begin around 60)
+export function getAgeGroup(age: number): 'newborn' | 'earlyInfant' | 'lateInfant' | 'toddler' | 'preschooler' | 'schoolAge' | 'adolescent' | 'youngAdult' | 'adult' | 'olderAdult' {
+  if (age <= 2/12) return 'newborn'; // 0-2 months
+  if (age <= 5/12) return 'earlyInfant'; // 3-5 months
+  if (age <= 11/12) return 'lateInfant'; // 6-11 months
+  if (age <= 2) return 'toddler'; // 12-23 months
+  if (age <= 4) return 'preschooler'; // 2-4 years
+  if (age <= 12) return 'schoolAge'; // 5-12 years
+  if (age <= 17) return 'adolescent'; // 13-17 years
+  if (age <= 25) return 'youngAdult'; // 18-25 years
+  if (age <= 64) return 'adult'; // 26-64 years
+  return 'olderAdult'; // 65+ years
 }
 
 export function getCycleLength(age: number): number {
@@ -205,115 +207,143 @@ export function calculateOptimalWakeTimes(
 
 export const AGE_GROUPS: Record<string, AgeGroupData> = {
   newborn: {
-    name: 'Newborn (0-3 months)',
-    sleepRange: '16-18 hours',
-    recommendedHours: { min: 16, max: 18 },
-    cycleLength: 50, // 30-60 minutes from research, using 50 as average
-    remSleepPercentage: 50, // Research shows 50% REM sleep
-    deepSleepPercentage: 50, // Remaining 50% is quiet sleep (NREM)
+    name: 'Newborn (0-2 months)',
+    sleepRange: '14-17 hours',
+    recommendedHours: { min: 14, max: 17 },
+    cycleLength: 45, // 40-50 mins range, 45 mins average
+    remSleepPercentage: 50, // Active Sleep (AS) ~50%
+    deepSleepPercentage: 50, // Quiet Sleep (QS) ~50%
     characteristics: [
-      'Sleep onset occurs through REM (active sleep) rather than NREM',
-      'Sleep cycles are 30-60 minutes, significantly shorter than adults',
-      'Longest continuous sleep episode typically 2.5-4 hours',
-      'Circadian rhythms not yet developed - emerge around 2-3 months'
+      'Active Sleep (AS) ~50%, Quiet Sleep (QS) ~50%',
+      'No true NREM stages yet',
+      '"Proto-cycles" alternate between AS and QS',
+      'High variability; 45-min intruder phenomenon common'
     ]
   },
-  infant: {
-    name: 'Infant (3-12 months)',
-    sleepRange: '12-16 hours (including naps)',
-    recommendedHours: { min: 12, max: 16 },
-    cycleLength: 75, // 60-90 minutes from research, using 75 as average
-    remSleepPercentage: 25, // 20-30% from research table
-    deepSleepPercentage: 75, // 70-80% NREM from research table
+  earlyInfant: {
+    name: 'Early Infant (3-5 months)',
+    sleepRange: '12-15 hours',
+    recommendedHours: { min: 12, max: 15 },
+    cycleLength: 50, // 45-55 mins range, 50 mins average
+    remSleepPercentage: 40, // REM ~40%
+    deepSleepPercentage: 60, // NREM ~60%
     characteristics: [
-      'Sleep onset shifts to NREM sleep by 3 months',
-      'Circadian rhythms establish with melatonin and cortisol cycling',
-      'By 6 months: longest sleep episode extends to 6 hours',
-      'By 12 months: sleep cycles solidify to ~90 minutes like adults'
+      'True REM/NREM stages emerge',
+      'REM ~40%, NREM ~60%',
+      'N2 and N3 start to become distinguishable',
+      'Cycles lengthen gradually'
+    ]
+  },
+  lateInfant: {
+    name: 'Late Infant (6-11 months)',
+    sleepRange: '12-15 hours',
+    recommendedHours: { min: 12, max: 15 },
+    cycleLength: 60, // 50-65 mins range, 60 mins average
+    remSleepPercentage: 30, // REM ~30%
+    deepSleepPercentage: 70, // NREM ~70% (N1 ~5%, N2 ~40%, N3 ~25%)
+    characteristics: [
+      'REM ~30%, N1 ~5%, N2 ~40%, N3 ~25%',
+      'Circadian rhythms strengthen',
+      'Night sleep consolidates',
+      'Sleep architecture becomes more mature'
     ]
   },
   toddler: {
-    name: 'Toddler (1-2 years)',
-    sleepRange: '11-14 hours (including naps)',
+    name: 'Toddler (12-23 months)',
+    sleepRange: '11-14 hours',
     recommendedHours: { min: 11, max: 14 },
-    cycleLength: 90, // Research shows cycles solidify to ~90 minutes by 12+ months
-    remSleepPercentage: 22, // 20-25% from research table
-    deepSleepPercentage: 78, // 75-80% NREM from research table
+    cycleLength: 70, // 60-75 mins range, 70 mins average
+    remSleepPercentage: 25, // REM ~25%
+    deepSleepPercentage: 75, // NREM ~75% (N1 ~5%, N2 ~45%, N3 ~25%)
     characteristics: [
-      'Sleep cycles now mirror adult length at 90 minutes',
-      'NREM sleep proportion reaches 75-80% like adults',
-      'Total sleep decreases from 13 to 11 hours during this period',
-      'More consolidated nighttime sleep with fewer awakenings'
+      'REM ~25%, N1 ~5%, N2 ~45%, N3 ~25%',
+      'Adult-like sleep architecture emerging',
+      'Sleep cycles approaching adult norms',
+      'More consolidated nighttime sleep'
     ]
   },
-  preschool: {
-    name: 'Preschool (2-5 years)',
-    sleepRange: '10-13 hours (including naps)',
+  preschooler: {
+    name: 'Preschooler (2-4 years)',
+    sleepRange: '10-13 hours',
     recommendedHours: { min: 10, max: 13 },
-    cycleLength: 90, // Adult-like 90 minute cycles established
-    remSleepPercentage: 22, // 20-25% maintained
-    deepSleepPercentage: 78, // 75-80% NREM maintained
+    cycleLength: 80, // 70-85 mins range, 80 mins average
+    remSleepPercentage: 25, // REM ~25%
+    deepSleepPercentage: 75, // NREM ~75% (N1 ~5%, N2 ~45%, N3 ~25%)
     characteristics: [
-      'Sleep patterns become increasingly adult-like',
-      'High proportion of N3 (deep sleep) supports rapid growth',
-      'Children spend more time in N3 compared to adolescents',
-      'Sleep architecture prioritizes physical repair and immune development'
+      'REM ~25%, N1 ~5%, N2 ~45%, N3 ~25%',
+      'Cycle length approaches adult norms by age 4',
+      'Sleep architecture stabilizes',
+      'High proportion of deep sleep for growth'
     ]
   },
   schoolAge: {
-    name: 'School Age (6-12 years)',
+    name: 'School Age (5-12 years)',
     sleepRange: '9-11 hours',
     recommendedHours: { min: 9, max: 11 },
-    cycleLength: 100, // 90-110 minutes similar to adult from research
-    remSleepPercentage: 22, // ~20-25% maintained
-    deepSleepPercentage: 78, // ~75-80% NREM maintained
+    cycleLength: 90, // 85-95 mins range, 90 mins average
+    remSleepPercentage: 25, // REM ~25%
+    deepSleepPercentage: 75, // NREM ~75% (N1 ~5%, N2 ~45%, N3 ~25%)
     characteristics: [
-      'Sleep cycle length now 90-110 minutes, similar to adults',
-      'Continued high N3 deep sleep for growth and development',
-      'More consistent sleep patterns than younger children',
-      'Sleep efficiency and consolidation continue to improve'
+      'REM ~25%, N1 ~5%, N2 ~45%, N3 ~25%',
+      'Peak slow-wave sleep; mature architecture',
+      'Adult-like cycle lengths established',
+      'Optimal sleep efficiency period'
     ]
   },
-  teen: {
-    name: 'Teen (10-18 years)',
+  adolescent: {
+    name: 'Adolescent (13-17 years)',
     sleepRange: '8-10 hours',
     recommendedHours: { min: 8, max: 10 },
-    cycleLength: 100, // 90-110 minutes, adult-like cycles
-    remSleepPercentage: 22, // Adult-like proportions
-    deepSleepPercentage: 78, // Adult-like proportions
+    cycleLength: 100, // 90-110 mins range, 100 mins average
+    remSleepPercentage: 25, // REM ~25%
+    deepSleepPercentage: 75, // NREM ~75% (N1 ~5%, N2 ~50%, N3 ~20%)
     characteristics: [
-      'Natural circadian shift - feel tired 1-2 hours later in evening',
-      'Biological "night owl" preference conflicts with early school times',
-      'Despite needing 8-10 hours, most get only 6.5-7.5 hours',
-      'Increased sensitivity to blue light from electronic devices'
+      'REM ~25%, N1 ~5%, N2 ~50%, N3 ~20%',
+      'Circadian phase delay (~2 hrs); delayed sleep timing',
+      'Biological preference for later bedtimes',
+      'Deep sleep (N3) begins to decline'
+    ]
+  },
+  youngAdult: {
+    name: 'Young Adult (18-25 years)',
+    sleepRange: '7-9 hours',
+    recommendedHours: { min: 7, max: 9 },
+    cycleLength: 105, // 90-120 mins range, 105 mins average
+    remSleepPercentage: 25, // REM ~25%
+    deepSleepPercentage: 75, // NREM ~75% (N1 ~5%, N2 ~45%, N3 ~25%)
+    characteristics: [
+      'REM ~25%, N1 ~5%, N2 ~45%, N3 ~25%',
+      'First cycle shorter (70-90 mins), rich in deep sleep',
+      'Peak efficiency period',
+      'Optimal sleep architecture'
     ]
   },
   adult: {
-    name: 'Adult (18-60 years)',
+    name: 'Adult (26-64 years)',
     sleepRange: '7-9 hours',
     recommendedHours: { min: 7, max: 9 },
-    cycleLength: 100, // 90-110 minutes from research
-    remSleepPercentage: 22, // 20-25% from research
-    deepSleepPercentage: 78, // 75-80% NREM from research
+    cycleLength: 96, // 90-120 mins range, 96 mins average
+    remSleepPercentage: 25, // REM ~25%
+    deepSleepPercentage: 75, // NREM ~75% (N1 ~5%, N2 ~45%, N3 ~25%)
     characteristics: [
-      'Complete sleep cycles typically 90-110 minutes',
-      'NREM sleep: 75-80% (N1: 2-5%, N2: 45-55%, N3: 10-25%)',
-      'REM sleep: 20-25%, increases in duration through the night',
-      'Deep sleep (N3) concentrated in first third of night'
+      'REM ~25%, N1 ~5%, N2 ~45%, N3 ~25%',
+      'Gradual N3 decline begins after age 30',
+      'Individual variability high',
+      'Stable sleep patterns'
     ]
   },
-  senior: {
-    name: 'Senior (60+ years)',
+  olderAdult: {
+    name: 'Older Adult (65+ years)',
     sleepRange: '7-8 hours',
     recommendedHours: { min: 7, max: 8 },
-    cycleLength: 100, // Cycle length remains similar, but quality changes
-    remSleepPercentage: 18, // Reduced REM sleep with aging
-    deepSleepPercentage: 62, // Significantly reduced N3, more N1 and N2
+    cycleLength: 95, // 90-110 mins range, 95 mins average
+    remSleepPercentage: 20, // REM ~20%
+    deepSleepPercentage: 80, // NREM ~80% (N1 ~10%, N2 ~50%, N3 ~15-20%)
     characteristics: [
-      'Significant decline in N3 (deep sleep) - decreases 2% per decade after age 20',
-      'More fragmented sleep with 3-4 awakenings per night',
-      'Advanced circadian phase - earlier bedtime and wake time',
-      'Reduced sleep efficiency despite similar time in bed'
+      'REM ~20%, N1 ~10%, N2 ~50%, N3 ~15-20%',
+      'Increased fragmentation, lighter sleep',
+      'Earlier bed/wake times',
+      'Reduced deep sleep and REM sleep'
     ]
   }
 };
