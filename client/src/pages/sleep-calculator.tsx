@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useTheme } from "@/components/theme-provider";
 import { useToast } from "@/hooks/use-toast";
+import RecommendationCard from "@/components/sleep/recommendation-card";
 import {
   calculateOptimalBedtimes,
   calculateOptimalWakeTimes,
@@ -664,22 +665,12 @@ export default function SleepCalculator() {
               {/* Multiple Time Recommendations */}
               <div className="space-y-4">
                 {recommendations.map((rec, index) => (
-                  <div
+                  <RecommendationCard
                     key={index}
-                    className="flex items-center justify-between p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors"
-                  >
-                    <div className="flex-1">
-                      <div className="flex items-center gap-4">
-                        <div className="text-3xl font-bold">{rec.time}</div>
-                        <Badge className={getQualityColor(rec.quality)}>
-                          {rec.quality}
-                        </Badge>
-                      </div>
-                      <div className="text-sm text-muted-foreground mt-1">
-                        {rec.cycles} complete sleep cycles • {rec.totalSleep}
-                      </div>
-                    </div>
-                  </div>
+                    recommendation={rec}
+                    settings={settings}
+                    calculationMode={calculationMode}
+                  />
                 ))}
               </div>
 
