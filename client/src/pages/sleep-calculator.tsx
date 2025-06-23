@@ -628,26 +628,8 @@ export default function SleepCalculator() {
                         </Badge>
                       </div>
                       <div className="text-sm text-muted-foreground mt-1">
-                        {rec.cycles} complete sleep cycles • {rec.totalSleep} • {getTimeUntil(rec.time)}
+                        {rec.cycles} complete sleep cycles • {rec.totalSleep}
                       </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => handleSetAlarm(rec.time)}
-                        className="touch-manipulation"
-                      >
-                        <AlarmClock className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={handleSetReminder}
-                        className="touch-manipulation"
-                      >
-                        <Bell className="h-4 w-4" />
-                      </Button>
                     </div>
                   </div>
                 ))}
