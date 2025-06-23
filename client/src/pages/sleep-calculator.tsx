@@ -259,32 +259,19 @@ export default function SleepCalculator() {
             </div>
           </div>
 
-          {/* Sleep Onset Type */}
+          {/* Sleep Onset Time */}
           <div className="mb-6 p-4 bg-muted/20 rounded-lg">
-            <div className="text-sm font-medium mb-2">Sleep Onset Pattern:</div>
+            <div className="text-sm font-medium mb-2">Sleep Onset Time:</div>
             <div className="text-primary font-semibold">
-              {ageGroup === 'newborn' ? 'Often begins in Active Sleep (REM)' :
-               ageGroup === 'earlyInfant' ? 'Transitions to NREM, though REM-onset still possible' :
-               ageGroup === 'lateInfant' ? 'Begins in NREM stage N1, but very short. Most observable sleep begins in N2' :
-               ageGroup === 'toddler' ? 'Begins in NREM stage N1, quickly transitioning into N2' :
-               ageGroup === 'preschooler' ? 'Begins in NREM stage N1, followed by longer duration in N2' :
-               ageGroup === 'schoolAge' ? 'Begins in NREM stage N1, quickly followed by N2' :
-               ageGroup === 'adolescent' ? 'Begins in NREM stage N1, quickly progressing to N2' :
-               ageGroup === 'youngAdult' ? 'Begins in NREM stage N1, progressing to N2 within minutes' :
-               ageGroup === 'adult' ? 'Begins in NREM stage N1, progressing quickly into N2' : 
-               'Begins in NREM stage N1, but may experience increased sleep onset latency'}
+              {ageGroup === 'newborn' ? 'Often begins in Active Sleep' : 'Begins in NREM sleep'}
             </div>
-            <div className="text-xs text-muted-foreground mt-2">
-              {ageGroup === 'newborn' ? 'Unique to newborns - all other ages begin with NREM sleep' :
-               ageGroup === 'earlyInfant' ? 'Developmental transition period from newborn patterns' :
-               ageGroup === 'lateInfant' ? 'N1 stage becomes consistently present but remains very brief' :
-               ageGroup === 'toddler' ? 'N1 remains brief but is now consistently present' :
-               ageGroup === 'preschooler' ? 'Most common and efficient starting pattern' :
-               ageGroup === 'schoolAge' ? 'Standard efficient onset pattern for childhood and adulthood' :
-               ageGroup === 'adolescent' ? 'Similar to school-age, but circadian phase delay affects timing' :
-               ageGroup === 'youngAdult' ? 'Well-established, efficient sleep onset pattern' :
-               ageGroup === 'adult' ? 'Standard sleep onset pattern for healthy adults' : 
-               'May take longer to fall asleep due to age-related changes'}
+          </div>
+
+          {/* Sleep Stage Composition */}
+          <div className="mb-6 p-4 bg-muted/20 rounded-lg">
+            <div className="text-sm font-medium mb-2">Sleep Stage Composition:</div>
+            <div className="text-primary font-semibold">
+              {ageGroup === 'newborn' ? '≈ 50% Active Sleep (AS), 50% Quiet Sleep (QS)' : 'Age-appropriate NREM/REM distribution'}
             </div>
           </div>
 
@@ -317,112 +304,86 @@ export default function SleepCalculator() {
             </div>
           </div>
 
+          {/* Important Section */}
+          {ageGroup === 'newborn' && (
+            <div className="mb-6 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800">
+              <div className="text-amber-600 font-semibold text-sm mb-2">Important:</div>
+              <p className="text-sm text-amber-800 dark:text-amber-300">
+                At this tender age, a newborn's brain is undergoing incredibly rapid development and hasn't yet developed the mature, clear-cut NREM stages (N1, N2, N3) seen in older individuals. Therefore, sleep scientists use the observable categories of "active" and "quiet" sleep as fundamental descriptors. Active Sleep (AS) is the direct precursor and analogous to adult REM sleep, serving similar critical brain development functions, while Quiet Sleep (QS) is analogous to a combined, less differentiated form of adult NREM sleep.
+              </p>
+            </div>
+          )}
+
           {/* Research-Based Notes */}
           <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-slate-800 dark:to-slate-700 rounded-lg">
             <h5 className="font-medium text-sm mb-3">Research-Based Notes:</h5>
-            <div className="space-y-2 text-xs">
+            <div className="space-y-3 text-xs">
               {ageGroup === 'newborn' && (
                 <>
-                  <p>• <strong>Unique Sleep Onset:</strong> Sleep onset directly into Active Sleep (REM equivalent) is unique to newborns - all other ages begin with NREM sleep.</p>
-                  <p>• <strong>Proto-Cycles:</strong> Short 40-60 minute cycles alternating between Active Sleep (AS) and Quiet Sleep (QS) patterns.</p>
-                  <p>• <strong>45-Minute Intruder:</strong> High sleep variability with babies often waking at 30-45 minute mark instead of transitioning smoothly to next cycle.</p>
-                  <p>• <strong>Immature Circadian Rhythm:</strong> No fully developed 24-hour body clock - sleep in short bursts every 2-3 hours primarily for feeding needs.</p>
-                </>
-              )}
-              {ageGroup === 'earlyInfant' && (
-                <>
-                  <p>• <strong>Emergence of True Stages:</strong> True REM and NREM sleep stages begin to emerge, replacing less differentiated newborn proto-cycles.</p>
-                  <p>• <strong>Strengthening Circadian Rhythms:</strong> Bodies begin producing melatonin more consistently and responding to environmental light cues.</p>
-                  <p>• <strong>Gradual Lengthening:</strong> Sleep cycles gradually lengthen from newborn proto-cycles toward more mature patterns by 12 months.</p>
-                </>
-              )}
-              {ageGroup === 'lateInfant' && (
-                <>
-                  <p>• <strong>Predictable Sleep Entry:</strong> Now typically fall asleep through NREM stage N2, then progress into deeper N3 and REM sleep.</p>
-                  <p>• <strong>Lengthening Cycles:</strong> Sleep cycles reliably stretch to about 60 minutes, contributing to more continuous nighttime sleep.</p>
-                  <p>• <strong>Circadian Rhythm Maturation:</strong> Increasingly sync with external light cues and routine, making consistent schedules more impactful.</p>
-                </>
-              )}
-              {ageGroup === 'toddler' && (
-                <>
-                  <p>• <strong>Reliable Cycle Lengths:</strong> Sleep cycles now reliably 60-75 minutes long, progressing toward adult-like patterns.</p>
-                  <p>• <strong>Prominent Deep Sleep:</strong> N3 remains notably prominent, especially early in the night, crucial for rapid physical growth.</p>
-                  <p>• <strong>REM's Cognitive Role:</strong> As language and memory skills develop, REM becomes increasingly important for emotional processing.</p>
-                </>
-              )}
-              {ageGroup === 'preschooler' && (
-                <>
-                  <p>• <strong>Lengthening Cycles:</strong> Sleep cycles now reliably ~80 minutes long, indicating more efficient and mature sleep system.</p>
-                  <p>• <strong>Dominant Deep Sleep:</strong> N3 continues highly concentrated in first half of night, essential for physical growth and immune system.</p>
-                  <p>• <strong>REM for Growth:</strong> REM sleep vital for processing emotions, integrating language skills, and solidifying social learning.</p>
-                </>
-              )}
-              {ageGroup === 'schoolAge' && (
-                <>
-                  <p>• <strong>Mature Sleep Cycles:</strong> Cycles consistently last ~90 minutes, establishing mature cycle length that persists into adulthood.</p>
-                  <p>• <strong>Deep Sleep Concentration:</strong> Slow-wave sleep (N3) concentrated in first 2-3 cycles, maximizing benefits for restoration and learning.</p>
-                  <p>• <strong>REM Density Increase:</strong> REM activity increases in later cycles toward morning, supporting complex information processing.</p>
-                </>
-              )}
-              {ageGroup === 'adolescent' && (
-                <>
-                  <p>• <strong>Lengthened Sleep Cycles:</strong> Cycles lengthen to ~100 minutes, reflecting ongoing sleep system maturation toward adult patterns.</p>
-                  <p>• <strong>Gradual Deep Sleep Decline:</strong> N3 begins decreasing compared to childhood, yet remains critically important for brain development.</p>
-                  <p>• <strong>REM for Emotional Regulation:</strong> REM especially vital during period of hormonal changes and intense emotional processing.</p>
-                </>
-              )}
-              {ageGroup === 'youngAdult' && (
-                <>
-                  <p>• <strong>Mature Sleep Cycles:</strong> Sleep cycles average ~105 minutes, indicating sleep architecture has largely matured.</p>
-                  <p>• <strong>Deep Sleep Trends:</strong> N3 begins subtle decline compared to adolescence, but maintaining sufficient levels vital for recovery.</p>
-                  <p>• <strong>High REM Demand:</strong> High REM demand for complex cognitive, emotional, and creative processes of higher education and career development.</p>
-                </>
-              )}
-              {ageGroup === 'adult' && (
-                <>
-                  <p>• <strong>Average Cycle Length:</strong> Sleep cycles last ~96 minutes (recent studies show median of 110 minutes with 95-130 minute range).</p>
-                  <p>• <strong>Decreased Sleep Efficiency:</strong> More time awake in bed, increased nighttime awakenings, higher proportion of lighter sleep stages.</p>
-                  <p>• <strong>Stable REM and N2:</strong> Despite N3 changes, REM and N2 proportions remain stable, vital for mental clarity and problem-solving.</p>
-                </>
-              )}
-              {ageGroup === 'olderAdult' && (
-                <>
-                  <p>• <strong>Increased Sleep Fragmentation:</strong> Sleep becomes more fragmented with 3-4 awakenings per night becoming normal.</p>
-                  <p>• <strong>Advanced Sleep Phase:</strong> Natural shift toward earlier bedtimes and wake times due to circadian rhythm changes.</p>
-                  <p>• <strong>Continued Deep Sleep Decline:</strong> N3 further decreases, but remaining deep sleep still crucial for immune function and restoration.</p>
+                  <div>
+                    <p><strong>Unique Sleep Onset:</strong> Sleep onset directly into Active Sleep (the newborn equivalent of REM) is a fascinating characteristic unique to newborns. This pattern changes as the brain matures; all other age groups typically begin their sleep cycle with NREM sleep, signaling a shift in sleep architecture and brain organization.</p>
+                  </div>
+                  <div>
+                    <p><strong>Proto-Cycles Defined:</strong> These "proto-cycles" are the fundamental building blocks of newborn sleep. They are short (around 40-60 minutes) and characterized by alternating between active (REM-like) and quiet (NREM-like) sleep patterns. Understanding these basic cycles is key to appreciating a newborn's unique sleep needs.</p>
+                  </div>
+                  <div>
+                    <p><strong>Navigating the 45-Minute Intruder Phenomenon:</strong> High sleep variability is common in this age group, notably the "45-minute intruder" or "false start bedtime." This occurs when babies wake fully instead of smoothly transitioning to the next sleep cycle, often around the 30-45 minute mark. This can be due to factors like hunger (tiny stomachs need frequent refueling), overtiredness (leading to difficulty settling), an inconsistent nighttime schedule, not being tired enough, practicing new skills during sleep, or environmental disruptions.</p>
+                  </div>
+                  <div>
+                    <p><strong>Actionable Tip:</strong> If your baby wakes at this mark, try observing them for a few minutes before intervening. Sometimes, they can resettle themselves. Gentle re-settling techniques, ensuring optimal sleep environment (dark, quiet, cool), and addressing hunger are crucial.</p>
+                  </div>
+                  <div>
+                    <p><strong>Emergence of Circadian Rhythm:</strong> Newborns do not yet have a fully developed circadian rhythm—their internal 24-hour body clock. This is because their bodies, particularly their brains and hormone production (like melatonin), are still very immature. Instead of following a predictable day-night cycle, they primarily sleep in short bursts (around 20-50 minutes) and wake up frequently (every 2-3 hours) mainly due to the physiological need for constant feeding to support their incredible growth rates.</p>
+                  </div>
                 </>
               )}
             </div>
           </div>
 
-          {/* Optimal Wake Window */}
+          {/* Recommended Wake Time */}
           <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
             <div className="flex items-center gap-2 mb-2">
               <Sun className="h-4 w-4 text-green-600" />
-              <span className="font-medium text-green-800 dark:text-green-300">Recommended Wake Time</span>
+              <span className="font-medium text-green-800 dark:text-green-300">Recommended Wake Time:</span>
             </div>
-            <p className="text-sm text-green-700 dark:text-green-400 mb-2">
-              {ageGroup === 'newborn' ? 'Wake at the end of a full ~45-minute proto-cycle, ideally during light Quiet Sleep for smoother transitions.' :
-               ageGroup === 'earlyInfant' ? 'Align with light sleep stage at the end of a full ~50-minute cycle to avoid waking from deep sleep.' :
-               ageGroup === 'lateInfant' ? 'Wake at the end of a full ~60-minute cycle, ideally during light N2 to make transitions smoother.' :
-               ageGroup === 'toddler' ? 'Wake at the end of a full ~70-minute cycle, ideally during N2 to avoid grogginess from deep sleep or active REM.' :
-               ageGroup === 'preschooler' ? 'Wake at the end of a full ~80-minute cycle, ideally during N2 to avoid waking from deep sleep or active REM.' :
-               ageGroup === 'schoolAge' ? 'Wake at the end of a full ~90-minute cycle, ideally during N2 to prevent sleep inertia and morning fatigue.' :
-               ageGroup === 'adolescent' ? 'Wake at the end of a full ~100-minute cycle, ideally during N2 to minimize sleep inertia and support daytime alertness.' :
-               ageGroup === 'youngAdult' ? 'Wake at the end of a ~105-minute cycle, during N2 to significantly reduce sleep inertia and improve clarity upon rising.' :
-               ageGroup === 'adult' ? 'Wake during light N2 at the end of a full ~96-minute cycle for optimal alertness and reduced sleep inertia.' : 
-               'Wake at the end of a complete cycle during lighter sleep stages, though cycles may be more variable with age.'}
+            <p className="text-sm text-green-700 dark:text-green-400">
+              {ageGroup === 'newborn' ? 'At the end of a full ~45-min proto-cycle, ideally during light Quiet Sleep. This is generally the easiest time to wake your baby, as they are transitioning out of a sleep state, making the wake-up smoother and less disruptive for both parent and child.' : 'Wake at the end of complete sleep cycles during lighter sleep stages for optimal alertness.'}
             </p>
-            <div className="text-xs text-green-600 dark:text-green-400">
-              <strong>Why This Works:</strong> Waking during light sleep stages feels natural and refreshed, while waking from deep sleep or active REM can cause grogginess and disorientation.
-            </div>
           </div>
 
-          {/* Detailed stage explanations based on research */}
+          {/* Sleep Stage Functions (Research-Based) */}
           <div className="border-t border-border pt-4">
             <h5 className="font-medium text-sm mb-3">Sleep Stage Functions (Research-Based):</h5>
             <div className="space-y-4 text-sm">
-              {stageData.map((stage, index) => (
+              {ageGroup === 'newborn' && (
+                <>
+                  <div className="border border-border rounded-lg p-3">
+                    <div className="flex items-start gap-3 mb-2">
+                      <div className="w-4 h-4 rounded bg-purple-500 mt-0.5 flex-shrink-0"></div>
+                      <div className="flex-1">
+                        <span className="font-medium">Active Sleep:</span>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          This is the newborn equivalent of REM sleep, where the brain is highly active, resembling wakefulness. You might observe rapid eye movements, twitching, and vocalizations. This stage is supremely critical for rapid brain maturation, the formation of new neural connections (synapses), and the overall development of the nervous system. It's where the brain actively processes and consolidates new experiences, even those experienced in utero.
+                        </p>
+                      </div>
+                      <div className="text-xs font-medium">50%</div>
+                    </div>
+                  </div>
+                  <div className="border border-border rounded-lg p-3">
+                    <div className="flex items-start gap-3 mb-2">
+                      <div className="w-4 h-4 rounded bg-blue-500 mt-0.5 flex-shrink-0"></div>
+                      <div className="flex-1">
+                        <span className="font-medium">Quiet Sleep:</span>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Comparable to NREM sleep in adults, this phase sees the newborn become very still with deep, regular breathing. While lacking the defined NREM sub-stages of older individuals, Quiet Sleep provides essential basic restorative functions and vital physical rest, supporting the immense physical growth occurring in this period.
+                        </p>
+                      </div>
+                      <div className="text-xs font-medium">50%</div>
+                    </div>
+                  </div>
+                </>
+              )}
+              {ageGroup !== 'newborn' && stageData.map((stage, index) => (
                 <div key={index} className="border border-border rounded-lg p-3">
                   <div className="flex items-start gap-3 mb-2">
                     <div className={`w-4 h-4 rounded ${stage.color} mt-0.5 flex-shrink-0`}></div>
@@ -431,281 +392,6 @@ export default function SleepCalculator() {
                       <p className="text-xs text-muted-foreground mt-1">{stage.description}</p>
                     </div>
                     <div className="text-xs font-medium">{stage.percentage}%</div>
-                  </div>
-                  
-                  {/* Age-specific detailed explanations based on research */}
-                  <div className="text-xs text-muted-foreground space-y-1 ml-7">
-                    {/* Newborn-specific stage descriptions */}
-                    {ageGroup === 'newborn' && stage.name.includes('Active Sleep') && (
-                      <>
-                        <p><strong>Function:</strong> Newborn equivalent of REM sleep where brain is highly active with rapid eye movements, twitching, and vocalizations</p>
-                        <p><strong>Critical Role:</strong> Supremely important for rapid brain maturation, formation of new neural connections, and nervous system development</p>
-                        <p><strong>Brain Processing:</strong> Actively processes and consolidates new experiences, even those from in utero</p>
-                      </>
-                    )}
-                    {ageGroup === 'newborn' && stage.name.includes('Quiet Sleep') && (
-                      <>
-                        <p><strong>Function:</strong> Comparable to NREM sleep - newborn becomes very still with deep, regular breathing</p>
-                        <p><strong>Restorative Role:</strong> Provides essential basic restorative functions and vital physical rest</p>
-                        <p><strong>Growth Support:</strong> Supports the immense physical growth occurring during this period</p>
-                      </>
-                    )}
-
-                    {/* Early Infant stage descriptions */}
-                    {ageGroup === 'earlyInfant' && stage.name.includes('REM') && (
-                      <>
-                        <p><strong>Development Function:</strong> Continues to be vital for active memory consolidation of daily experiences</p>
-                        <p><strong>Brain Development:</strong> Supports early cognitive leaps like recognizing faces and responding to sounds</p>
-                        <p><strong>Transition Period:</strong> Moving from newborn proto-cycles to more organized sleep patterns</p>
-                      </>
-                    )}
-                    {ageGroup === 'earlyInfant' && stage.name.includes('NREM') && (
-                      <>
-                        <p><strong>Emerging Function:</strong> With emergence of N2 and N3, begins providing more significant physical restoration</p>
-                        <p><strong>Motor Development:</strong> Crucial as babies become more active and start developing motor skills</p>
-                        <p><strong>Foundation Building:</strong> N2 and N3 stages are more stable and significant than minimal N1</p>
-                      </>
-                    )}
-
-                    {/* Late Infant stage descriptions */}
-                    {ageGroup === 'lateInfant' && stage.name.includes('N1') && (
-                      <>
-                        <p><strong>Brief Transition:</strong> Very brief, light entry point where brain begins to slow down</p>
-                        <p><strong>Fragility:</strong> Easily disrupted - even small sounds can cause baby to stir</p>
-                        <p><strong>Gateway Function:</strong> Essential transitional phase into deeper sleep stages</p>
-                      </>
-                    )}
-                    {ageGroup === 'lateInfant' && stage.name.includes('N2') && (
-                      <>
-                        <p><strong>Dominant Stage:</strong> Most frequent stage at this age, crucial for learning and memory consolidation</p>
-                        <p><strong>Learning Support:</strong> Remembering faces, routines, and developing motor skills like rolling and crawling</p>
-                        <p><strong>Development Foundation:</strong> Supports the organized sleep patterns emerging at this age</p>
-                      </>
-                    )}
-                    {ageGroup === 'lateInfant' && stage.name.includes('N3') && (
-                      <>
-                        <p><strong>Deep Sleep Function:</strong> Essential for physical growth with growth hormone release</p>
-                        <p><strong>Immune Support:</strong> Strengthens immune system and provides significant physical recovery</p>
-                        <p><strong>Growth Period:</strong> Supports recovery from increasingly active days</p>
-                      </>
-                    )}
-                    {ageGroup === 'lateInfant' && stage.name.includes('REM') && (
-                      <>
-                        <p><strong>Language Development:</strong> Vital role in early language development and emotional regulation</p>
-                        <p><strong>Experience Processing:</strong> Processes new stimuli and integrates daytime experiences</p>
-                        <p><strong>Cognitive Foundation:</strong> Lays groundwork for complex cognitive functions</p>
-                      </>
-                    )}
-
-                    {/* Toddler stage descriptions */}
-                    {ageGroup === 'toddler' && stage.name.includes('N1') && (
-                      <>
-                        <p><strong>Entry Gateway:</strong> Brief, essential gateway from wakefulness into sleep cycle</p>
-                        <p><strong>Light Arousal:</strong> Stage from which toddlers are most easily aroused</p>
-                        <p><strong>Consistent Presence:</strong> Now reliably present, marking stable sleep entry</p>
-                      </>
-                    )}
-                    {ageGroup === 'toddler' && stage.name.includes('N2') && (
-                      <>
-                        <p><strong>Motor Skills:</strong> Critical for consolidating motor skill memory like walking and climbing</p>
-                        <p><strong>Emotional Regulation:</strong> Aids in processing "big toddler feelings" and emotional development</p>
-                        <p><strong>Optimal Wake Stage:</strong> Ideal stage for smoother waking transitions</p>
-                      </>
-                    )}
-                    {ageGroup === 'toddler' && stage.name.includes('N3') && (
-                      <>
-                        <p><strong>Growth Powerhouse:</strong> Strongly promotes growth hormone release for rapid physical development</p>
-                        <p><strong>Immune System:</strong> Supports immune system and brain detoxification processes</p>
-                        <p><strong>Metabolic Clearing:</strong> Facilitates brain detoxification that clears metabolic waste</p>
-                      </>
-                    )}
-                    {ageGroup === 'toddler' && stage.name.includes('REM') && (
-                      <>
-                        <p><strong>Language Acquisition:</strong> Significantly boosts language acquisition and vocabulary building</p>
-                        <p><strong>Emotional Processing:</strong> Enhances emotional processing of their complex world</p>
-                        <p><strong>Memory Integration:</strong> Aids in memory integration of new skills and concepts</p>
-                      </>
-                    )}
-
-                    {/* Preschooler stage descriptions */}
-                    {ageGroup === 'preschooler' && stage.name.includes('N1') && (
-                      <>
-                        <p><strong>Quick Entry:</strong> Brief phase that gently prepares brain and body for deeper rest</p>
-                        <p><strong>Light Stage:</strong> Very light stage from which child can be easily awakened</p>
-                        <p><strong>Established Pattern:</strong> Now consistently most common starting pattern</p>
-                      </>
-                    )}
-                    {ageGroup === 'preschooler' && stage.name.includes('N2') && (
-                      <>
-                        <p><strong>Motor Development:</strong> Crucial for motor skill memory development</p>
-                        <p><strong>Emotional Regulation:</strong> Supports emotional regulation - managing increasingly complex feelings</p>
-                        <p><strong>Memory Preparation:</strong> Prepares brain for new memory consolidation</p>
-                      </>
-                    )}
-                    {ageGroup === 'preschooler' && stage.name.includes('N3') && (
-                      <>
-                        <p><strong>Growth Driver:</strong> Primary driver of physical growth and immune system strength</p>
-                        <p><strong>Brain Recovery:</strong> Brain recovery from energetic daily activities</p>
-                        <p><strong>Repair Process:</strong> When body undertakes significant repair and regeneration</p>
-                      </>
-                    )}
-                    {ageGroup === 'preschooler' && stage.name.includes('REM') && (
-                      <>
-                        <p><strong>Emotional Processing:</strong> Actively helps with emotional processing and imagination</p>
-                        <p><strong>Creative Play:</strong> Fuels imagination and creative play development</p>
-                        <p><strong>Problem-Solving:</strong> Hones early problem-solving abilities and learning consolidation</p>
-                      </>
-                    )}
-
-                    {/* School Age stage descriptions */}
-                    {ageGroup === 'schoolAge' && stage.name.includes('N1') && (
-                      <>
-                        <p><strong>Bridge Function:</strong> Brief, delicate bridge from wakefulness into deeper sleep stages</p>
-                        <p><strong>Minimal Changes:</strong> Represents minimal physiological changes but necessary entry point</p>
-                        <p><strong>Efficient Entry:</strong> Part of efficient sleep onset pattern for school-age children</p>
-                      </>
-                    )}
-                    {ageGroup === 'schoolAge' && stage.name.includes('N2') && (
-                      <>
-                        <p><strong>Learning Retention:</strong> Crucial for solidifying new academic information and skills</p>
-                        <p><strong>Motor Coordination:</strong> Refines motor coordination and integrates daily memories</p>
-                        <p><strong>Academic Performance:</strong> Supports optimal cognitive performance for school success</p>
-                      </>
-                    )}
-                    {ageGroup === 'schoolAge' && stage.name.includes('N3') && (
-                      <>
-                        <p><strong>Growth Hormone:</strong> Primary stage for growth hormone release during peak growth period</p>
-                        <p><strong>Immune Function:</strong> Bolsters immune function against childhood illnesses</p>
-                        <p><strong>Memory Consolidation:</strong> Facilitates long-term memory consolidation, especially declarative memories</p>
-                      </>
-                    )}
-                    {ageGroup === 'schoolAge' && stage.name.includes('REM') && (
-                      <>
-                        <p><strong>Creativity Enhancement:</strong> Enhances creativity and sharpens emotional regulation skills</p>
-                        <p><strong>Social Skills:</strong> Critical for social interactions and processing complex social challenges</p>
-                        <p><strong>Problem-Solving:</strong> Supports problem-solving skills for academic and social situations</p>
-                      </>
-                    )}
-
-                    {/* Adolescent stage descriptions */}
-                    {ageGroup === 'adolescent' && stage.name.includes('N1') && (
-                      <>
-                        <p><strong>Sleep Initiation:</strong> Initial light stage that prepares brain for deeper sleep stages</p>
-                        <p><strong>Brief Signal:</strong> Brief and signals onset of lengthened ~100-minute sleep cycle</p>
-                        <p><strong>Circadian Shift:</strong> Part of delayed sleep phase characteristic of adolescence</p>
-                      </>
-                    )}
-                    {ageGroup === 'adolescent' && stage.name.includes('N2') && (
-                      <>
-                        <p><strong>Memory Processing:</strong> Important for procedural memories and learning consolidation</p>
-                        <p><strong>Academic Material:</strong> Processes day's academic material and social interactions</p>
-                        <p><strong>Skills Integration:</strong> Consolidates habits and skills during intense development period</p>
-                      </>
-                    )}
-                    {ageGroup === 'adolescent' && stage.name.includes('N3') && (
-                      <>
-                        <p><strong>Physical Recovery:</strong> Supports profound physical restoration from sports and growth spurts</p>
-                        <p><strong>Immune Enhancement:</strong> Enhances immune function during demanding growth phase</p>
-                        <p><strong>Brain Plasticity:</strong> Contributes to crucial brain plasticity - forming new neural connections</p>
-                      </>
-                    )}
-                    {ageGroup === 'adolescent' && stage.name.includes('REM') && (
-                      <>
-                        <p><strong>Emotional Regulation:</strong> Absolutely critical for emotional regulation during turbulent development</p>
-                        <p><strong>Social Cognition:</strong> Sharpens social cognition and understanding of social cues</p>
-                        <p><strong>Creative Problem-Solving:</strong> Fuels creative problem-solving for personal and academic challenges</p>
-                      </>
-                    )}
-
-                    {/* Young Adult stage descriptions */}
-                    {ageGroup === 'youngAdult' && stage.name.includes('N1') && (
-                      <>
-                        <p><strong>Efficient Initiation:</strong> Brief, initial stage that effectively initiates mature sleep pattern</p>
-                        <p><strong>Light Phase:</strong> Very light phase, easy to wake from, but essential for entering sleep cycle</p>
-                        <p><strong>Adult Pattern:</strong> Part of well-established, efficient sleep onset pattern</p>
-                      </>
-                    )}
-                    {ageGroup === 'youngAdult' && stage.name.includes('N2') && (
-                      <>
-                        <p><strong>Alertness Maintenance:</strong> Maintains daytime alertness and aids in memory processing</p>
-                        <p><strong>New Experiences:</strong> Processes new facts and experiences from higher education/career</p>
-                        <p><strong>Motor Learning:</strong> Supports motor learning and refining of physical skills</p>
-                      </>
-                    )}
-                    {ageGroup === 'youngAdult' && stage.name.includes('N3') && (
-                      <>
-                        <p><strong>Physical Recovery:</strong> Crucial for profound physical recovery from daily activities</p>
-                        <p><strong>Immune Function:</strong> Robust immune function helps body fight off illness</p>
-                        <p><strong>Cell Repair:</strong> Essential cell repair and regeneration throughout the body</p>
-                      </>
-                    )}
-                    {ageGroup === 'youngAdult' && stage.name.includes('REM') && (
-                      <>
-                        <p><strong>Emotional Intelligence:</strong> Actively enhances emotional intelligence and creative thinking</p>
-                        <p><strong>Mental Flexibility:</strong> Fosters mental flexibility needed for new situations</p>
-                        <p><strong>Complex Problem-Solving:</strong> Supports complex problem-solving in academic and professional settings</p>
-                      </>
-                    )}
-
-                    {/* Adult stage descriptions */}
-                    {ageGroup === 'adult' && stage.name.includes('N1') && (
-                      <>
-                        <p><strong>Lightest Sleep:</strong> Lightest stage serving as rapid bridge into deeper sleep</p>
-                        <p><strong>Fragile Stage:</strong> Most fragile stage, prone to disruption and awakening</p>
-                        <p><strong>Standard Pattern:</strong> Part of efficient, standard sleep onset pattern for adults</p>
-                      </>
-                    )}
-                    {ageGroup === 'adult' && stage.name.includes('N2') && (
-                      <>
-                        <p><strong>Procedural Memory:</strong> Supports procedural memory and consolidates motor skills</p>
-                        <p><strong>Sensory Processing:</strong> Processes sensory information from the day</p>
-                        <p><strong>Cognitive Function:</strong> Crucial for maintaining general cognitive function and alertness</p>
-                      </>
-                    )}
-                    {ageGroup === 'adult' && stage.name.includes('N3') && (
-                      <>
-                        <p><strong>Tissue Repair:</strong> Though declining with age, remains crucial for tissue growth and repair</p>
-                        <p><strong>Immune Support:</strong> Robust immune support and fundamental energy restoration</p>
-                        <p><strong>Cellular Restoration:</strong> Energy restoration at the cellular level</p>
-                      </>
-                    )}
-                    {ageGroup === 'adult' && stage.name.includes('REM') && (
-                      <>
-                        <p><strong>Emotional Stability:</strong> Promotes emotional stability and resilience</p>
-                        <p><strong>Complex Learning:</strong> Facilitates learning new complex information</p>
-                        <p><strong>Creative Integration:</strong> Supports creative integration of new ideas and experiences</p>
-                      </>
-                    )}
-
-                    {/* Older Adult stage descriptions */}
-                    {ageGroup === 'olderAdult' && stage.name.includes('N1') && (
-                      <>
-                        <p><strong>Increased Latency:</strong> May experience longer time to fall asleep due to age-related changes</p>
-                        <p><strong>Light Entry:</strong> Still serves as entry point but may be more fragmented</p>
-                        <p><strong>Variable Timing:</strong> Sleep onset timing may shift earlier due to circadian changes</p>
-                      </>
-                    )}
-                    {ageGroup === 'olderAdult' && stage.name.includes('N2') && (
-                      <>
-                        <p><strong>Stable Function:</strong> Generally remains stable proportion providing continued cognitive support</p>
-                        <p><strong>Memory Processing:</strong> Continues supporting memory processing and skill maintenance</p>
-                        <p><strong>Lighter Sleep:</strong> Part of generally lighter, more fragmented sleep pattern</p>
-                      </>
-                    )}
-                    {ageGroup === 'olderAdult' && stage.name.includes('N3') && (
-                      <>
-                        <p><strong>Continued Decline:</strong> Further decreases but remaining deep sleep still crucial</p>
-                        <p><strong>Immune Function:</strong> Essential for immune function and basic restoration</p>
-                        <p><strong>Quality Focus:</strong> Quality becomes more important than quantity with age</p>
-                      </>
-                    )}
-                    {ageGroup === 'olderAdult' && stage.name.includes('REM') && (
-                      <>
-                        <p><strong>Emotional Processing:</strong> Continues supporting emotional processing and mental flexibility</p>
-                        <p><strong>Adaptability:</strong> Helps maintain adaptability and cognitive function with aging</p>
-                        <p><strong>Earlier REM:</strong> May occur earlier in sleep cycle due to architectural changes</p>
-                      </>
-                    )}
                   </div>
                 </div>
               ))}
