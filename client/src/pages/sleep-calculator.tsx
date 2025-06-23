@@ -531,12 +531,7 @@ export default function SleepCalculator() {
               
               {/* Age Input */}
               <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <label className="font-medium">Your Age</label>
-                  <span className="text-sm text-primary dark:text-mint-400 font-semibold">
-                    {settings.age} years old
-                  </span>
-                </div>
+                <label className="font-medium">Your Age</label>
                 <Select 
                   value={settings.age.toString()} 
                   onValueChange={(value) => {
