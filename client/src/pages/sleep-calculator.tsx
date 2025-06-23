@@ -15,6 +15,7 @@ import {
   calculateOptimalCyclesForAge,
   getCycleLength,
   getAgeGroup,
+  getFallAsleepTime,
   formatSleepDuration,
   type SleepRecommendation,
   type SleepSettings
@@ -30,8 +31,17 @@ export default function SleepCalculator() {
   const [settings, setSettings] = useState<SleepSettings>({
     fallAsleepTime: 15,
     selectedCycles: 5,
-    age: 25
+    age: 21.5
   });
+
+  // Update fall asleep time automatically when age changes
+  useEffect(() => {
+    const calculatedFallAsleepTime = getFallAsleepTime(settings.age);
+    setSettings(prev => ({ 
+      ...prev, 
+      fallAsleepTime: calculatedFallAsleepTime 
+    }));
+  }, [settings.age]);
   const [recommendations, setRecommendations] = useState<SleepRecommendation[]>([]);
 
   const updateRecommendations = () => {
@@ -559,34 +569,9 @@ export default function SleepCalculator() {
                     <SelectItem value="70">65+ years (Older Adult)</SelectItem>
                   </SelectContent>
                 </Select>
-
-              </div>
-              
-              {/* Fall Asleep Time Input */}
-              <div className="space-y-3">
-                <label className="font-medium">Fall asleep time</label>
-                <Select 
-                  value={settings.fallAsleepTime.toString()} 
-                  onValueChange={(value) => setSettings(prev => ({ ...prev, fallAsleepTime: parseInt(value) }))}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select fall asleep time" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="5">5 minutes</SelectItem>
-                    <SelectItem value="10">10 minutes</SelectItem>
-                    <SelectItem value="15">15 minutes</SelectItem>
-                    <SelectItem value="20">20 minutes</SelectItem>
-                    <SelectItem value="25">25 minutes</SelectItem>
-                    <SelectItem value="30">30 minutes</SelectItem>
-                    <SelectItem value="35">35 minutes</SelectItem>
-                    <SelectItem value="40">40 minutes</SelectItem>
-                    <SelectItem value="45">45 minutes</SelectItem>
-                    <SelectItem value="50">50 minutes</SelectItem>
-                    <SelectItem value="55">55 minutes</SelectItem>
-                    <SelectItem value="60">60 minutes</SelectItem>
-                  </SelectContent>
-                </Select>
+                <div className="text-sm text-muted-foreground">
+                  Age Group: {ageData.name} | Sleep Cycle: {cycleLength} minutes | Fall asleep time: ~{settings.fallAsleepTime} minutes
+                </div>
               </div>
             </div>
           </CardContent>

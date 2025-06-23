@@ -30,6 +30,23 @@ export function getCycleLength(age: number): number {
   return AGE_GROUPS[ageGroup].cycleLength;
 }
 
+export function getFallAsleepTime(age: number): number {
+  const ageGroup = getAgeGroup(age);
+  switch (ageGroup) {
+    case 'newborn': return 5; // 0-2 months: ~5 mins
+    case 'earlyInfant': return 10; // 3-5 months: ~10 mins
+    case 'lateInfant': return 10; // 6-11 months: ~10 mins
+    case 'toddler': return 10; // 12-23 months: ~10 mins
+    case 'preschooler': return 10; // 2-4 years: ~10 mins
+    case 'schoolAge': return 10; // 5-12 years: ~10 mins
+    case 'adolescent': return 20; // 13-17 years: ~20 mins
+    case 'youngAdult': return 15; // 18-25 years: ~15 mins
+    case 'adult': return 15; // 26-64 years: ~15 mins
+    case 'olderAdult': return 20; // 65+ years: ~20 mins
+    default: return 15;
+  }
+}
+
 export interface AgeGroupData {
   name: string;
   sleepRange: string;
