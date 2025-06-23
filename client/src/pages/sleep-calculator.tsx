@@ -552,48 +552,16 @@ export default function SleepCalculator() {
                     <SelectValue placeholder="Select your age" />
                   </SelectTrigger>
                   <SelectContent className="max-h-60">
-                    {/* Newborns and Infants */}
-                    <SelectItem value="0.08">1 month</SelectItem>
-                    <SelectItem value="0.17">2 months</SelectItem>
-                    <SelectItem value="0.25">3 months</SelectItem>
-                    <SelectItem value="0.5">6 months</SelectItem>
-                    <SelectItem value="0.75">9 months</SelectItem>
-                    <SelectItem value="1">1 year</SelectItem>
-                    
-                    {/* Toddlers and Preschoolers */}
-                    <SelectItem value="1.5">1.5 years</SelectItem>
-                    <SelectItem value="2">2 years</SelectItem>
-                    <SelectItem value="3">3 years</SelectItem>
-                    <SelectItem value="4">4 years</SelectItem>
-                    <SelectItem value="5">5 years</SelectItem>
-                    
-                    {/* School Age */}
-                    {Array.from({ length: 7 }, (_, i) => (
-                      <SelectItem key={i + 6} value={(i + 6).toString()}>
-                        {i + 6} years
-                      </SelectItem>
-                    ))}
-                    
-                    {/* Teens */}
-                    {Array.from({ length: 8 }, (_, i) => (
-                      <SelectItem key={i + 13} value={(i + 13).toString()}>
-                        {i + 13} years
-                      </SelectItem>
-                    ))}
-                    
-                    {/* Adults */}
-                    {Array.from({ length: 41 }, (_, i) => (
-                      <SelectItem key={i + 21} value={(i + 21).toString()}>
-                        {i + 21} years
-                      </SelectItem>
-                    ))}
-                    
-                    {/* Seniors */}
-                    {Array.from({ length: 30 }, (_, i) => (
-                      <SelectItem key={i + 62} value={(i + 62).toString()}>
-                        {i + 62} years
-                      </SelectItem>
-                    ))}
+                    <SelectItem value="0.08">0–2 months (Newborn)</SelectItem>
+                    <SelectItem value="0.33">3–5 months (Early Infant)</SelectItem>
+                    <SelectItem value="0.71">6–11 months (Late Infant)</SelectItem>
+                    <SelectItem value="1.5">12–23 months (Toddler)</SelectItem>
+                    <SelectItem value="3">2–4 years (Preschooler)</SelectItem>
+                    <SelectItem value="8.5">5–12 years (School Age)</SelectItem>
+                    <SelectItem value="15">13–17 years (Adolescent)</SelectItem>
+                    <SelectItem value="21.5">18–25 years (Young Adult)</SelectItem>
+                    <SelectItem value="45">26–64 years (Adult)</SelectItem>
+                    <SelectItem value="70">65+ years (Older Adult)</SelectItem>
                   </SelectContent>
                 </Select>
                 <div className="text-sm text-muted-foreground">
