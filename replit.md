@@ -96,3 +96,4 @@ Preferred communication style: Simple, everyday language.
 
 Changelog:
 - June 23, 2025. Initial setup
+- June 23, 2025. Updated sleep architecture component with exact research data for newborn age group, including precise sleep stage percentages, labels, and research-based content

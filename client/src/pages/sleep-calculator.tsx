@@ -267,40 +267,66 @@ export default function SleepCalculator() {
             </div>
           </div>
 
-          {/* Sleep Stage Composition */}
-          <div className="mb-6 p-4 bg-muted/20 rounded-lg">
-            <div className="text-sm font-medium mb-2">Sleep Stage Composition:</div>
-            <div className="text-primary font-semibold">
-              {ageGroup === 'newborn' ? '≈ 50% Active Sleep (AS), 50% Quiet Sleep (QS)' : 'Age-appropriate NREM/REM distribution'}
-            </div>
-          </div>
+
 
           {/* Sleep Stage Composition Bar */}
           <div className="mb-6">
             <h5 className="font-medium text-sm mb-3">Sleep Stage Composition:</h5>
             <div className="w-full bg-muted rounded-full h-8 overflow-hidden mb-4">
               <div className="flex h-full">
-                {stageData.map((stage, index) => (
-                  <div
-                    key={index}
-                    className={`${stage.color} flex items-center justify-center text-xs font-medium text-white`}
-                    style={{ width: `${stage.percentage}%` }}
-                    title={`${stage.name}: ${stage.percentage}%`}
-                  >
-                    {stage.percentage >= 8 && <span>{stage.name.replace(/\s*\([^)]*\)/g, '')}</span>}
-                  </div>
-                ))}
+                {ageGroup === 'newborn' ? (
+                  <>
+                    <div
+                      className="bg-purple-500 flex items-center justify-center text-xs font-medium text-white"
+                      style={{ width: '50%' }}
+                      title="Active Sleep (AS): 50%"
+                    >
+                      <span>Active Sleep (AS)</span>
+                    </div>
+                    <div
+                      className="bg-blue-500 flex items-center justify-center text-xs font-medium text-white"
+                      style={{ width: '50%' }}
+                      title="Quiet Sleep (QS): 50%"
+                    >
+                      <span>Quiet Sleep (QS)</span>
+                    </div>
+                  </>
+                ) : (
+                  stageData.map((stage, index) => (
+                    <div
+                      key={index}
+                      className={`${stage.color} flex items-center justify-center text-xs font-medium text-white`}
+                      style={{ width: `${stage.percentage}%` }}
+                      title={`${stage.name}: ${stage.percentage}%`}
+                    >
+                      {stage.percentage >= 8 && <span>{stage.name.replace(/\s*\([^)]*\)/g, '')}</span>}
+                    </div>
+                  ))
+                )}
               </div>
             </div>
             
             {/* Legend */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 text-xs">
-              {stageData.map((stage, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <div className={`w-3 h-3 rounded ${stage.color}`}></div>
-                  <span>{stage.name}: {stage.percentage}%</span>
-                </div>
-              ))}
+              {ageGroup === 'newborn' ? (
+                <>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded bg-purple-500"></div>
+                    <span>Active Sleep (AS): 50%</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded bg-blue-500"></div>
+                    <span>Quiet Sleep (QS): 50%</span>
+                  </div>
+                </>
+              ) : (
+                stageData.map((stage, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <div className={`w-3 h-3 rounded ${stage.color}`}></div>
+                    <span>{stage.name}: {stage.percentage}%</span>
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
