@@ -1709,25 +1709,33 @@ export default function SleepCalculator() {
                   {ageGroup === 'newborn' && (
                     <div className="space-y-3">
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-2">
+                        <div className="flex items-center gap-2 mb-3">
                           <span className="bg-purple-100 dark:bg-purple-800 px-3 py-1 rounded-full text-xs font-bold">Active Sleep (AS)</span>
+                          <span className="text-xs text-muted-foreground">(Newborn equivalent of REM sleep)</span>
                         </div>
+                        <p className="text-sm mb-3 italic">
+                          **Brain is highly active, resembling wakefulness** — you might observe rapid eye movements, twitching, and vocalizations.
+                        </p>
                         <ul className="space-y-1 pl-4">
-                          <li>• **Rapid brain development** and neural pathway formation</li>
-                          <li>• **Sensory system maturation** (vision, hearing, touch)</li>
-                          <li>• **Memory processing** of new experiences</li>
-                          <li>• **Synaptic pruning** and brain organization</li>
+                          <li>• **Supremely critical for rapid brain maturation** and nervous system development</li>
+                          <li>• **Formation of new neural connections (synapses)** — the foundation of learning</li>
+                          <li>• **Actively processes and consolidates new experiences**, even those from in utero</li>
+                          <li>• **Overall development of the nervous system** during this crucial period</li>
                         </ul>
                       </div>
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-2">
+                        <div className="flex items-center gap-2 mb-3">
                           <span className="bg-blue-100 dark:bg-blue-800 px-3 py-1 rounded-full text-xs font-bold">Quiet Sleep (QS)</span>
+                          <span className="text-xs text-muted-foreground">(Comparable to NREM sleep in adults)</span>
                         </div>
+                        <p className="text-sm mb-3 italic">
+                          **Newborn becomes very still** with deep, regular breathing — lacks the defined NREM sub-stages of older individuals.
+                        </p>
                         <ul className="space-y-1 pl-4">
-                          <li>• **Physical restoration** and cellular repair</li>
-                          <li>• **Growth hormone release** for development</li>
-                          <li>• **Immune system support** and protection</li>
-                          <li>• **Energy conservation** for rapid growth</li>
+                          <li>• **Essential basic restorative functions** for physical recovery</li>
+                          <li>• **Vital physical rest** supporting the immense growth occurring in this period</li>
+                          <li>• **Cellular repair and restoration** during this quiet phase</li>
+                          <li>• **Energy conservation** for the rapid physical development happening daily</li>
                         </ul>
                       </div>
                     </div>
