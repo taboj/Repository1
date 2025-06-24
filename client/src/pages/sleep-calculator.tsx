@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Moon, Sun, AlarmClock, Bell, RotateCcw, ChevronUp, ChevronDown, ArrowUp, Clock } from "lucide-react";
+import { Moon, Sun, AlarmClock, Bell, RotateCcw, ChevronUp, ChevronDown, ArrowUp, Clock, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -63,11 +63,23 @@ export default function SleepCalculator() {
   };
 
   const scrollToTimeInput = () => {
-    const timeSection = document.querySelector('.time-input-section');
-    if (timeSection) {
-      timeSection.scrollIntoView({ behavior: 'smooth' });
+    const timeInputSection = document.querySelector('[data-time-input]');
+    if (timeInputSection) {
+      timeInputSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   };
+
+  // Tooltip component for scientific terms
+  const ScienceTooltip = ({ term, definition, children }: { term: string; definition: string; children: React.ReactNode }) => (
+    <span className="relative group inline-flex items-center gap-1">
+      {children}
+      <Info className="h-3 w-3 text-slate-400 hover:text-slate-600 cursor-help" />
+      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-slate-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-50 w-72 text-center shadow-lg">
+        <strong>{term}:</strong> {definition}
+        <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-slate-900"></div>
+      </div>
+    </span>
+  );
 
   const updateRecommendations = () => {
     const timeString = `${selectedTime.hour}:${selectedTime.minute.toString().padStart(2, '0')}`;
@@ -344,15 +356,9 @@ export default function SleepCalculator() {
           {/* Sleep Stage Composition Bar with improved contrast */}
           <div className="mb-6">
             <h5 className="font-medium text-sm mb-3 text-slate-800 dark:text-slate-100">
-              <span 
-                tabIndex="0"
-                role="tooltip"
-                aria-describedby="sleep-stages-tooltip"
-                className="border-b border-dotted border-slate-400 cursor-help"
-              >
-                Sleep Stage Composition:
-              </span>
-              <div id="sleep-stages-tooltip" className="sr-only">Visual breakdown of time spent in each sleep stage during a typical night</div>
+              <ScienceTooltip term="Sleep Cycle" definition="A complete sequence of sleep stages that repeats throughout the night, typically lasting 90-120 minutes">
+                <span>Sleep Stage Composition:</span>
+              </ScienceTooltip>
             </h5>
             <div className="w-full bg-slate-200 dark:bg-slate-600 rounded-full h-8 overflow-hidden mb-4">
               <div className="flex h-full">
@@ -363,7 +369,9 @@ export default function SleepCalculator() {
                       style={{ width: '50%' }}
                       title="Active Sleep (AS): 50%"
                     >
-                      <span>Active Sleep (AS)</span>
+                      <ScienceTooltip term="REM/Active Sleep" definition="Sleep phase that supports memory consolidation, creativity, and emotional processing">
+                        <span>Active Sleep (AS)</span>
+                      </ScienceTooltip>
                     </div>
                     <div
                       className="bg-blue-500 flex items-center justify-center text-xs font-medium text-white"
@@ -1695,7 +1703,7 @@ export default function SleepCalculator() {
                 <span className="font-semibold text-slate-800 dark:text-slate-100">Research-Based Sleep Insights</span>
               </summary>
               <div className="mt-3 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-600">
-                <p className="text-sm text-slate-800 dark:text-slate-100 leading-relaxed">
+                <p className="text-sm leading-relaxed text-slate-900 dark:text-slate-100">
                   <strong>Scientific Overview:</strong> Sleep architecture evolves dramatically across the lifespan. {' '}
                   {getAgeGroup(settings.age) === 'newborn' && 'Newborns enter sleep through REM (unique pattern) with 50% active sleep and 30-60 minute cycles for critical neural development.'}
                   {(getAgeGroup(settings.age) === 'earlyInfant' || getAgeGroup(settings.age) === 'lateInfant') && 'By 3 months, circadian rhythms establish and sleep onset shifts to NREM. Cycles lengthen from 60-90 minutes as brain matures.'}
