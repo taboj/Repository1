@@ -1565,7 +1565,7 @@ export default function SleepCalculator() {
                           <li className="pl-4">- They're overtired or overstimulated</li>
                           <li className="pl-4">- They're practicing new milestones like rolling</li>
                           <li className="pl-4">- Their bedtime routine is inconsistent</li>
-                          <li>• **What to do**: Before jumping in, pause. Your baby might settle back on their own. Try **gentle soothing**, check if they're hungry, and make sure the room is **cool, dark, and quiet**.</li>
+                          <li>• What to do: Before jumping in, pause. Your baby might settle back on their own. Try gentle soothing, check if they're hungry, and make sure the room is cool, dark, and quiet.</li>
                         </ul>
                       </div>
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
@@ -1573,9 +1573,9 @@ export default function SleepCalculator() {
                           <span>🌞</span> Day vs. Night: Not Yet!
                         </p>
                         <ul className="space-y-1 pl-4">
-                          <li>• **Newborns don't have a circadian rhythm yet** — their internal clock hasn't kicked in</li>
-                          <li>• They sleep in **short bursts** and wake **every 2–3 hours to feed**</li>
-                          <li>• By **2–3 months**, you may start noticing **longer nighttime stretches** as their rhythm matures</li>
+                          <li>• Newborns don't have a circadian rhythm yet — their internal clock hasn't kicked in</li>
+                          <li>• They sleep in short bursts and wake every 2–3 hours to feed</li>
+                          <li>• By 2–3 months, you may start noticing longer nighttime stretches as their rhythm matures</li>
                         </ul>
                       </div>
                     </div>
