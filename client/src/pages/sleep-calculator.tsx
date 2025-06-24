@@ -1537,13 +1537,10 @@ export default function SleepCalculator() {
         </Card>
 
         {/* Results Display */}
+        {showResults && recommendations.length > 0 && (
         <div 
           id="resultsContainer" 
-          className={`transition-all duration-500 ease-in-out ${
-            showResults && recommendations.length > 0 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-4 pointer-events-none'
-          }`}
+          className="animate-in fade-in slide-in-from-bottom-4 duration-500 ease-out"
         >
         {recommendations.length > 0 && (
           <Card className="shadow-xl border-0 bg-white/95 dark:bg-slate-800/95 rounded-2xl transition-all duration-300 hover:shadow-2xl">
@@ -1889,8 +1886,10 @@ export default function SleepCalculator() {
 
         {/* Sleep Architecture Component is now embedded within the Sleep Cycle Visualization */}
         </div>
+        )}
 
         {/* Floating Edit Wake-up Time Button */}
+        {showResults && (
         <Button
           onClick={scrollToTimeInput}
           className={`fixed top-6 right-6 z-40 shadow-xl transition-all duration-500 text-base px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 hover:scale-110 hover:shadow-2xl ${
@@ -1903,8 +1902,10 @@ export default function SleepCalculator() {
           <AlarmClock className="h-5 w-5 mr-2" aria-hidden="true" />
           Edit Time
         </Button>
+        )}
 
         {/* Back to Top Button with enhanced styling */}
+        {showResults && (
         <Button
           onClick={scrollToTop}
           className={`fixed bottom-6 right-6 z-50 rounded-full w-14 h-14 md:w-16 md:h-16 shadow-xl transition-all duration-500 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 hover:scale-110 hover:shadow-2xl ${
@@ -1917,6 +1918,7 @@ export default function SleepCalculator() {
         >
           <ArrowUp className="h-6 w-6 md:h-7 md:w-7" aria-hidden="true" />
         </Button>
+        )}
       </div>
     </div>
   );
