@@ -49,6 +49,7 @@ export default function SleepCalculator() {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [analysisExpanded, setAnalysisExpanded] = useState(false);
   const [showStickyEditButton, setShowStickyEditButton] = useState(false);
+  const [showResults, setShowResults] = useState(false);
 
   // Scroll tracking for back-to-top button and sticky edit button
   useEffect(() => {
@@ -117,10 +118,23 @@ export default function SleepCalculator() {
     }
     
     setRecommendations(newRecommendations);
+    setShowResults(true);
   };
 
   useEffect(() => {
-    updateRecommendations();
+    const timeString = `${selectedTime.hour}:${selectedTime.minute.toString().padStart(2, '0')}`;
+    const targetTime = parseTimeString(timeString, selectedTime.period);
+    
+    let newRecommendations: SleepRecommendation[];
+    
+    if (calculationMode === 'wakeUp') {
+      newRecommendations = calculateOptimalBedtimes(targetTime, settings);
+    } else {
+      newRecommendations = calculateOptimalWakeTimes(targetTime, settings);
+    }
+    
+    setRecommendations(newRecommendations);
+    // Don't auto-show results on dependency changes, only on button click
   }, [calculationMode, selectedTime, settings]);
 
   // Compact time picker for step 2
@@ -1523,6 +1537,14 @@ export default function SleepCalculator() {
         </Card>
 
         {/* Results Display */}
+        <div 
+          id="resultsContainer" 
+          className={`transition-all duration-500 ease-in-out ${
+            showResults && recommendations.length > 0 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-4 pointer-events-none'
+          }`}
+        >
         {recommendations.length > 0 && (
           <Card className="shadow-xl border-0 bg-white/95 dark:bg-slate-800/95 rounded-2xl transition-all duration-300 hover:shadow-2xl">
             <CardContent className="p-8 md:p-10">
@@ -1866,35 +1888,36 @@ export default function SleepCalculator() {
         </Card>
 
         {/* Sleep Architecture Component is now embedded within the Sleep Cycle Visualization */}
+        </div>
+
+        {/* Floating Edit Wake-up Time Button */}
+        <Button
+          onClick={scrollToTimeInput}
+          className={`fixed top-6 right-6 z-40 shadow-xl transition-all duration-500 text-base px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 hover:scale-110 hover:shadow-2xl ${
+            showStickyEditButton ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8 pointer-events-none'
+          }`}
+          size="sm"
+          aria-label="Edit wake-up time (floating button)"
+          tabIndex={showStickyEditButton ? 0 : -1}
+        >
+          <AlarmClock className="h-5 w-5 mr-2" aria-hidden="true" />
+          Edit Time
+        </Button>
+
+        {/* Back to Top Button with enhanced styling */}
+        <Button
+          onClick={scrollToTop}
+          className={`fixed bottom-6 right-6 z-50 rounded-full w-14 h-14 md:w-16 md:h-16 shadow-xl transition-all duration-500 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 hover:scale-110 hover:shadow-2xl ${
+            showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+          }`}
+          size="icon"
+          title="Back to top"
+          aria-label="Scroll to top of page"
+          tabIndex={showBackToTop ? 0 : -1}
+        >
+          <ArrowUp className="h-6 w-6 md:h-7 md:w-7" aria-hidden="true" />
+        </Button>
       </div>
-
-      {/* Floating Edit Wake-up Time Button */}
-      <Button
-        onClick={scrollToTimeInput}
-        className={`fixed top-6 right-6 z-40 shadow-xl transition-all duration-500 text-base px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 hover:scale-110 hover:shadow-2xl ${
-          showStickyEditButton ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8 pointer-events-none'
-        }`}
-        size="sm"
-        aria-label="Edit wake-up time (floating button)"
-        tabIndex={showStickyEditButton ? 0 : -1}
-      >
-        <AlarmClock className="h-5 w-5 mr-2" aria-hidden="true" />
-        Edit Time
-      </Button>
-
-      {/* Back to Top Button with enhanced styling */}
-      <Button
-        onClick={scrollToTop}
-        className={`fixed bottom-6 right-6 z-50 rounded-full w-14 h-14 md:w-16 md:h-16 shadow-xl transition-all duration-500 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 hover:scale-110 hover:shadow-2xl ${
-          showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
-        }`}
-        size="icon"
-        title="Back to top"
-        aria-label="Scroll to top of page"
-        tabIndex={showBackToTop ? 0 : -1}
-      >
-        <ArrowUp className="h-6 w-6 md:h-7 md:w-7" aria-hidden="true" />
-      </Button>
     </div>
   );
 }
