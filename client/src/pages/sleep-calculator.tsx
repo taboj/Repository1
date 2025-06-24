@@ -850,9 +850,7 @@ export default function SleepCalculator() {
               <div className="text-slate-700 dark:text-slate-300 space-y-4 leading-relaxed">
               {ageGroup === 'newborn' && (
                 <div className="space-y-4">
-                  <p className="font-normal">
-                    Newborns don't sleep in structured stages like older children and adults. Instead, they move between **two simple kinds of sleep**:
-                  </p>
+                  <p className="font-normal">Newborns don't sleep in structured stages like older children and adults. Instead, they move between two simple kinds of sleep:</p>
                   <div className="bg-white dark:bg-slate-700 border-l-4 border-amber-400 dark:border-amber-500 rounded-lg p-4 shadow-sm space-y-3">
                     <div className="font-normal">
                       <strong>Active sleep (AS):</strong> their eyes move, bodies twitch, and brains are very active — similar to REM in adults.
