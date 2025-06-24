@@ -1189,8 +1189,317 @@ export default function SleepCalculator() {
           </div>
 
 
+            
+            {/* Research-Based Notes Section - Enhanced Card */}
+            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-xl p-6 border border-blue-200 dark:border-blue-700">
+              <button
+                onClick={() => setResearchNotesExpanded(!researchNotesExpanded)}
+                className="w-full flex items-center justify-between"
+                aria-expanded={researchNotesExpanded}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl">📚</span>
+                  <h3 className="font-bold text-lg text-blue-800 dark:text-blue-200">Research-Based Notes</h3>
+                </div>
+                {researchNotesExpanded ? (
+                  <ChevronUp className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                ) : (
+                  <ChevronDown className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                )}
+              </button>
+              
+              {researchNotesExpanded && (
+                <div className="mt-4 text-blue-800 dark:text-blue-200 space-y-4 text-sm">
+                  {ageGroup === 'newborn' && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🌙</span> Unique Sleep Start
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Newborns are the only age group that start sleep in Active Sleep (their version of REM)</li>
+                          <li>• As they grow, they'll shift to starting in quiet sleep like older kids and adults</li>
+                          <li>• This unique pattern supports critical brain development during this crucial period</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🔁</span> What Are "Proto-Cycles"?
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Your baby sleeps in short cycles (~40–60 minutes) that alternate between:</li>
+                          <li className="pl-4">- Active Sleep (AS): lots of movement, brain activity</li>
+                          <li className="pl-4">- Quiet Sleep (QS): still and restful</li>
+                          <li>• These early cycles are the building blocks of healthy sleep</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>⏱️</span> The 45-Minute Wake-Up (aka "The Intruder")
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Common for newborns to wake fully after just one cycle — especially around 30–45 minutes</li>
+                          <li>• This can happen if:</li>
+                          <li className="pl-4">- They're hungry</li>
+                          <li className="pl-4">- They're overtired or overstimulated</li>
+                          <li className="pl-4">- They're practicing new milestones like rolling</li>
+                          <li className="pl-4">- Their bedtime routine is inconsistent</li>
+                          <li>• What to do: Before jumping in, pause. Your baby might settle back on their own. Try gentle soothing, check if they're hungry, and make sure the room is cool, dark, and quiet.</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🌞</span> Day vs. Night: Not Yet!
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Newborns don't have a circadian rhythm yet — their internal clock hasn't kicked in</li>
+                          <li>• They sleep in short bursts and wake every 2–3 hours to feed</li>
+                          <li>• By 2–3 months, you may start noticing longer nighttime stretches as their rhythm matures</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  {ageGroup === 'earlyInfant' && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2">Developmental Transition:</p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Sleep shows **rapid maturation** during this period</li>
+                          <li>• <span className="bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded text-xs">N2</span> and <span className="bg-indigo-100 dark:bg-indigo-800 px-2 py-1 rounded text-xs">N3</span> become **functionally significant**</li>
+                          <li>• Marks transition from **newborn** to **infant** sleep patterns</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2">Sleep Consolidation:</p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Longer sleep periods** begin to emerge</li>
+                          <li>• **Sleep-wake cycles** become more predictable</li>
+                          <li>• Foundation for **circadian rhythm development**</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  {(ageGroup === 'lateInfant' || ageGroup === 'toddler' || ageGroup === 'preschooler') && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2">Sleep Architecture Maturation:</p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• All **major sleep stages** now consistently present</li>
+                          <li>• **Predictable cycling** between stages develops</li>
+                          <li>• Sleep becomes **increasingly organized**</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2">Developmental Support:</p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• <span className="bg-indigo-100 dark:bg-indigo-800 px-2 py-1 rounded text-xs">Deep sleep</span> supports **physical growth** and **immune function**</li>
+                          <li>• <span className="bg-purple-100 dark:bg-purple-800 px-2 py-1 rounded text-xs">REM sleep</span> aids **cognitive development** and **learning**</li>
+                          <li>• **Memory consolidation** becomes more efficient</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  {(ageGroup === 'schoolAge' || ageGroup === 'adolescent') && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2">Sleep Architecture Stability:</p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Sleep patterns become **highly stable** and **adult-like**</li>
+                          <li>• **Slow-wave sleep** concentration in first half of night</li>
+                          <li>• **REM sleep** increases toward morning hours</li>
+                        </ul>
+                      </div>
+                      {ageGroup === 'adolescent' && (
+                        <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                          <p className="font-medium mb-2">Circadian Biology:</p>
+                          <ul className="space-y-1 pl-4">
+                            <li>• **Melatonin release** shifts to later evening hours</li>
+                            <li>• **Natural sleep phase delay** of 1-2 hours</li>
+                            <li>• **Brain development** requires increased sleep duration</li>
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {(ageGroup === 'youngAdult' || ageGroup === 'adult') && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2">Mature Sleep Architecture:</p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Sleep architecture reaches **full maturation**</li>
+                          <li>• **Consistent sleep stage percentages** established</li>
+                          <li>• **Individual variations** in sleep needs become apparent</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2">Lifestyle Factors:</p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Work schedules**, **social obligations** impact sleep timing</li>
+                          <li>• **Stress management** becomes crucial for sleep quality</li>
+                          <li>• **Sleep hygiene** practices significantly influence outcomes</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  {ageGroup === 'olderAdult' && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2">Age-Related Changes:</p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Slow-wave sleep** shows natural decline</li>
+                          <li>• **Sleep efficiency** may decrease</li>
+                          <li>• **Earlier bedtimes** and **wake times** common</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2">Health Considerations:</p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Medical conditions** can significantly impact sleep</li>
+                          <li>• **Medications** may affect sleep architecture</li>
+                          <li>• **Sleep disorders** become more prevalent</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
 
-
+            {/* Sleep Stage Functions Section - Enhanced Card */}
+            <div className="bg-gradient-to-r from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 rounded-xl p-6 border border-green-200 dark:border-green-700">
+              <button
+                onClick={() => setStageFunctionsExpanded(!stageFunctionsExpanded)}
+                className="w-full flex items-center justify-between"
+                aria-expanded={stageFunctionsExpanded}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl">🧠</span>
+                  <h3 className="font-bold text-lg text-green-800 dark:text-green-200">Sleep Stage Functions (Research-Based)</h3>
+                </div>
+                {stageFunctionsExpanded ? (
+                  <ChevronUp className="h-5 w-5 text-green-600 dark:text-green-400" />
+                ) : (
+                  <ChevronDown className="h-5 w-5 text-green-600 dark:text-green-400" />
+                )}
+              </button>
+              
+              {stageFunctionsExpanded && (
+                <div className="mt-4 text-green-800 dark:text-green-200 space-y-4 text-sm">
+                  {ageGroup === 'newborn' && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="bg-purple-100 dark:bg-purple-800 px-3 py-1 rounded-full text-xs font-bold">Active Sleep (AS)</span>
+                          <span className="text-xs text-muted-foreground">(Newborn equivalent of REM sleep)</span>
+                        </div>
+                        <p className="text-sm mb-3 italic">
+                          **Brain is highly active, resembling wakefulness** — you might observe rapid eye movements, twitching, and vocalizations.
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Supremely critical for rapid brain maturation** and nervous system development</li>
+                          <li>• **Formation of new neural connections (synapses)** — the foundation of learning</li>
+                          <li>• **Actively processes and consolidates new experiences**, even those from in utero</li>
+                          <li>• **Overall development of the nervous system** during this crucial period</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="bg-blue-100 dark:bg-blue-800 px-3 py-1 rounded-full text-xs font-bold">Quiet Sleep (QS)</span>
+                          <span className="text-xs text-muted-foreground">(Comparable to NREM sleep in adults)</span>
+                        </div>
+                        <p className="text-sm mb-3 italic">
+                          **Newborn becomes very still** with deep, regular breathing — lacks the defined NREM sub-stages of older individuals.
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Essential basic restorative functions** for physical recovery</li>
+                          <li>• **Vital physical rest** supporting the immense growth occurring in this period</li>
+                          <li>• **Cellular repair and restoration** during this quiet phase</li>
+                          <li>• **Energy conservation** for the rapid physical development happening daily</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  {ageGroup !== 'newborn' && ageGroup !== 'earlyInfant' && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full text-xs font-bold">N1 (Light Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Transition phase** from wake to sleep</li>
+                          <li>• **Relaxation** of muscle tone and brain activity</li>
+                          <li>• **Preparation** for deeper sleep stages</li>
+                          <li>• Duration: **1-7 minutes** typically</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-blue-100 dark:bg-blue-800 px-3 py-1 rounded-full text-xs font-bold">N2 (Light Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Memory consolidation** through sleep spindles</li>
+                          <li>• **Learning integration** and skill development</li>
+                          <li>• **K-complexes** help maintain sleep continuity</li>
+                          <li>• **Sensory gating** - filtering external stimuli</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-indigo-100 dark:bg-indigo-800 px-3 py-1 rounded-full text-xs font-bold">N3 (Deep Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Physical restoration** and tissue repair</li>
+                          <li>• **Growth hormone release** {(ageGroup === 'toddler' || ageGroup === 'preschooler' || ageGroup === 'schoolAge') ? 'for continued growth' : 'for cellular maintenance'}</li>
+                          <li>• **Immune system strengthening** and recovery</li>
+                          <li>• **Declarative memory consolidation** (facts, events)</li>
+                          <li>• **Metabolic regulation** and energy restoration</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-purple-100 dark:bg-purple-800 px-3 py-1 rounded-full text-xs font-bold">REM Sleep</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Emotional processing** and regulation</li>
+                          <li>• **Procedural memory** consolidation (skills, habits)</li>
+                          <li>• **Creative problem solving** and insight formation</li>
+                          <li>• **Brain maintenance** - clearing metabolic waste</li>
+                          {ageGroup === 'adolescent' && <li>• **Neural reorganization** during brain development</li>}
+                          {(ageGroup === 'youngAdult' || ageGroup === 'adult') && <li>• **Cognitive resilience** and mental flexibility</li>}
+                          {ageGroup === 'olderAdult' && <li>• **Neural protection** and cognitive maintenance</li>}
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  {ageGroup === 'earlyInfant' && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-blue-100 dark:bg-blue-800 px-3 py-1 rounded-full text-xs font-bold">NREM Sleep</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Emerging sleep spindles** support learning</li>
+                          <li>• **Physical growth** and development</li>
+                          <li>• **Immune system maturation**</li>
+                          <li>• **Brain structure development**</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-purple-100 dark:bg-purple-800 px-3 py-1 rounded-full text-xs font-bold">REM Sleep</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Continued brain development** from newborn stage</li>
+                          <li>• **Neural pathway refinement**</li>
+                          <li>• **Sensory processing** integration</li>
+                          <li>• **Emotional development** foundations</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
           )}
         </CardContent>
