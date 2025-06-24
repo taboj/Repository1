@@ -121,6 +121,14 @@ export default function SleepCalculator() {
     
     setRecommendations(newRecommendations);
     setShowResults(true);
+
+    // Scroll to results after a brief delay to allow DOM to update
+    setTimeout(() => {
+      const resultsContainer = document.querySelector('#resultsContainer');
+      if (resultsContainer) {
+        resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   };
 
   useEffect(() => {
