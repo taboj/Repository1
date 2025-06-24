@@ -1460,17 +1460,22 @@ export default function SleepCalculator() {
 
         {/* Results Display */}
         {recommendations.length > 0 && (
-          <Card className="shadow-lg">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold">
-                  {calculationMode === 'wakeUp' ? 'Recommended Bedtimes' : 'Recommended Wake Times'}
-                </h3>
+          <Card className="shadow-xl border-0 bg-white/95 dark:bg-slate-800/95 rounded-2xl transition-all duration-300 hover:shadow-2xl">
+            <CardContent className="p-8 md:p-10">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
+                    <CheckCircle className="h-6 w-6 md:h-7 md:w-7 text-green-600 dark:text-green-400" />
+                  </div>
+                  <h3 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white">
+                    {calculationMode === 'wakeUp' ? 'Recommended Bedtimes' : 'Recommended Wake Times'}
+                  </h3>
+                </div>
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => setCalculationMode(calculationMode === 'wakeUp' ? 'bedTime' : 'wakeUp')}
-                  className="gap-2"
+                  className="gap-2 transition-all duration-300 hover:scale-105 hover:shadow-md border-2"
                 >
                   <RotateCcw className="h-4 w-4" />
                   Reverse
@@ -1652,33 +1657,44 @@ export default function SleepCalculator() {
                 </div>
 
                 {/* Educational footer */}
-                <div className="mt-6 p-4 bg-muted/30 rounded-lg">
-                  <h4 className="font-semibold text-sm mb-2">Sleep Cycle Science</h4>
-                  <div className="grid md:grid-cols-3 gap-4 text-xs text-muted-foreground">
-                    <div>
-                      <span className="font-medium text-green-600 dark:text-green-400">EXCELLENT (5-6 cycles):</span>
+                <div className="mt-8 p-6 bg-gradient-to-r from-slate-50 to-blue-50 dark:from-slate-700/50 dark:to-blue-900/30 rounded-xl border border-slate-200 dark:border-slate-600">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                      <Info className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <h4 className="font-bold text-lg text-gray-800 dark:text-white">Sleep Cycle Science</h4>
+                  </div>
+                  <div className="grid md:grid-cols-3 gap-6 text-base text-gray-700 dark:text-gray-200">
+                    <div className="space-y-2">
+                      <span className="font-bold text-green-700 dark:text-green-400 flex items-center gap-2">
+                        <Star className="h-4 w-4" /> EXCELLENT (5-6 cycles):
+                      </span>
                       <p>Optimal sleep duration that aligns with natural circadian rhythms and allows complete recovery.</p>
                     </div>
-                    <div>
-                      <span className="font-medium text-yellow-600 dark:text-yellow-400">FAIR (4 or 7+ cycles):</span>
+                    <div className="space-y-2">
+                      <span className="font-bold text-yellow-700 dark:text-yellow-400 flex items-center gap-2">
+                        <AlertCircle className="h-4 w-4" /> FAIR (4 or 7+ cycles):
+                      </span>
                       <p>Either insufficient sleep time or potential oversleeping that may disrupt natural wake cycles.</p>
                     </div>
-                    <div>
-                      <span className="font-medium text-red-600 dark:text-red-400">POOR (≤3 cycles):</span>
+                    <div className="space-y-2">
+                      <span className="font-bold text-red-700 dark:text-red-400 flex items-center gap-2">
+                        <XCircle className="h-4 w-4" /> POOR (≤3 cycles):
+                      </span>
                       <p>Dangerously insufficient sleep that impairs cognitive function, immune system, and overall health.</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Edit Wake-up Time Button */}
-                <div className="flex justify-center mt-6">
+                <div className="flex justify-center mt-8">
                   <Button
-                    variant="outline"
+                    variant="default"
                     onClick={scrollToTimeInput}
-                    className="gap-2 text-base md:text-sm px-6 py-3 md:px-4 md:py-2"
+                    className="gap-3 text-lg px-8 py-4 rounded-xl shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
                     aria-label="Scroll to time input section to edit wake-up time"
                   >
-                    <AlarmClock className="h-4 w-4" aria-hidden="true" />
+                    <AlarmClock className="h-5 w-5" aria-hidden="true" />
                     Edit wake-up time
                   </Button>
                 </div>
@@ -1688,36 +1704,46 @@ export default function SleepCalculator() {
         )}
 
         {/* Age-Specific Educational Section with Collapsible Analysis */}
-        <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-slate-800 dark:to-slate-700 border-0">
-          <CardContent className="p-4 md:p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl md:text-2xl font-bold text-slate-700 dark:text-slate-200">Sleep Science for {ageData.name}</h2>
+        <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-slate-800 dark:to-slate-700 border-0 shadow-xl rounded-2xl transition-all duration-300 hover:shadow-2xl">
+          <CardContent className="p-8 md:p-10">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-cyan-100 dark:bg-cyan-900 rounded-lg">
+                  <Moon className="h-7 w-7 text-cyan-600 dark:text-cyan-400" />
+                </div>
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-100">Sleep Science for {ageData.name}</h2>
+              </div>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setAnalysisExpanded(!analysisExpanded)}
-                className="shrink-0"
+                className="shrink-0 transition-all duration-300 hover:scale-110 hover:bg-white/50 dark:hover:bg-slate-700/50 rounded-xl p-3"
                 aria-expanded={analysisExpanded}
                 aria-controls="analysis-content"
                 aria-label={`${analysisExpanded ? 'Collapse' : 'Expand'} detailed sleep analysis`}
               >
                 {analysisExpanded ? (
-                  <ChevronUp className="h-5 w-5" aria-hidden="true" />
+                  <ChevronUp className="h-6 w-6" aria-hidden="true" />
                 ) : (
-                  <ChevronDown className="h-5 w-5" aria-hidden="true" />
+                  <ChevronDown className="h-6 w-6" aria-hidden="true" />
                 )}
               </Button>
             </div>
             
             {/* Summary always visible */}
-            <div className="mb-4 p-4 bg-white/50 dark:bg-slate-700/50 rounded-lg">
-              <p className="text-base md:text-sm text-slate-800 dark:text-slate-100">
-                <strong>Quick Facts:</strong> {ageData.name} need {ageData.sleepRange} of sleep with cycles lasting {getCycleLength(settings.age)} minutes.
-                {getAgeGroup(settings.age) === 'newborn' && ' Newborns have unique sleep patterns starting with REM.'}
-                {getAgeGroup(settings.age) === 'adolescent' && ' Natural circadian shift delays bedtime by 1-2 hours.'}
-                {(getAgeGroup(settings.age) === 'youngAdult' || getAgeGroup(settings.age) === 'adult') && ' Mature sleep architecture with consistent 90-110 minute cycles.'}
-                {getAgeGroup(settings.age) === 'olderAdult' && ' Sleep becomes lighter with more frequent night awakenings.'}
-              </p>
+            <div className="mb-6 p-6 bg-white/70 dark:bg-slate-700/70 rounded-xl border border-white/50 dark:border-slate-600/50 shadow-sm">
+              <div className="flex items-start gap-3">
+                <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg shrink-0 mt-1">
+                  <Info className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                </div>
+                <p className="text-lg text-slate-800 dark:text-slate-100 leading-relaxed">
+                  <strong className="text-blue-700 dark:text-blue-300">Quick Facts:</strong> {ageData.name} need {ageData.sleepRange} of sleep with cycles lasting {getCycleLength(settings.age)} minutes.
+                  {getAgeGroup(settings.age) === 'newborn' && ' Newborns have unique sleep patterns starting with REM.'}
+                  {getAgeGroup(settings.age) === 'adolescent' && ' Natural circadian shift delays bedtime by 1-2 hours.'}
+                  {(getAgeGroup(settings.age) === 'youngAdult' || getAgeGroup(settings.age) === 'adult') && ' Mature sleep architecture with consistent 90-110 minute cycles.'}
+                  {getAgeGroup(settings.age) === 'olderAdult' && ' Sleep becomes lighter with more frequent night awakenings.'}
+                </p>
+              </div>
             </div>
 
             {analysisExpanded && (
@@ -1778,33 +1804,32 @@ export default function SleepCalculator() {
         {/* Sleep Architecture Component is now embedded within the Sleep Cycle Visualization */}
       </div>
 
-      {/* Sticky Edit Wake-up Time Button */}
+      {/* Floating Edit Wake-up Time Button */}
       <Button
         onClick={scrollToTimeInput}
-        className={`fixed top-4 right-4 z-40 shadow-lg transition-all duration-300 text-sm ${
-          showStickyEditButton ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
+        className={`fixed top-6 right-6 z-40 shadow-xl transition-all duration-500 text-base px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 hover:scale-110 hover:shadow-2xl ${
+          showStickyEditButton ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8 pointer-events-none'
         }`}
-        variant="secondary"
         size="sm"
-        aria-label="Edit wake-up time (sticky button)"
+        aria-label="Edit wake-up time (floating button)"
         tabIndex={showStickyEditButton ? 0 : -1}
       >
-        <AlarmClock className="h-4 w-4 mr-2" aria-hidden="true" />
+        <AlarmClock className="h-5 w-5 mr-2" aria-hidden="true" />
         Edit Time
       </Button>
 
-      {/* Back to Top Button with fade transition */}
+      {/* Back to Top Button with enhanced styling */}
       <Button
         onClick={scrollToTop}
-        className={`fixed bottom-6 right-6 z-50 rounded-full w-12 h-12 md:w-14 md:h-14 shadow-lg transition-opacity duration-300 ${
-          showBackToTop ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        className={`fixed bottom-6 right-6 z-50 rounded-full w-14 h-14 md:w-16 md:h-16 shadow-xl transition-all duration-500 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 hover:scale-110 hover:shadow-2xl ${
+          showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
         }`}
         size="icon"
         title="Back to top"
         aria-label="Scroll to top of page"
         tabIndex={showBackToTop ? 0 : -1}
       >
-        <ArrowUp className="h-5 w-5 md:h-6 md:w-6" aria-hidden="true" />
+        <ArrowUp className="h-6 w-6 md:h-7 md:w-7" aria-hidden="true" />
       </Button>
     </div>
   );
