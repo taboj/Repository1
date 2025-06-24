@@ -1257,7 +1257,6 @@ export default function SleepCalculator() {
           </Button>
         </div>
       </div>
-
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-8">
         {/* Dual Calculation Modes */}
         <Card className="shadow-lg">
@@ -1300,7 +1299,7 @@ export default function SleepCalculator() {
                   max={12}
                   type="hour"
                 />
-                <div className="text-6xl md:text-8xl font-bold text-muted-foreground mx-2">:</div>
+                <div className="md:text-8xl font-bold text-muted-foreground mx-2 text-[52px]">:</div>
                 <TimeWheel
                   value={selectedTime.minute}
                   onChange={(minute) => setSelectedTime(prev => ({ ...prev, minute }))}
