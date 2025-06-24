@@ -1051,7 +1051,7 @@ export default function SleepCalculator() {
               <span className="font-medium text-green-800 dark:text-green-300">Recommended Wake Time:</span>
             </div>
             <p className="text-sm text-green-700 dark:text-green-400">
-              {ageGroup === 'newborn' ? 'At the end of a full ~45-min proto-cycle, ideally during light Quiet Sleep. This is generally the easiest time to wake your baby, as they are transitioning out of a sleep state, making the wake-up smoother and less disruptive for both parent and child.' :
+              {ageGroup === 'newborn' ? 'At the end of a full ~45 min proto-cycle, ideally during light Quiet Sleep. This is generally the easiest time to wake your baby, as they are transitioning out of a sleep state, making the wake-up smoother and less disruptive for both parent and child.' :
                ageGroup === 'earlyInfant' ? 'Align with the light sleep stage at the end of a full ~50-minute cycle. Waking during a light sleep stage helps to avoid waking them from deep sleep, which can lead to grogginess or fussiness.' :
                ageGroup === 'lateInfant' ? 'At the end of a full ~60-minute cycle, ideally during light N2. Waking during this lighter stage makes the transition smoother and helps avoid the grogginess and fussiness often associated with being roused from deep sleep.' :
                ageGroup === 'toddler' ? 'Aim to wake at the end of a full ~70-minute cycle, ideally during N2 (light sleep). This timing helps to avoid waking them from deep sleep or active REM, which can lead to notable grogginess, fussiness, or "sleep inertia" in toddlers.' :
