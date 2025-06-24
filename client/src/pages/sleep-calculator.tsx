@@ -356,7 +356,7 @@ export default function SleepCalculator() {
               <div className="text-xs text-purple-600 dark:text-purple-300 mb-1 font-medium">⏱️ Cycle Length Range</div>
               <div className="font-bold text-purple-800 dark:text-purple-100 text-lg">
                 {ageGroup === 'newborn' ? '40-50 mins' : 
-                 ageGroup === 'earlyInfant' ? '45–55 mins' :
+                 ageGroup === 'earlyInfant' ? '45-55 mins' :
                  ageGroup === 'lateInfant' ? '50–65 mins' :
                  ageGroup === 'toddler' ? '60–75 mins' :
                  ageGroup === 'preschooler' ? '70–85 mins' :
