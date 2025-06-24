@@ -1538,7 +1538,7 @@ export default function SleepCalculator() {
                           <span>🌙</span> Unique Sleep Start
                         </p>
                         <ul className="space-y-1 pl-4">
-                          <li>• **Newborns are the only age group** that start sleep in Active Sleep (their version of REM)</li>
+                          <li>• Newborns are the only age group that start sleep in Active Sleep (their version of REM)</li>
                           <li>• As they grow, they'll **shift to starting in quiet sleep** like older kids and adults</li>
                           <li>• This unique pattern supports **critical brain development** during this crucial period</li>
                         </ul>
