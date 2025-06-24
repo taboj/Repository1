@@ -123,7 +123,7 @@ export default function SleepCalculator() {
     updateRecommendations();
   }, [calculationMode, selectedTime, settings]);
 
-  // Touch-friendly time picker with swipe gestures
+  // Compact time picker for step 2
   const TimeWheel = ({ value, onChange, max, type }: { 
     value: number; 
     onChange: (val: number) => void; 
@@ -152,20 +152,22 @@ export default function SleepCalculator() {
           variant="ghost"
           size="icon"
           onClick={increment}
-          className="h-12 w-12 text-muted-foreground hover:text-foreground"
+          className="h-8 w-8 text-muted-foreground hover:text-foreground"
+          aria-label={`Increase ${type}`}
         >
-          <ChevronUp className="h-6 w-6" />
+          <ChevronUp className="h-4 w-4" />
         </Button>
-        <div className="md:text-8xl font-bold my-4 min-w-[120px] text-center select-none text-[52px]">
+        <div className="text-2xl md:text-3xl font-bold my-2 min-w-[60px] text-center select-none">
           {type === 'hour' || type === 'minute' ? value.toString().padStart(2, '0') : value}
         </div>
         <Button
           variant="ghost"
           size="icon"
           onClick={decrement}
-          className="h-12 w-12 text-muted-foreground hover:text-foreground"
+          className="h-8 w-8 text-muted-foreground hover:text-foreground"
+          aria-label={`Decrease ${type}`}
         >
-          <ChevronDown className="h-6 w-6" />
+          <ChevronDown className="h-4 w-4" />
         </Button>
       </div>
     );
@@ -1364,95 +1366,157 @@ export default function SleepCalculator() {
         </div>
       </div>
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-8">
-        {/* Dual Calculation Modes */}
-        <Card className="shadow-lg">
-          <CardContent className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-              <Button
-                variant={calculationMode === 'wakeUp' ? 'default' : 'outline'}
-                className="h-20 flex flex-col gap-2 text-left justify-center"
-                onClick={() => setCalculationMode('wakeUp')}
-              >
-                <Sun className="h-6 w-6 mx-auto" />
-                <div className="text-center">
-                  <div className="font-semibold">I want to wake up at...</div>
-                  <div className="text-sm opacity-70">Calculate ideal bedtime</div>
-                </div>
-              </Button>
-              
-              <Button
-                variant={calculationMode === 'bedTime' ? 'default' : 'outline'}
-                className="h-20 flex flex-col gap-2 text-left justify-center"
-                onClick={() => setCalculationMode('bedTime')}
-              >
-                <Moon className="h-6 w-6 mx-auto" />
-                <div className="text-center">
-                  <div className="font-semibold">I want to go to bed now...</div>
-                  <div className="text-sm opacity-70">Calculate wake up times</div>
-                </div>
-              </Button>
-            </div>
-
-            {/* Large Time Picker */}
-            <div className="time-input-section text-center mb-8">
-              <h2 className="text-2xl font-bold mb-6">
-                {calculationMode === 'wakeUp' ? 'Select your wake up time:' : 'Current time:'}
-              </h2>
-              <div className="flex items-center justify-center gap-4 bg-muted/30 rounded-2xl p-8">
-                <TimeWheel
-                  value={selectedTime.hour}
-                  onChange={(hour) => setSelectedTime(prev => ({ ...prev, hour }))}
-                  max={12}
-                  type="hour"
-                />
-                <div className="md:text-8xl font-bold text-muted-foreground mx-2 text-[52px]">:</div>
-                <TimeWheel
-                  value={selectedTime.minute}
-                  onChange={(minute) => setSelectedTime(prev => ({ ...prev, minute }))}
-                  max={45}
-                  type="minute"
-                />
-                <PeriodWheel />
+        {/* Main Input Section - Redesigned 3-Step Flow */}
+        <Card className="shadow-xl border-0 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-2xl transition-all duration-300 hover:shadow-2xl">
+          <CardContent className="p-8 md:p-12">
+            {/* Section Header */}
+            <div className="text-center mb-10">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <Target className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white">Customize Your Sleep Goal</h2>
               </div>
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                Choose when you want to sleep or wake up, then personalize your recommendations
+              </p>
             </div>
 
-            {/* Input Controls */}
-            <div className="space-y-6">
-              <h3 className="text-xl font-bold">Personalization</h3>
-              
-              {/* Age Input */}
-              <div className="space-y-3">
-                <label className="font-medium">Your Age</label>
-                <Select 
-                  value={settings.age.toString()} 
-                  onValueChange={(value) => {
-                    const ageValue = parseFloat(value);
-                    setSettings(prev => ({ 
-                      ...prev, 
-                      age: ageValue,
-                      selectedCycles: calculateOptimalCyclesForAge(ageValue)[0]
-                    }));
-                  }}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select your age" />
-                  </SelectTrigger>
-                  <SelectContent className="max-h-60">
-                    <SelectItem value="0.08">0–2 months (Newborn)</SelectItem>
-                    <SelectItem value="0.33">3–5 months (Early Infant)</SelectItem>
-                    <SelectItem value="0.71">6–11 months (Late Infant)</SelectItem>
-                    <SelectItem value="1.5">12–23 months (Toddler)</SelectItem>
-                    <SelectItem value="3">2–4 years (Preschooler)</SelectItem>
-                    <SelectItem value="8.5">5–12 years (School Age)</SelectItem>
-                    <SelectItem value="15">13–17 years (Adolescent)</SelectItem>
-                    <SelectItem value="21.5">18–25 years (Young Adult)</SelectItem>
-                    <SelectItem value="45">26–64 years (Adult)</SelectItem>
-                    <SelectItem value="70">65+ years (Older Adult)</SelectItem>
-                  </SelectContent>
-                </Select>
-                <div className="text-sm text-muted-foreground">
-                  Age Group: {ageData.name} | Sleep Cycle: {cycleLength} minutes | Fall asleep time: ~{settings.fallAsleepTime} minutes
+            <div className="space-y-12">
+              {/* Step 1: Select Goal */}
+              <div className="space-y-6">
+                <div className="text-center">
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-800 dark:text-white mb-2">Step 1: Select Goal</h3>
+                  <p className="text-base text-gray-600 dark:text-gray-300">What would you like to plan?</p>
                 </div>
+
+                <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                  {/* Wake Up Button Card */}
+                  <Button
+                    variant={calculationMode === 'wakeUp' ? 'default' : 'outline'}
+                    onClick={() => setCalculationMode('wakeUp')}
+                    className={`h-auto p-6 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg ${
+                      calculationMode === 'wakeUp' 
+                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white border-0' 
+                        : 'bg-white dark:bg-slate-700 border-2 border-blue-200 dark:border-blue-700 hover:bg-blue-50 dark:hover:bg-slate-600'
+                    }`}
+                    aria-label="Plan when to wake up"
+                  >
+                    <div className="flex flex-col items-center gap-3 text-center">
+                      <Sun className="h-8 w-8" />
+                      <div>
+                        <div className="text-lg font-bold">I want to wake up at...</div>
+                        <div className="text-sm opacity-90">Plan my bedtime</div>
+                      </div>
+                    </div>
+                  </Button>
+
+                  {/* Go to Bed Button Card */}
+                  <Button
+                    variant={calculationMode === 'bedTime' ? 'default' : 'outline'}
+                    onClick={() => setCalculationMode('bedTime')}
+                    className={`h-auto p-6 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg ${
+                      calculationMode === 'bedTime' 
+                        ? 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white border-0' 
+                        : 'bg-white dark:bg-slate-700 border-2 border-purple-200 dark:border-purple-700 hover:bg-purple-50 dark:hover:bg-slate-600'
+                    }`}
+                    aria-label="Plan when to go to bed"
+                  >
+                    <div className="flex flex-col items-center gap-3 text-center">
+                      <Moon className="h-8 w-8" />
+                      <div>
+                        <div className="text-lg font-bold">I want to go to bed now...</div>
+                        <div className="text-sm opacity-90">Plan my wake time</div>
+                      </div>
+                    </div>
+                  </Button>
+                </div>
+              </div>
+
+              {/* Step 2: Choose Time */}
+              <div className="space-y-6">
+                <div className="text-center">
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-800 dark:text-white mb-2">Step 2: Select Time</h3>
+                  <p className="text-base text-gray-600 dark:text-gray-300">
+                    {calculationMode === 'wakeUp' ? 'When do you want to wake up?' : 'What time are you going to bed?'}
+                  </p>
+                </div>
+
+                <div className="flex justify-center">
+                  <div className="w-full max-w-md bg-gray-50 dark:bg-slate-700 rounded-2xl p-6">
+                    <div className="flex items-center justify-center gap-4">
+                      <TimeWheel
+                        value={selectedTime.hour}
+                        onChange={(hour) => setSelectedTime(prev => ({ ...prev, hour }))}
+                        max={12}
+                        type="hour"
+                      />
+                      <div className="text-2xl md:text-3xl font-bold text-muted-foreground">:</div>
+                      <TimeWheel
+                        value={selectedTime.minute}
+                        onChange={(minute) => setSelectedTime(prev => ({ ...prev, minute }))}
+                        max={45}
+                        type="minute"
+                      />
+                      <PeriodWheel />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Step 3: Personalization */}
+              <div className="space-y-6">
+                <div className="text-center">
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-800 dark:text-white mb-2">Step 3: Personalization</h3>
+                  <p className="text-base text-gray-600 dark:text-gray-300">Help us customize your sleep recommendations</p>
+                </div>
+
+                <div className="max-w-md mx-auto bg-gray-50 dark:bg-slate-700 rounded-2xl p-6">
+                  <div className="space-y-4">
+                    <label htmlFor="age-select" className="block text-lg font-semibold text-gray-800 dark:text-white">
+                      Your Age
+                    </label>
+                    <Select 
+                      value={settings.age.toString()} 
+                      onValueChange={(value) => {
+                        const ageValue = parseFloat(value);
+                        setSettings(prev => ({ 
+                          ...prev, 
+                          age: ageValue,
+                          selectedCycles: calculateOptimalCyclesForAge(ageValue)[0]
+                        }));
+                      }}
+                    >
+                      <SelectTrigger id="age-select" className="w-full h-12 text-base" aria-label="Select your age range">
+                        <SelectValue placeholder="Select your age" />
+                      </SelectTrigger>
+                      <SelectContent className="max-h-60">
+                        <SelectItem value="0.08">0–2 months (Newborn)</SelectItem>
+                        <SelectItem value="0.33">3–5 months (Early Infant)</SelectItem>
+                        <SelectItem value="0.71">6–11 months (Late Infant)</SelectItem>
+                        <SelectItem value="1.5">12–23 months (Toddler)</SelectItem>
+                        <SelectItem value="3">2–4 years (Preschooler)</SelectItem>
+                        <SelectItem value="8.5">5–12 years (School Age)</SelectItem>
+                        <SelectItem value="15">13–17 years (Adolescent)</SelectItem>
+                        <SelectItem value="21.5">18–25 years (Young Adult)</SelectItem>
+                        <SelectItem value="45">26–64 years (Adult)</SelectItem>
+                        <SelectItem value="70">65+ years (Older Adult)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <div className="text-sm text-muted-foreground">
+                      Age Group: {ageData.name} | Sleep Cycle: {cycleLength} minutes | Fall asleep time: ~{settings.fallAsleepTime} minutes
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Calculate Button */}
+              <div className="text-center pt-6">
+                <Button 
+                  onClick={updateRecommendations}
+                  className="px-12 py-4 text-lg font-semibold rounded-xl shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                >
+                  <AlarmClock className="mr-3 h-6 w-6" />
+                  Calculate Sleep Times
+                </Button>
               </div>
             </div>
           </CardContent>
