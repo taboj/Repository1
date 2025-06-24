@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Moon, Sun, AlarmClock, Bell, RotateCcw, ChevronUp, ChevronDown } from "lucide-react";
+import { Moon, Sun, AlarmClock, Bell, RotateCcw, ChevronUp, ChevronDown, ArrowUp, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -43,6 +43,31 @@ export default function SleepCalculator() {
     }));
   }, [settings.age]);
   const [recommendations, setRecommendations] = useState<SleepRecommendation[]>([]);
+  
+  // UX improvement states
+  const [sleepArchitectureExpanded, setSleepArchitectureExpanded] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  // Scroll tracking for back-to-top button
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 500);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Smooth scroll functions
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const scrollToTimeInput = () => {
+    const timeSection = document.querySelector('.time-input-section');
+    if (timeSection) {
+      timeSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const updateRecommendations = () => {
     const timeString = `${selectedTime.hour}:${selectedTime.minute.toString().padStart(2, '0')}`;
@@ -227,7 +252,20 @@ export default function SleepCalculator() {
     return (
       <Card className="mt-6">
         <CardContent className="p-6">
-          <h4 className="font-semibold mb-6">Sleep Architecture: {ageData.name}</h4>
+          <button
+            onClick={() => setSleepArchitectureExpanded(!sleepArchitectureExpanded)}
+            className="w-full flex items-center justify-between p-3 bg-muted/20 rounded-lg hover:bg-muted/30 transition-colors"
+          >
+            <h4 className="font-semibold text-left">Sleep Architecture: {ageData.name}</h4>
+            {sleepArchitectureExpanded ? (
+              <ChevronUp className="h-5 w-5 text-muted-foreground" />
+            ) : (
+              <ChevronDown className="h-5 w-5 text-muted-foreground" />
+            )}
+          </button>
+          
+          {sleepArchitectureExpanded && (
+            <div className="mt-6">
           
           {/* Key Sleep Metrics */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -1214,6 +1252,8 @@ export default function SleepCalculator() {
               )}
             </div>
           </div>
+            </div>
+          )}
         </CardContent>
       </Card>
     );
@@ -1288,8 +1328,8 @@ export default function SleepCalculator() {
             </div>
 
             {/* Large Time Picker */}
-            <div className="text-center mb-8">
-              <h2 className="text-lg font-semibold mb-6">
+            <div className="time-input-section text-center mb-8">
+              <h2 className="text-2xl font-bold mb-6">
                 {calculationMode === 'wakeUp' ? 'Select your wake up time:' : 'Current time:'}
               </h2>
               <div className="flex items-center justify-center gap-4 bg-muted/30 rounded-2xl p-8">
@@ -1312,7 +1352,7 @@ export default function SleepCalculator() {
 
             {/* Input Controls */}
             <div className="space-y-6">
-              <h3 className="text-lg font-semibold">Personalization</h3>
+              <h3 className="text-xl font-bold">Personalization</h3>
               
               {/* Age Input */}
               <div className="space-y-3">
@@ -1563,6 +1603,18 @@ export default function SleepCalculator() {
                     </div>
                   </div>
                 </div>
+
+                {/* Edit Wake-up Time Button */}
+                <div className="flex justify-center mt-6">
+                  <Button
+                    variant="outline"
+                    onClick={scrollToTimeInput}
+                    className="gap-2"
+                  >
+                    <AlarmClock className="h-4 w-4" />
+                    Edit wake-up time
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -1571,13 +1623,13 @@ export default function SleepCalculator() {
         {/* Age-Specific Educational Section */}
         <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-slate-800 dark:to-slate-700 border-0">
           <CardContent className="p-6">
-            <h3 className="text-lg font-semibold mb-4">Sleep Science for {ageData.name}</h3>
+            <h2 className="text-2xl font-bold mb-4 text-slate-700 dark:text-slate-200">Sleep Science for {ageData.name}</h2>
             
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div className="space-y-3">
-                <h4 className="font-semibold">Age-Specific Sleep Patterns</h4>
+                <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">Age-Specific Sleep Patterns</h3>
                 <div className="space-y-2">
-                  <div className="text-sm">
+                  <div className="text-sm text-slate-700 dark:text-slate-200">
                     <span className="font-medium">Recommended sleep:</span> {ageData.sleepRange}
                   </div>
                   <div className="text-sm">
@@ -1603,7 +1655,7 @@ export default function SleepCalculator() {
             </div>
 
             <div className="text-center p-4 bg-background/50 rounded-lg">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-slate-700 dark:text-slate-200">
                 <strong>Research-based insights:</strong> Sleep architecture evolves dramatically across the lifespan. {' '}
                 {getAgeGroup(settings.age) === 'newborn' && 'Newborns enter sleep through REM (unique pattern) with 50% active sleep and 30-60 minute cycles for critical neural development.'}
                 {(getAgeGroup(settings.age) === 'earlyInfant' || getAgeGroup(settings.age) === 'lateInfant') && 'By 3 months, circadian rhythms establish and sleep onset shifts to NREM. Cycles lengthen from 60-90 minutes as brain matures.'}
@@ -1617,7 +1669,21 @@ export default function SleepCalculator() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Sleep Architecture Component is now embedded within the Sleep Cycle Visualization */}
       </div>
+
+      {/* Back to Top Button */}
+      {showBackToTop && (
+        <Button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 z-50 rounded-full w-12 h-12 shadow-lg"
+          size="icon"
+          title="Back to top"
+        >
+          <ArrowUp className="h-5 w-5" />
+        </Button>
+      )}
     </div>
   );
 }
