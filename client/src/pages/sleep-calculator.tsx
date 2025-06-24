@@ -67,9 +67,11 @@ export default function SleepCalculator() {
   };
 
   const scrollToTimeInput = () => {
-    const timeInputSection = document.querySelector('[data-time-input]');
-    if (timeInputSection) {
-      timeInputSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const mainInputSection = document.querySelector('[data-main-input]');
+    if (mainInputSection) {
+      mainInputSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
