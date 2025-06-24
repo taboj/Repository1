@@ -341,17 +341,17 @@ export default function SleepCalculator() {
           </div>
           
           {sleepArchitectureExpanded && (
-            <div id="sleep-architecture-content" className="mt-6">
+            <div id="sleep-architecture-content" className="mt-6 space-y-6">
           
           {/* Key Sleep Metrics */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <div className="text-center p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
-              <div className="text-xs text-slate-600 dark:text-slate-300 mb-1">Total Sleep Duration</div>
-              <div className="font-semibold text-slate-800 dark:text-slate-100">{ageData.sleepRange}</div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg border border-blue-200 dark:border-blue-700">
+              <div className="text-xs text-blue-600 dark:text-blue-300 mb-1 font-medium">💤 Total Sleep Duration</div>
+              <div className="font-bold text-blue-800 dark:text-blue-100 text-lg">{ageData.sleepRange}</div>
             </div>
-            <div className="text-center p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
-              <div className="text-xs text-slate-600 dark:text-slate-300 mb-1">Cycle Length Range</div>
-              <div className="font-semibold text-slate-800 dark:text-slate-100">
+            <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-lg border border-purple-200 dark:border-purple-700">
+              <div className="text-xs text-purple-600 dark:text-purple-300 mb-1 font-medium">⏱️ Cycle Length Range</div>
+              <div className="font-bold text-purple-800 dark:text-purple-100 text-lg">
                 {ageGroup === 'newborn' ? '40–50 mins' : 
                  ageGroup === 'earlyInfant' ? '45–55 mins' :
                  ageGroup === 'lateInfant' ? '50–65 mins' :
@@ -363,30 +363,26 @@ export default function SleepCalculator() {
                  ageGroup === 'adult' ? '90–120 mins' : '90–110 mins'}
               </div>
             </div>
-            <div className="text-center p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
-              <div className="text-xs text-slate-600 dark:text-slate-300 mb-1">Average Cycle Duration</div>
-              <div className="font-semibold text-slate-800 dark:text-slate-100">{cycleLength} mins</div>
+            <div className="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-lg border border-green-200 dark:border-green-700">
+              <div className="text-xs text-green-600 dark:text-green-300 mb-1 font-medium">🔄 Average Cycle Duration</div>
+              <div className="font-bold text-green-800 dark:text-green-100 text-lg">{cycleLength} mins</div>
             </div>
-            <div className="text-center p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
-              <div className="text-xs text-slate-600 dark:text-slate-300 mb-1">Fall Asleep Time</div>
-              <div className="font-semibold text-slate-800 dark:text-slate-100">~{settings.fallAsleepTime} mins</div>
+            <div className="text-center p-4 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 rounded-lg border border-orange-200 dark:border-orange-700">
+              <div className="text-xs text-orange-600 dark:text-orange-300 mb-1 font-medium">⌛ Fall Asleep Time</div>
+              <div className="font-bold text-orange-800 dark:text-orange-100 text-lg">~{settings.fallAsleepTime} mins</div>
             </div>
           </div>
 
-          {/* Sleep Onset Time with tooltip accessibility */}
-          <div className="mb-6 p-4 bg-slate-100 dark:bg-slate-700 rounded-lg">
-            <div className="text-sm font-medium mb-2 text-slate-800 dark:text-slate-100">
-              <span 
-                tabIndex="0"
-                role="tooltip"
-                aria-describedby="sleep-onset-tooltip"
-                className="border-b border-dotted border-slate-400 cursor-help"
-              >
-                Sleep Onset Time:
-              </span>
-              <div id="sleep-onset-tooltip" className="sr-only">The time it takes to transition from wake to the first sleep stage</div>
+          {/* Sleep Onset Flow Card */}
+          <div className="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 rounded-xl p-6 border border-indigo-200 dark:border-indigo-700">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-2xl">🛏️</span>
+              <h3 className="text-lg font-bold text-indigo-800 dark:text-indigo-200">Sleep Onset Flow</h3>
             </div>
-            <div className="text-slate-800 dark:text-slate-100 font-semibold">
+            <div className="text-indigo-700 dark:text-indigo-300 font-medium mb-2">
+              How Sleep Begins:
+            </div>
+            <div className="text-indigo-800 dark:text-indigo-200 leading-relaxed">
               {ageGroup === 'newborn' ? 'Often begins in Active Sleep' :
                ageGroup === 'earlyInfant' ? 'Transitions to NREM, though REM-onset still possible' :
                ageGroup === 'lateInfant' ? 'Technically begins in NREM stage N1, but this stage is very short. Most observable sleep begins in N2.' :
@@ -402,13 +398,125 @@ export default function SleepCalculator() {
 
 
 
-          {/* Sleep Stage Composition Bar with improved contrast */}
-          <div className="mb-6">
-            <h5 className="font-medium text-sm mb-3 text-slate-800 dark:text-slate-100">
-              <ScienceTooltip term="Sleep Cycle" definition="A complete sequence of sleep stages that repeats throughout the night, typically lasting 90-120 minutes">
-                <span>Sleep Stage Composition:</span>
-              </ScienceTooltip>
-            </h5>
+          {/* Sleep Stage Composition with Donut Chart */}
+          <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl p-6 border border-purple-200 dark:border-purple-700">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-2xl">📊</span>
+              <h3 className="font-bold text-lg text-purple-800 dark:text-purple-200">
+                <ScienceTooltip term="Sleep Cycle" definition="A complete sequence of sleep stages that repeats throughout the night, typically lasting 90-120 minutes">
+                  <span>Sleep Stage Composition</span>
+                </ScienceTooltip>
+              </h3>
+            </div>
+            
+            {/* Donut Chart Container */}
+            <div className="flex flex-col lg:flex-row items-center gap-6 mb-6">
+              {/* Simple Donut Chart using CSS */}
+              <div className="relative w-48 h-48 mx-auto lg:mx-0">
+                <div className="absolute inset-0 rounded-full" style={{
+                  background: ageGroup === 'newborn' ? 
+                    `conic-gradient(#a855f7 0% 50%, #3b82f6 50% 100%)` :
+                    ageGroup === 'earlyInfant' ?
+                    `conic-gradient(#3b82f6 0% 60%, #a855f7 60% 100%)` :
+                    ageGroup === 'lateInfant' ?
+                    `conic-gradient(#9ca3af 0% 5%, #3b82f6 5% 45%, #4f46e5 45% 70%, #a855f7 70% 100%)` :
+                    (ageGroup === 'toddler' || ageGroup === 'preschooler') ?
+                    `conic-gradient(#9ca3af 0% 5%, #3b82f6 5% 50%, #4f46e5 50% 75%, #a855f7 75% 100%)` :
+                    (ageGroup === 'schoolAge' || ageGroup === 'adolescent') ?
+                    `conic-gradient(#9ca3af 0% 5%, #3b82f6 5% 55%, #4f46e5 55% 75%, #a855f7 75% 100%)` :
+                    (ageGroup === 'youngAdult' || ageGroup === 'adult') ?
+                    `conic-gradient(#9ca3af 0% 5%, #3b82f6 5% 50%, #4f46e5 50% 75%, #a855f7 75% 100%)` :
+                    `conic-gradient(#9ca3af 0% 5%, #3b82f6 5% 55%, #4f46e5 55% 70%, #a855f7 70% 90%)`
+                }}>
+                </div>
+                {/* Center hole for donut effect */}
+                <div className="absolute inset-6 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-xs text-muted-foreground">One Cycle</div>
+                    <div className="font-bold text-sm">{cycleLength}min</div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Legend */}
+              <div className="flex-1 space-y-3">
+                {ageGroup === 'newborn' ? (
+                  <>
+                    <div className="flex items-center gap-3 p-3 bg-white/60 dark:bg-slate-800/60 rounded-lg">
+                      <div className="w-4 h-4 rounded-full bg-purple-500 flex-shrink-0"></div>
+                      <div className="flex-1">
+                        <div className="font-medium text-purple-800 dark:text-purple-200">🧠 Active Sleep (AS)</div>
+                        <div className="text-sm text-purple-600 dark:text-purple-300">50% - Critical for neural maturation</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 bg-white/60 dark:bg-slate-800/60 rounded-lg">
+                      <div className="w-4 h-4 rounded-full bg-blue-500 flex-shrink-0"></div>
+                      <div className="flex-1">
+                        <div className="font-medium text-blue-800 dark:text-blue-200">💤 Quiet Sleep (QS)</div>
+                        <div className="text-sm text-blue-600 dark:text-blue-300">50% - Basic restorative functions</div>
+                      </div>
+                    </div>
+                  </>
+                ) : ageGroup === 'earlyInfant' ? (
+                  <>
+                    <div className="flex items-center gap-3 p-3 bg-white/60 dark:bg-slate-800/60 rounded-lg">
+                      <div className="w-4 h-4 rounded-full bg-blue-500 flex-shrink-0"></div>
+                      <div className="flex-1">
+                        <div className="font-medium text-blue-800 dark:text-blue-200">💤 NREM Sleep</div>
+                        <div className="text-sm text-blue-600 dark:text-blue-300">60% - Physical restoration</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 bg-white/60 dark:bg-slate-800/60 rounded-lg">
+                      <div className="w-4 h-4 rounded-full bg-purple-500 flex-shrink-0"></div>
+                      <div className="flex-1">
+                        <div className="font-medium text-purple-800 dark:text-purple-200">🧠 REM Sleep</div>
+                        <div className="text-sm text-purple-600 dark:text-purple-300">40% - Brain development</div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="flex items-center gap-3 p-3 bg-white/60 dark:bg-slate-800/60 rounded-lg">
+                      <div className="w-4 h-4 rounded-full bg-gray-400 flex-shrink-0"></div>
+                      <div className="flex-1">
+                        <div className="font-medium text-gray-700 dark:text-gray-300">🛏️ N1 (Light Sleep)</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">~5% - Sleep transition</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 bg-white/60 dark:bg-slate-800/60 rounded-lg">
+                      <div className="w-4 h-4 rounded-full bg-blue-500 flex-shrink-0"></div>
+                      <div className="flex-1">
+                        <div className="font-medium text-blue-800 dark:text-blue-200">💤 N2 (Light Sleep)</div>
+                        <div className="text-sm text-blue-600 dark:text-blue-300">
+                          {(ageGroup === 'schoolAge' || ageGroup === 'adolescent') ? '50%' : 
+                           (ageGroup === 'olderAdult') ? '50%' : '45%'} - Memory consolidation
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 bg-white/60 dark:bg-slate-800/60 rounded-lg">
+                      <div className="w-4 h-4 rounded-full bg-indigo-500 flex-shrink-0"></div>
+                      <div className="flex-1">
+                        <div className="font-medium text-indigo-800 dark:text-indigo-200">🌙 N3 (Deep Sleep)</div>
+                        <div className="text-sm text-indigo-600 dark:text-indigo-300">
+                          {(ageGroup === 'olderAdult') ? '15%' : 
+                           (ageGroup === 'adolescent') ? '20%' : 
+                           (ageGroup === 'schoolAge') ? '20%' : '25%'} - Physical restoration
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 bg-white/60 dark:bg-slate-800/60 rounded-lg">
+                      <div className="w-4 h-4 rounded-full bg-purple-500 flex-shrink-0"></div>
+                      <div className="flex-1">
+                        <div className="font-medium text-purple-800 dark:text-purple-200">🧠 REM Sleep</div>
+                        <div className="text-sm text-purple-600 dark:text-purple-300">
+                          {ageData.remSleepPercentage}% - Dreams & memory processing
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
             <div className="w-full bg-slate-200 dark:bg-slate-600 rounded-full h-8 overflow-hidden mb-4">
               <div className="flex h-full">
                 {ageGroup === 'newborn' ? (
