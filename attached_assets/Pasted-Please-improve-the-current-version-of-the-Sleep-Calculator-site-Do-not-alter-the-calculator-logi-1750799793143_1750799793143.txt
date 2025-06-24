@@ -1,0 +1,82 @@
+Please improve the current version of the Sleep Calculator site.
+⚠️ Do not alter the calculator logic or main layout.
+Apply the following UX/UI changes one at a time to avoid breaking any existing functionality.
+
+✅ 1. Fix Scroll Behavior After “Calculate Sleep Time” Button Is Clicked
+When the user clicks "Calculate Sleep Times", the page currently scrolls too far down and hides the “Recommended Bedtimes” title behind the sticky header.
+
+Adjust scroll behavior to offset the scroll position by the sticky header height (~60–80px).
+
+Ensure the scroll lands just before the section title, not on top of it.
+
+✅ 2. Hide Previous Results When User Changes “Your Age” Dropdown
+When the user selects a different age group from the "Your Age" dropdown:
+
+Automatically hide the results section (Recommended Bedtimes and below).
+
+Only show results again when “Calculate Sleep Times” is clicked.
+
+This ensures results are always tied to an explicit calculation action.
+
+✅ 3. Remove Final Section: “Sleep Science for X” (at Bottom of Page)
+Remove the entire bottom section labeled:
+
+“Sleep Science for Newborn” or “Sleep Science for Young Adult” (varies by age)
+
+It is no longer needed and should not be rendered.
+
+Make sure the removal doesn’t leave extra spacing or padding at the bottom.
+
+✅ 4. Add Visual Toggle Indicators to Accordion Sections
+For expandable sections like “Sleep Architecture”, “Sleep Stage Function”:
+
+Add visual indicator (▼ for collapsed, ▲ for expanded).
+
+Optionally add “Show more” / “Hide” labels.
+
+Make toggle state clearly visible and animated if possible.
+
+✅ 5. Improve Sleep Stage Pie Chart Readability
+In the "Sleep Stage Composition" chart:
+
+Bold and enlarge all label text.
+
+Improve contrast between chart segments and labels.
+
+Optional: add hover tooltips or display labels outside the pie for clarity.
+
+✅ 6. Align and Standardize Icons Across All Cards and Boxes
+In boxes like “How Sleep Works”, “Sleep Stage Function”, “Research Notes”:
+
+Align icons to text baseline or center.
+
+Use consistent icon size (preferably 16px–20px).
+
+Add spacing between icon and text for clean alignment.
+
+✅ 7. Improve Visual Variation in Sleep Cycle Analysis Section
+Alternate the background color slightly between each result block (e.g., #F9FAFB, #FFFFFF).
+
+Add a sleep cycle badge in each result:
+
+e.g., 🌀 4 Cycles, 💤 5 Cycles
+
+Make “EXCELLENT”, “FAIR”, etc. ratings stand out clearly.
+
+✅ 8. Strengthen Section Header Styles
+For sections like “Recommended Bedtimes”, “Sleep Cycle Analysis”:
+
+Increase header font size and boldness.
+
+Optionally add icons to headers for stronger scanning (e.g., 🧠, 📊, ⏰).
+
+✅ After each update:
+
+Ensure layout remains visually intact
+
+Ensure no calculation or content logic is affected
+
+Test scroll, dropdown, and click interactions
+
+⚠️ Do not touch core functional logic, sleep cycle math, or backend API (if any).
+
