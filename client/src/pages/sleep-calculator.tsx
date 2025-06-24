@@ -1073,81 +1073,355 @@ export default function SleepCalculator() {
                   {ageGroup === 'earlyInfant' && (
                     <div className="space-y-3">
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
-                        <p className="font-medium mb-2">Developmental Transition:</p>
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🧩</span> Real Sleep Stages Are Taking Shape
+                        </p>
                         <ul className="space-y-1 pl-4">
-                          <li>• Sleep shows **rapid maturation** during this period</li>
-                          <li>• <span className="bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded text-xs">N2</span> and <span className="bg-indigo-100 dark:bg-indigo-800 px-2 py-1 rounded text-xs">N3</span> become **functionally significant**</li>
-                          <li>• Marks transition from **newborn** to **infant** sleep patterns</li>
+                          <li>• Your baby's sleep is **maturing**! Around this age, they start cycling through **real sleep stages** like REM, light sleep (N2), and deep sleep (N3)</li>
+                          <li>• This **replaces the less organized sleep patterns** from the newborn stage</li>
+                          <li>• Helps them **rest better and grow stronger**</li>
                         </ul>
                       </div>
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
-                        <p className="font-medium mb-2">Sleep Consolidation:</p>
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🌞</span> Day-Night Rhythm Starts Clicking
+                        </p>
                         <ul className="space-y-1 pl-4">
-                          <li>• **Longer sleep periods** begin to emerge</li>
-                          <li>• **Sleep-wake cycles** become more predictable</li>
-                          <li>• Foundation for **circadian rhythm development**</li>
-                        </ul>
-                      </div>
-                    </div>
-                  )}
-                  {(ageGroup === 'lateInfant' || ageGroup === 'toddler' || ageGroup === 'preschooler') && (
-                    <div className="space-y-3">
-                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
-                        <p className="font-medium mb-2">Sleep Architecture Maturation:</p>
-                        <ul className="space-y-1 pl-4">
-                          <li>• All **major sleep stages** now consistently present</li>
-                          <li>• **Predictable cycling** between stages develops</li>
-                          <li>• Sleep becomes **increasingly organized**</li>
+                          <li>• Their **circadian rhythm (body clock)** is finally waking up. You'll start to notice:</li>
+                          <li className="pl-4">- **Longer stretches of nighttime sleep**</li>
+                          <li className="pl-4">- **More alertness during the day**</li>
+                          <li className="pl-4">- **Less random waking**</li>
+                          <li>• **Tip**: Open the curtains in the morning and dim the lights at night — **natural light helps their rhythm settle** into a day-night pattern</li>
                         </ul>
                       </div>
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
-                        <p className="font-medium mb-2">Developmental Support:</p>
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>⏳</span> Sleep Cycles Are Getting Longer
+                        </p>
                         <ul className="space-y-1 pl-4">
-                          <li>• <span className="bg-indigo-100 dark:bg-indigo-800 px-2 py-1 rounded text-xs">Deep sleep</span> supports **physical growth** and **immune function**</li>
-                          <li>• <span className="bg-purple-100 dark:bg-purple-800 px-2 py-1 rounded text-xs">REM sleep</span> aids **cognitive development** and **learning**</li>
-                          <li>• **Memory consolidation** becomes more efficient</li>
+                          <li>• Instead of short newborn-style cycles, your baby's sleep is now **stretching toward more mature patterns** — about **50 minutes per cycle**</li>
+                          <li>• This means **more time in each stage**, and potentially **longer stretches of continuous sleep** at night</li>
                         </ul>
                       </div>
                     </div>
                   )}
-                  {(ageGroup === 'schoolAge' || ageGroup === 'adolescent') && (
+                  {ageGroup === 'lateInfant' && (
                     <div className="space-y-3">
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
-                        <p className="font-medium mb-2">Sleep Architecture Stability:</p>
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>😴</span> A More Grown-Up Sleep Pattern
+                        </p>
                         <ul className="space-y-1 pl-4">
-                          <li>• Sleep patterns become **highly stable** and **adult-like**</li>
-                          <li>• **Slow-wave sleep** concentration in first half of night</li>
-                          <li>• **REM sleep** increases toward morning hours</li>
+                          <li>• Your baby now usually **falls asleep through light sleep (N2)**, then moves into **deep sleep (N3) and REM**, just like adults</li>
+                          <li>• Their sleep is becoming **more predictable and structured**</li>
                         </ul>
                       </div>
-                      {ageGroup === 'adolescent' && (
-                        <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
-                          <p className="font-medium mb-2">Circadian Biology:</p>
-                          <ul className="space-y-1 pl-4">
-                            <li>• **Melatonin release** shifts to later evening hours</li>
-                            <li>• **Natural sleep phase delay** of 1-2 hours</li>
-                            <li>• **Brain development** requires increased sleep duration</li>
-                          </ul>
-                        </div>
-                      )}
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>⏱️</span> Longer Sleep Cycles = Better Nights
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Sleep cycles are now **about 60 minutes long**</li>
+                          <li>• This gives your baby **more time in each stage** and helps them **sleep for longer stretches** at night — a win for everyone</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🌙</span> Body Clock Kicking In
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Their **circadian rhythm is maturing**, meaning their body is starting to **sync with light, dark, and routine**</li>
+                          <li>• **Consistent bedtimes and wake times** now make a real difference</li>
+                          <li>• **Tip**: Keep mornings bright and evenings calm and dim — it helps reinforce the day-night pattern</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🚼</span> Big Milestones Can Stir Things Up
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• New skills like **crawling, babbling, or sitting up** can cause temporary sleep hiccups. That's normal — **their brain is busy growing**</li>
+                          <li>• **Tip**: Stick to your sleep routines and help your baby **practice new skills during the day**. A little extra comfort at night can go a long way</li>
+                        </ul>
+                      </div>
                     </div>
                   )}
-                  {(ageGroup === 'youngAdult' || ageGroup === 'adult') && (
+                  {ageGroup === 'toddler' && (
                     <div className="space-y-3">
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
-                        <p className="font-medium mb-2">Mature Sleep Architecture:</p>
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>⏳</span> Sleep Cycles Are Settling In
+                        </p>
                         <ul className="space-y-1 pl-4">
-                          <li>• Sleep architecture reaches **full maturation**</li>
-                          <li>• **Consistent sleep stage percentages** established</li>
-                          <li>• **Individual variations** in sleep needs become apparent</li>
+                          <li>• Your toddler now has **consistent 60–75 minute sleep cycles**, showing steady progress toward adult-like sleep structure</li>
+                          <li>• This means **more predictable naps and nighttime rhythms**</li>
                         </ul>
                       </div>
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
-                        <p className="font-medium mb-2">Lifestyle Factors:</p>
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🛠️</span> Deep Sleep Powers Growth
+                        </p>
                         <ul className="space-y-1 pl-4">
-                          <li>• **Work schedules**, **social obligations** impact sleep timing</li>
-                          <li>• **Stress management** becomes crucial for sleep quality</li>
-                          <li>• **Sleep hygiene** practices significantly influence outcomes</li>
+                          <li>• **Deep sleep (N3) is still strong** — especially in the early part of the night. This stage is key for:</li>
+                          <li className="pl-4">- **Physical growth**</li>
+                          <li className="pl-4">- **Cell repair**</li>
+                          <li className="pl-4">- **Energy restoration**</li>
+                          <li>• It's when a lot of that **growing magic happens**</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🧠</span> REM Sleep = Brain in Action
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• As your toddler's brain learns new words, skills, and emotions, **REM sleep helps them**:</li>
+                          <li className="pl-4">- **Process memories**</li>
+                          <li className="pl-4">- **Make sense of new experiences**</li>
+                          <li className="pl-4">- **Regulate emotions**</li>
+                          <li>• Think of it as **overnight mental organization**</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🚶‍♂️</span> Milestones Can Stir Things Up
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• New skills like **walking, talking, or even asserting independence** can cause sleep disruptions</li>
+                          <li>• **Nap refusal or sudden wake-ups** are usually normal and temporary</li>
+                          <li>• **Tip**: Keep your bedtime routine predictable, and let your toddler **practice new skills during the day**. If they wake up at night, **stay calm and consistent** — they'll settle with your reassurance</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  {ageGroup === 'preschooler' && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>⏱️</span> Longer Sleep Cycles = Better Rest
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Your child's **sleep cycles now last around 80 minutes**, supporting deeper, more continuous sleep</li>
+                          <li>• Their **sleep system is working more efficiently**, helping them stay asleep longer</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>💤</span> Deep Sleep Does the Heavy Lifting
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Deep sleep (N3) is still dominant**, especially early in the night. It's essential for:</li>
+                          <li className="pl-4">- **Physical growth**</li>
+                          <li className="pl-4">- **Cell repair and healing**</li>
+                          <li className="pl-4">- **Building a strong immune system**</li>
+                          <li>• This helps them **recover and stay healthy** as they explore the world</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🧠</span> REM Fuels the Mind
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **REM sleep supports**:</li>
+                          <li className="pl-4">- **Emotional processing**</li>
+                          <li className="pl-4">- **Social understanding and imagination**</li>
+                          <li>• It's **especially important now** as your child starts forming relationships and expressing themselves more</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>😵‍💫</span> Imagination = Sleep Challenges
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Nightmares, bedtime resistance, or fears** of the dark are common — your preschooler's imagination is growing fast</li>
+                          <li>• These are **normal and usually not signs** of a sleep disorder</li>
+                          <li>• **Tip**: Keep bedtime calm and predictable. **Reassure your child** if they're scared, but **stay firm with boundaries**. A cozy, secure sleep environment makes a big difference</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  {ageGroup === 'schoolAge' && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>⏰</span> Sleep Cycles Have Matured
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• By this age, kids have **90-minute sleep cycles**, just like adults</li>
+                          <li>• These **stable rhythms** help support their growing need for **focused learning, physical energy, and emotional balance**</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🛠️</span> Deep Sleep Happens Early
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• The **first few cycles of the night are packed with deep sleep (N3)** — this is when the body:</li>
+                          <li className="pl-4">- **Heals and grows**</li>
+                          <li className="pl-4">- **Stores energy**</li>
+                          <li className="pl-4">- **Processes the day's learning**</li>
+                          <li>• That's why **an early bedtime is so valuable**!</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🧠</span> Brain Power Builds in the Morning
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• As the night progresses, **REM sleep becomes more active**. This stage is essential for:</li>
+                          <li className="pl-4">- **Emotional regulation**</li>
+                          <li className="pl-4">- **Problem-solving**</li>
+                          <li className="pl-4">- **Creativity and memory**</li>
+                          <li>• The **last few hours of sleep** are when much of that **"mental organizing" happens**</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🧘‍♂️</span> Consistent Routines = Smarter Days
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Kids need structure. A **screen-free wind-down and set bedtime** help:</li>
+                          <li className="pl-4">- **Boost academic performance**</li>
+                          <li className="pl-4">- **Improve mood**</li>
+                          <li className="pl-4">- **Support overall health**</li>
+                          <li>• **Tip**: Create a calm pre-bed routine that lasts **30–60 minutes**. This could include a warm bath, reading together, or quiet time — just make sure **screens are off at least an hour before bed**</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  {ageGroup === 'adolescent' && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>⏱️</span> Longer Sleep Cycles, Growing Brain
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Teens now **cycle through sleep in ~100-minute intervals**, moving closer to full adult sleep architecture</li>
+                          <li>• This **extended cycle supports brain development, memory, and hormonal balance** during a time of major growth</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>💤</span> Deep Sleep Starts to Dip
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Deep sleep (N3) starts to decline** in overall percentage compared to childhood — but it's still essential. It helps with:</li>
+                          <li className="pl-4">- **Physical recovery**</li>
+                          <li className="pl-4">- **Cell repair**</li>
+                          <li className="pl-4">- **Mental focus for the next day**</li>
+                          <li>• **Encouraging early, consistent bedtimes** can help preserve more of it</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🧠</span> REM: The Emotional Equalizer
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **REM sleep takes center stage** in adolescence. It plays a major role in:</li>
+                          <li className="pl-4">- **Managing mood swings**</li>
+                          <li className="pl-4">- **Processing social and academic stress**</li>
+                          <li className="pl-4">- **Supporting emotional regulation** in a time of intense self-discovery</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>📵</span> Modern Life Gets in the Way
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Late-night screens, socializing, and heavy school loads** can seriously mess with sleep quality and timing</li>
+                          <li>• Many teens **don't get the rest they need** — and it shows in their mood, focus, and health</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  {ageGroup === 'youngAdult' && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>⏳</span> Adult Sleep Cycles Are Fully In Place
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Young adults now experience **~105-minute sleep cycles** — a sign that their **sleep architecture is fully matured**</li>
+                          <li>• This rhythm helps support **everything from focus to physical recovery**</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🔧</span> Deep Sleep Slowly Starts to Fade
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Deep sleep (N3) is still strong**, but it's beginning a **slow, natural decline** compared to teenage years. It remains crucial for:</li>
+                          <li className="pl-4">- **Muscle repair**</li>
+                          <li className="pl-4">- **Energy restoration**</li>
+                          <li className="pl-4">- **Cognitive function and memory**</li>
+                          <li>• **Getting enough of it requires regular sleep hours** and healthy routines</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🧠</span> REM Sleep: Your Brain's MVP
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **REM demand is still high** — and for good reason. This stage supports:</li>
+                          <li className="pl-4">- **Creative thinking**</li>
+                          <li className="pl-4">- **Emotional resilience**</li>
+                          <li className="pl-4">- **Problem-solving**</li>
+                          <li>• It's **especially valuable during this phase** of academic growth, work pressure, and complex relationships</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>⚠️</span> Sleep vs. Lifestyle
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Between **late nights, busy schedules, and screen use**, many young adults don't get the rest they need. This leads to:</li>
+                          <li className="pl-4">- **Brain fog**</li>
+                          <li className="pl-4">- **Low energy**</li>
+                          <li className="pl-4">- **Mood swings and decreased productivity**</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  {ageGroup === 'adult' && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>⏱️</span> Average Sleep Cycles = ~96 Minutes
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Most adults experience **sleep cycles that average around 96 minutes**, though recent research shows they can **range from 95 to 130 minutes** depending on the person</li>
+                          <li>• This **variation is completely normal** and reflects individual sleep needs</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>📉</span> Sleep Efficiency Slows Down
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• With age, many adults notice:</li>
+                          <li className="pl-4">- **More time lying awake in bed**</li>
+                          <li className="pl-4">- **More frequent nighttime awakenings**</li>
+                          <li className="pl-4">- **Less time in deep, restorative sleep**</li>
+                          <li>• These are **common changes and not always signs** of a sleep problem</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🧠</span> REM and N2 Stay Strong
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Even as **deep sleep (N3) declines**, **REM and light sleep (N2) remain stable**. These stages support:</li>
+                          <li className="pl-4">- **Mental clarity**</li>
+                          <li className="pl-4">- **Emotional regulation**</li>
+                          <li className="pl-4">- **Problem-solving and learning**</li>
+                          <li>• They help you **stay sharp and balanced** in the face of daily demands</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>⚠️</span> Life Gets in the Way of Sleep
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Busy work lives, parenting, health concerns, and stress** can seriously impact sleep quality in this stage of life</li>
                         </ul>
                       </div>
                     </div>
@@ -1155,19 +1429,42 @@ export default function SleepCalculator() {
                   {ageGroup === 'olderAdult' && (
                     <div className="space-y-3">
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
-                        <p className="font-medium mb-2">Age-Related Changes:</p>
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🌙</span> Sleep Becomes More Fragmented
+                        </p>
                         <ul className="space-y-1 pl-4">
-                          <li>• **Slow-wave sleep** shows natural decline</li>
-                          <li>• **Sleep efficiency** may decrease</li>
-                          <li>• **Earlier bedtimes** and **wake times** common</li>
+                          <li>• Older adults often experience **lighter, more broken sleep**</li>
+                          <li>• **Deep sleep (N3) becomes less common**, and **sleep cycles may be shorter** and less restorative than in earlier life stages</li>
                         </ul>
                       </div>
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
-                        <p className="font-medium mb-2">Health Considerations:</p>
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🧠</span> REM Sleep Still Matters
+                        </p>
                         <ul className="space-y-1 pl-4">
-                          <li>• **Medical conditions** can significantly impact sleep</li>
-                          <li>• **Medications** may affect sleep architecture</li>
-                          <li>• **Sleep disorders** become more prevalent</li>
+                          <li>• **REM sleep may decrease slightly** and feel lighter, but it's **still vital for**:</li>
+                          <li className="pl-4">- **Emotional health**</li>
+                          <li className="pl-4">- **Memory consolidation**</li>
+                          <li className="pl-4">- **Brain maintenance**</li>
+                          <li>• Even in later life, this stage **plays a key role in keeping the mind sharp**</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>😴</span> Daytime Naps Are Common — and Helpful
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **More frequent daytime napping is normal**. It often helps **compensate for fragmented nighttime sleep** and can reduce fatigue</li>
+                          <li>• **Especially when naps are short and timed well**</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🕰️</span> The Body Clock Shifts Earlier
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Many older adults naturally start **feeling sleepy earlier in the evening** and **wake up earlier in the morning** — this is known as an **advanced sleep phase**</li>
+                          <li>• However, things like **less sunlight exposure, social isolation, and medications** can also affect this rhythm</li>
                         </ul>
                       </div>
                     </div>
@@ -1230,17 +1527,57 @@ export default function SleepCalculator() {
                       </div>
                     </div>
                   )}
-                  {ageGroup !== 'newborn' && ageGroup !== 'earlyInfant' && (
+                  {ageGroup === 'lateInfant' && (
                     <div className="space-y-3">
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full text-xs font-bold">N1 (Light Sleep)</span>
+                          <span className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full text-xs font-bold">N1 Sleep (≈5%)</span>
                         </div>
                         <ul className="space-y-1 pl-4">
-                          <li>• **Transition phase** from wake to sleep</li>
-                          <li>• **Relaxation** of muscle tone and brain activity</li>
-                          <li>• **Preparation** for deeper sleep stages</li>
-                          <li>• Duration: **1-7 minutes** typically</li>
+                          <li>• A **very brief, light entry point** into sleep—the transitional phase where the brain begins to slow down</li>
+                          <li>• It's **easily disrupted**, meaning even small sounds can cause a baby to stir</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-blue-100 dark:bg-blue-800 px-3 py-1 rounded-full text-xs font-bold">N2 Sleep (≈40%)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• This is the **most frequent and dominant stage** of sleep at this age</li>
+                          <li>• It's **crucial for supporting learning, memory consolidation** (like remembering faces and routines)</li>
+                          <li>• **Development of motor skills** (such as rolling and crawling)</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-indigo-100 dark:bg-indigo-800 px-3 py-1 rounded-full text-xs font-bold">N3 Sleep (≈25%)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Also known as **deep or slow-wave sleep**, this stage is essential for **physical growth** (with growth hormone release)</li>
+                          <li>• **Immune system support**, and **significant physical recovery** from their active days</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-purple-100 dark:bg-purple-800 px-3 py-1 rounded-full text-xs font-bold">REM Sleep (≈30%)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• During REM sleep, the baby's **brain is highly active**</li>
+                          <li>• This stage plays a **vital role in language development, emotional regulation** (processing new stimuli)</li>
+                          <li>• **Integrating and processing daytime experiences**, laying the groundwork for complex cognitive functions</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  {ageGroup === 'toddler' && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full text-xs font-bold">N1 (Light Transition)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• A **brief, essential gateway** from wakefulness into sleep</li>
+                          <li>• While **not deeply restorative**, it's necessary for entry into the sleep cycle and is the stage from which toddlers are **most easily aroused**</li>
                         </ul>
                       </div>
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
@@ -1248,10 +1585,9 @@ export default function SleepCalculator() {
                           <span className="bg-blue-100 dark:bg-blue-800 px-3 py-1 rounded-full text-xs font-bold">N2 (Light Sleep)</span>
                         </div>
                         <ul className="space-y-1 pl-4">
-                          <li>• **Memory consolidation** through sleep spindles</li>
-                          <li>• **Learning integration** and skill development</li>
-                          <li>• **K-complexes** help maintain sleep continuity</li>
-                          <li>• **Sensory gating** - filtering external stimuli</li>
+                          <li>• This **prominent stage is critical** for consolidating motor skill memory (like walking and climbing)</li>
+                          <li>• **Aids in emotional regulation** (processing big toddler feelings)</li>
+                          <li>• Is the **ideal stage for a smoother waking transition**</li>
                         </ul>
                       </div>
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
@@ -1259,25 +1595,267 @@ export default function SleepCalculator() {
                           <span className="bg-indigo-100 dark:bg-indigo-800 px-3 py-1 rounded-full text-xs font-bold">N3 (Deep Sleep)</span>
                         </div>
                         <ul className="space-y-1 pl-4">
-                          <li>• **Physical restoration** and tissue repair</li>
-                          <li>• **Growth hormone release** {(ageGroup === 'toddler' || ageGroup === 'preschooler' || ageGroup === 'schoolAge') ? 'for continued growth' : 'for cellular maintenance'}</li>
-                          <li>• **Immune system strengthening** and recovery</li>
-                          <li>• **Declarative memory consolidation** (facts, events)</li>
-                          <li>• **Metabolic regulation** and energy restoration</li>
+                          <li>• Often called **slow-wave sleep**, N3 is the **powerhouse of physical restoration**</li>
+                          <li>• It **strongly promotes growth hormone release**, supports the immune system</li>
+                          <li>• **Facilitates crucial brain detoxification processes** that clear metabolic waste</li>
                         </ul>
                       </div>
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="bg-purple-100 dark:bg-purple-800 px-3 py-1 rounded-full text-xs font-bold">REM Sleep</span>
+                          <span className="bg-purple-100 dark:bg-purple-800 px-3 py-1 rounded-full text-xs font-bold">REM</span>
                         </div>
                         <ul className="space-y-1 pl-4">
-                          <li>• **Emotional processing** and regulation</li>
-                          <li>• **Procedural memory** consolidation (skills, habits)</li>
-                          <li>• **Creative problem solving** and insight formation</li>
-                          <li>• **Brain maintenance** - clearing metabolic waste</li>
-                          {ageGroup === 'adolescent' && <li>• **Neural reorganization** during brain development</li>}
-                          {(ageGroup === 'youngAdult' || ageGroup === 'adult') && <li>• **Cognitive resilience** and mental flexibility</li>}
-                          {ageGroup === 'olderAdult' && <li>• **Neural protection** and cognitive maintenance</li>}
+                          <li>• This **active brain state significantly boosts language acquisition** and vocabulary building</li>
+                          <li>• **Enhances emotional processing** of their complex world</li>
+                          <li>• **Aids in memory integration** of all the new skills and concepts they're absorbing</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  {ageGroup === 'preschooler' && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full text-xs font-bold">N1 (Transition Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• A **quick entry phase** that gently prepares the brain and body for deeper rest</li>
+                          <li>• It's a **very light stage** from which a child can be easily awakened</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-blue-100 dark:bg-blue-800 px-3 py-1 rounded-full text-xs font-bold">N2 (Light Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• This **prominent stage is crucial** for the development of motor skill memory</li>
+                          <li>• **Supports emotional regulation** (helping them manage their increasingly complex feelings)</li>
+                          <li>• **Prepares the brain** for new memory consolidation</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-indigo-100 dark:bg-indigo-800 px-3 py-1 rounded-full text-xs font-bold">N3 (Deep Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• The **primary driver of physical growth**, immune system strength</li>
+                          <li>• **Brain recovery** from the day's energetic activities</li>
+                          <li>• This **restorative stage is when the body undertakes** significant repair and regeneration</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-purple-100 dark:bg-purple-800 px-3 py-1 rounded-full text-xs font-bold">REM</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Actively helps with emotional processing**, fuels imagination and creative play</li>
+                          <li>• **Hones early problem-solving abilities** as the child processes and consolidates their learning</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  {ageGroup === 'schoolAge' && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full text-xs font-bold">N1 (Transition Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• A **brief, delicate bridge** from wakefulness into deeper sleep stages</li>
+                          <li>• It **represents minimal physiological changes** but is a necessary entry point into the sleep cycle</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-blue-100 dark:bg-blue-800 px-3 py-1 rounded-full text-xs font-bold">N2 (Light Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• This **prominent and abundant stage is crucial** for learning retention (solidifying new academic information)</li>
+                          <li>• **Refining motor coordination**, and **integrating daily memories** and skills</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-indigo-100 dark:bg-indigo-800 px-3 py-1 rounded-full text-xs font-bold">N3 (Deep Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• The **primary stage for promoting growth hormone release**, bolstering immune function against illnesses</li>
+                          <li>• **Facilitating long-term memory consolidation**, especially for declarative memories (facts and events)</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-purple-100 dark:bg-purple-800 px-3 py-1 rounded-full text-xs font-bold">REM</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Highly active for the brain**, REM sleep enhances creativity</li>
+                          <li>• **Sharpens emotional regulation skills** (critical for social interactions)</li>
+                          <li>• **Supports problem-solving skills** as children process complex social and academic challenges</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  {ageGroup === 'adolescent' && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full text-xs font-bold">N1 (Transition Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• The **initial, light stage** that prepares the brain for the deeper sleep stages</li>
+                          <li>• It's **brief and signals the onset** of the sleep cycle</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-blue-100 dark:bg-blue-800 px-3 py-1 rounded-full text-xs font-bold">N2 (Light Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Important for memory processing**, particularly for procedural memories (skills and habits)</li>
+                          <li>• **Learning consolidation** of the day's academic material and social interactions</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-indigo-100 dark:bg-indigo-800 px-3 py-1 rounded-full text-xs font-bold">N3 (Deep Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Supports profound physical restoration** and recovery from sports and growth spurts</li>
+                          <li>• **Enhances immune function**, and contributes to **crucial brain plasticity**—the brain's ability to reorganize itself by forming new neural connections</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-purple-100 dark:bg-purple-800 px-3 py-1 rounded-full text-xs font-bold">REM</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Absolutely critical for emotional regulation** during a turbulent phase of development</li>
+                          <li>• **Sharpens social cognition** (understanding social cues)</li>
+                          <li>• **Fuels creative problem-solving** as adolescents navigate complex personal and academic challenges</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  {ageGroup === 'youngAdult' && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full text-xs font-bold">N1 (Transition Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• A **brief, initial stage** that effectively initiates sleep</li>
+                          <li>• It's a **very light phase**, making it easy to wake from, but it's **essential for entering the sleep cycle**</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-blue-100 dark:bg-blue-800 px-3 py-1 rounded-full text-xs font-bold">N2 (Light Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• This **highly prevalent stage maintains daytime alertness**</li>
+                          <li>• **Significantly aids in memory processing** (especially for new facts and experiences)</li>
+                          <li>• **Supports motor learning** (refining physical skills)</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-indigo-100 dark:bg-indigo-800 px-3 py-1 rounded-full text-xs font-bold">N3 (Deep Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Crucial for profound physical recovery** from daily activities</li>
+                          <li>• **Robust immune function** (helping the body fight off illness)</li>
+                          <li>• **Essential cell repair and regeneration** throughout the body</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-purple-100 dark:bg-purple-800 px-3 py-1 rounded-full text-xs font-bold">REM</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Actively enhances emotional intelligence**, fuels creative thinking</li>
+                          <li>• **Fosters mental flexibility** needed to adapt to new situations and solve complex problems in academic and professional settings</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  {ageGroup === 'adult' && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full text-xs font-bold">N1 (Transition Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• The **lightest stage of sleep**, serving as a rapid bridge into deeper sleep</li>
+                          <li>• It's the **most fragile stage** and from which individuals are most prone to disruption and awakening</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-blue-100 dark:bg-blue-800 px-3 py-1 rounded-full text-xs font-bold">N2 (Light Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• This **dominant stage supports procedural memory** (how-to skills)</li>
+                          <li>• **Consolidates motor skills**, and **processes sensory information** from the day</li>
+                          <li>• It's **crucial for maintaining general cognitive function** and alertness</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-indigo-100 dark:bg-indigo-800 px-3 py-1 rounded-full text-xs font-bold">N3 (Deep Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Though it **declines with age**, N3 remains **crucial for tissue growth and repair**</li>
+                          <li>• **Robust immune support**, and **fundamental energy restoration** at the cellular level</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-purple-100 dark:bg-purple-800 px-3 py-1 rounded-full text-xs font-bold">REM</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Promotes emotional stability and resilience**</li>
+                          <li>• **Facilitates learning new complex information**, and **supports the creative integration** of new ideas and experiences</li>
+                          <li>• **Vital for adaptability and innovation**</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  {ageGroup === 'olderAdult' && (
+                    <div className="space-y-3">
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full text-xs font-bold">N1 (Transition Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• This **lightest stage is highly prone to disruption** and frequent awakenings</li>
+                          <li>• It **primarily serves as the entry point** into the sleep architecture</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-blue-100 dark:bg-blue-800 px-3 py-1 rounded-full text-xs font-bold">N2 (Light Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Still the dominant sleep stage**, N2 is **crucial for maintaining cognitive function** and alertness</li>
+                          <li>• **Supporting sensory memory**, and **facilitating basic day-to-day alertness**</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-indigo-100 dark:bg-indigo-800 px-3 py-1 rounded-full text-xs font-bold">N3 (Deep Sleep)</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• Although **less prevalent than in younger adults**, N3 continues to **aid in immune repair**</li>
+                          <li>• **Regulate glucose metabolism**, and **contribute to overall physical restoration** and vitality</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-purple-100 dark:bg-purple-800 px-3 py-1 rounded-full text-xs font-bold">REM</span>
+                        </div>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Continues to be vital for emotional processing**, particularly for navigating life changes and managing mood</li>
+                          <li>• For **long-term memory consolidation**, and for **essential neural maintenance** and brain plasticity</li>
                         </ul>
                       </div>
                     </div>
@@ -1286,24 +1864,20 @@ export default function SleepCalculator() {
                     <div className="space-y-3">
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="bg-blue-100 dark:bg-blue-800 px-3 py-1 rounded-full text-xs font-bold">NREM Sleep</span>
+                          <span className="bg-purple-100 dark:bg-purple-800 px-3 py-1 rounded-full text-xs font-bold">REM</span>
                         </div>
                         <ul className="space-y-1 pl-4">
-                          <li>• **Emerging sleep spindles** support learning</li>
-                          <li>• **Physical growth** and development</li>
-                          <li>• **Immune system maturation**</li>
-                          <li>• **Brain structure development**</li>
+                          <li>• **Continues to be vital** for active memory consolidation of the day's new experiences</li>
+                          <li>• **Supports the early brain development** essential for cognitive leaps like recognizing faces and responding to sounds</li>
                         </ul>
                       </div>
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-4">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="bg-purple-100 dark:bg-purple-800 px-3 py-1 rounded-full text-xs font-bold">REM Sleep</span>
+                          <span className="bg-blue-100 dark:bg-blue-800 px-3 py-1 rounded-full text-xs font-bold">Non-REM</span>
                         </div>
                         <ul className="space-y-1 pl-4">
-                          <li>• **Continued brain development** from newborn stage</li>
-                          <li>• **Neural pathway refinement**</li>
-                          <li>• **Sensory processing** integration</li>
-                          <li>• **Emotional development** foundations</li>
+                          <li>• With the **emergence of N2 and N3**, Non-REM sleep begins to provide **more significant physical restoration** and deeper rest</li>
+                          <li>• This is **crucial as babies become more active** and start developing motor skills</li>
                         </ul>
                       </div>
                     </div>
