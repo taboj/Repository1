@@ -841,206 +841,208 @@ export default function SleepCalculator() {
           </div>
 
           {/* How Sleep Works at This Age Section - Enhanced Card */}
-          <div className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-xl p-6 border border-amber-200 dark:border-amber-700">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-2xl">🧬</span>
-              <h3 className="font-bold text-lg text-amber-800 dark:text-amber-200">How Sleep Works at This Age</h3>
-            </div>
-            <div className="text-amber-800 dark:text-amber-200 space-y-3">
+          <div className="bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-800 dark:to-blue-900/30 rounded-xl p-6">
+            <div className="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-slate-200 dark:border-slate-600">
+                <span className="text-2xl">🧬</span>
+                <h3 className="font-bold text-lg text-slate-800 dark:text-slate-200">How Sleep Works at This Age</h3>
+              </div>
+              <div className="text-slate-700 dark:text-slate-300 space-y-4 leading-relaxed">
               {ageGroup === 'newborn' && (
-                <div className="space-y-3">
-                  <p>
+                <div className="space-y-4">
+                  <p className="font-normal">
                     Newborns don't sleep in structured stages like older children and adults. Instead, they move between **two simple kinds of sleep**:
                   </p>
-                  <div className="bg-amber-100 dark:bg-amber-800/30 rounded-lg p-3 space-y-2">
-                    <div>
+                  <div className="bg-white dark:bg-slate-700 border-l-4 border-amber-400 dark:border-amber-500 rounded-lg p-4 shadow-sm space-y-3">
+                    <div className="font-normal">
                       <strong>Active sleep (AS):</strong> their eyes move, bodies twitch, and brains are very active — similar to REM in adults.
                     </div>
-                    <div>
+                    <div className="font-normal">
                       <strong>Quiet sleep (QS):</strong> stiller and more peaceful — similar to NREM in adults.
                     </div>
                   </div>
-                  <p>
+                  <p className="font-normal">
                     Each sleep cycle is **short — about 40–50 minutes** — and babies wake up often. This is **normal and helps protect them** while their brains and bodies grow rapidly.
                   </p>
                 </div>
               )}
               {ageGroup === 'earlyInfant' && (
-                <div className="space-y-3">
-                  <p>
+                <div className="space-y-4">
+                  <p className="font-normal">
                     At this stage, your baby's sleep is **becoming more organized and mature**.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     They now **start each cycle in light, calm sleep**, move into **deeper, body-repairing sleep**, and finish in **dream sleep**, where the brain is very active.
                   </p>
-                  <div className="bg-amber-100 dark:bg-amber-800/30 rounded-lg p-3">
-                    <p className="font-medium mb-2">The brain is learning to separate sleep into clear stages:</p>
-                    <div className="space-y-1 pl-4">
-                      <div>• **Light and deep sleep (N1, N2, N3)** help with physical healing and early memory development</div>
-                      <div>• **Dream sleep (REM)** continues to play a big role in brain growth and emotional processing</div>
+                  <div className="bg-white dark:bg-slate-700 border-l-4 border-amber-400 dark:border-amber-500 rounded-lg p-4 shadow-sm">
+                    <p className="font-medium mb-3">The brain is learning to separate sleep into clear stages:</p>
+                    <div className="space-y-2 pl-4">
+                      <div className="font-normal">• **Light and deep sleep (N1, N2, N3)** help with physical healing and early memory development</div>
+                      <div className="font-normal">• **Dream sleep (REM)** continues to play a big role in brain growth and emotional processing</div>
                     </div>
                   </div>
-                  <p>
+                  <p className="font-normal">
                     While N1 (the lightest stage) exists, it's **short and fleeting**. Most of your baby's sleep now happens in **N2, N3, and REM** — a major step forward from the newborn pattern of "active" and "quiet" sleep.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     Each cycle lasts **about 50 minutes**, and your baby may start **connecting two or more cycles** — especially during nighttime sleep. Their **body clock is also beginning to form**, so sleep may start to feel more predictable across day and night.
                   </p>
                 </div>
               )}
               {ageGroup === 'lateInfant' && (
-                <div className="space-y-3">
-                  <p>
+                <div className="space-y-4">
+                  <p className="font-normal">
                     Sleep cycles at this age last **around 60 minutes**. Babies fall into **light sleep first (N1+N2)**, then drift into **deep, quiet rest (N3)**, and finally **dream sleep (REM)**.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     They usually **sleep longer at night** and have **more consistent naps**. Dream sleep is getting longer in the early morning, and their brain is becoming better at **knowing when to feel sleepy or awake** based on light and routine.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     This age also marks a **noticeable maturation of circadian rhythm**, helping babies respond more consistently to light, routines, and time cues. As a result, **nighttime sleep consolidates**, with fewer interruptions.
                   </p>
                 </div>
               )}
               {ageGroup === 'toddler' && (
-                <div className="space-y-3">
-                  <p>
+                <div className="space-y-4">
+                  <p className="font-normal">
                     By this age, toddlers move through **all four stages of sleep** in a steady, predictable pattern. Each cycle includes **light sleep (N1 and N2), deep sleep (N3), and dream sleep (REM)**, and lasts about **60 to 75 minutes**.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     **Deep sleep happens mostly in the first few hours** of the night, helping the body rest and grow. As the night continues, **dream sleep becomes more active**, especially toward morning — this stage supports emotional growth and learning.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     **Nighttime sleep is now more consistent**, but naps are still important. Many toddlers go from **two naps to one** around this age, but dropping naps too soon can lead to crankiness, trouble falling asleep at night, and slower learning.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     A **calm, regular bedtime routine** helps their brain and body get the sleep they need — and makes bedtime smoother for you too.
                   </p>
                 </div>
               )}
               {ageGroup === 'preschooler' && (
-                <div className="space-y-3">
-                  <p>
+                <div className="space-y-4">
+                  <p className="font-normal">
                     Preschoolers sleep in cycles that last **around 80 minutes**.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     Each cycle **begins in light sleep (N1 and N2)**, moves into **deep, restoring sleep (N3)**, and **ends in dream sleep (REM)**. This full pattern repeats several times throughout the night.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     **Deep sleep is most concentrated in the early part of the night**, when the body does most of its growth and repair.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     **Dream sleep becomes longer in the early morning**, supporting memory, learning, and emotional development.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     By this age, their **body clock is well developed** — so having regular bedtimes and wake times helps keep sleep quality steady and strong.
                   </p>
                 </div>
               )}
               {ageGroup === 'schoolAge' && (
-                <div className="space-y-3">
-                  <p>
+                <div className="space-y-4">
+                  <p className="font-normal">
                     Children now sleep in **full 90-minute cycles**, just like adults.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     They **start each cycle in light sleep (N1 and N2)**, move into **deep, body-restoring sleep (N3)**, and **finish with dream sleep (REM)**.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     **Deep sleep is strongest during the first 2–3 cycles** of the night, which is when the body grows and repairs.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     **REM sleep becomes more active in the later cycles**, especially toward morning, helping with emotional balance and memory.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     **Good, uninterrupted sleep during this stage is essential** for learning, focus, energy, and physical growth — especially in the school years.
                   </p>
                 </div>
               )}
               {ageGroup === 'adolescent' && (
-                <div className="space-y-3">
-                  <p>
+                <div className="space-y-4">
+                  <p className="font-normal">
                     Teenagers sleep in cycles that last **about 100 minutes**, just like adults. Each cycle follows a regular pattern: **starting with light sleep (N1+N2), then deep sleep (N3), and ending in dream sleep (REM)**. This full sequence repeats several times throughout the night.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     **Deep sleep (N3) is most concentrated during the first 2 to 3 cycles**, helping with physical recovery and growth.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     As the night goes on, **REM (dream) sleep increases in the later cycles**, supporting emotional regulation, memory, and stress processing — all especially important during adolescence.
                   </p>
-                  <div className="bg-amber-100 dark:bg-amber-800/30 rounded-lg p-3">
-                    <p className="font-medium mb-2">Natural Sleep Phase Delay:</p>
-                    <p>
+                  <div className="bg-white dark:bg-slate-700 border-l-4 border-amber-400 dark:border-amber-500 rounded-lg p-4 shadow-sm">
+                    <p className="font-medium mb-3">Natural Sleep Phase Delay:</p>
+                    <p className="font-normal">
                       Teens also go through a natural biological shift called a **"sleep phase delay."** This means they start **feeling sleepy later at night** and **prefer waking later in the morning**. On top of that, their **need for sleep increases** because of intense brain changes and physical development during puberty.
                     </p>
                   </div>
                 </div>
               )}
               {ageGroup === 'youngAdult' && (
-                <div className="space-y-3">
-                  <p>
+                <div className="space-y-4">
+                  <p className="font-normal">
                     Young adults sleep in cycles that **average about 105 minutes** — the most mature and stable sleep pattern across the lifespan.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     Each cycle includes **light sleep, deep sleep, and dream sleep (REM)**, with a well-balanced mix that supports both physical and mental health.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     **Deep sleep (N3) is still present** but begins its gradual decline compared to the teenage years.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     Meanwhile, **REM sleep increases in the later cycles** of the night, helping with complex thinking, emotional balance, and creativity — all essential for handling academic demands, career growth, and growing independence.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     Even though sleep structure is strong, it's still **sensitive to irregular schedules and stress** — so staying consistent with sleep routines is important for overall well-being.
                   </p>
                 </div>
               )}
               {ageGroup === 'adult' && (
-                <div className="space-y-3">
-                  <p>
+                <div className="space-y-4">
+                  <p className="font-normal">
                     Adults still cycle through the same sleep stages, with **each cycle lasting about 90 to 95 minutes**.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     But with age, **changes in the brain make sleep lighter** and more easily disrupted.
                   </p>
-                  <p>
+                  <p className="font-normal">
                     **Deep sleep (N3)** — the stage that helps you feel fully rested — **becomes shorter in each cycle**, and it's normal to wake up more often during the night.
                   </p>
-                  <div className="bg-amber-100 dark:bg-amber-800/30 rounded-lg p-3">
-                    <p className="font-medium mb-2">Even though the structure of sleep cycles stays intact, many adults:</p>
-                    <div className="space-y-1 pl-4">
-                      <div>• **Take longer to fall asleep**</div>
-                      <div>• **Wake up earlier in the morning** due to a natural shift in their internal clock</div>
-                      <div>• **Feel sleepy during the day** because nighttime sleep isn't as solid</div>
+                  <div className="bg-white dark:bg-slate-700 border-l-4 border-amber-400 dark:border-amber-500 rounded-lg p-4 shadow-sm">
+                    <p className="font-medium mb-3">Even though the structure of sleep cycles stays intact, many adults:</p>
+                    <div className="space-y-2 pl-4">
+                      <div className="font-normal">• **Take longer to fall asleep**</div>
+                      <div className="font-normal">• **Wake up earlier in the morning** due to a natural shift in their internal clock</div>
+                      <div className="font-normal">• **Feel sleepy during the day** because nighttime sleep isn't as solid</div>
                     </div>
                   </div>
-                  <p>
+                  <p className="font-normal">
                     **Short daytime naps can help fill the gap** — just keep them early and brief so they don't interfere with your next sleep cycle.
                   </p>
-                  <ul className="space-y-1 text-sm pl-4">
-                    <li>• **Progressive decrease** in <span className="bg-indigo-100 dark:bg-indigo-800 px-2 py-1 rounded text-xs">deep sleep (N3)</span></li>
-                    <li>• **Especially noticeable after age 40**</li>
-                    <li>• Natural physiological shift causes:</li>
-                    <li className="pl-4">- Sleep feels **lighter**</li>
-                    <li className="pl-4">- Potentially **more fragmented**</li>
-                    <li className="pl-4">- **Increased brief awakenings**</li>
-                    <li>• Understanding decline helps **manage expectations**</li>
-                  </ul>
                 </div>
               )}
               {ageGroup === 'olderAdult' && (
-                <div className="space-y-2">
-                  <p className="font-medium">Age-Related Sleep Changes:</p>
-                  <ul className="space-y-1 text-sm pl-4">
-                    <li>• **Natural shift** toward lighter, fragmented sleep</li>
-                    <li>• Common patterns:</li>
-                    <li className="pl-4">- **More frequent awakenings** during night</li>
-                    <li className="pl-4">- Tendency for **earlier wake times**</li>
-                    <li>• **Total sleep time may decrease** slightly</li>
-                    <li>• **Varies widely** based on:</li>
-                    <li className="pl-4">- Individual health, lifestyle</li>
-                    <li className="pl-4">- Sleep disorders, medical conditions</li>
-                  </ul>
+                <div className="space-y-4">
+                  <p className="font-normal">
+                    Older adults still cycle through the same sleep stages, with **each cycle lasting about 90 to 95 minutes**.
+                  </p>
+                  <p className="font-normal">
+                    But with age, **changes in the brain make sleep lighter** and more easily disrupted.
+                  </p>
+                  <p className="font-normal">
+                    **Deep sleep (N3)** — the stage that helps you feel fully rested — **becomes shorter in each cycle**, and it's normal to wake up more often during the night.
+                  </p>
+                  <div className="bg-white dark:bg-slate-700 border-l-4 border-amber-400 dark:border-amber-500 rounded-lg p-4 shadow-sm">
+                    <p className="font-medium mb-3">Even though the structure of sleep cycles stays intact, many older adults:</p>
+                    <div className="space-y-2 pl-4">
+                      <div className="font-normal">• **Take longer to fall asleep**</div>
+                      <div className="font-normal">• **Wake up earlier in the morning** due to a natural shift in their internal clock</div>
+                      <div className="font-normal">• **Feel sleepy during the day** because nighttime sleep isn't as solid</div>
+                    </div>
+                  </div>
+                  <p className="font-normal">
+                    **Short daytime naps can help fill the gap** — just keep them early and brief so they don't interfere with your next sleep cycle.
+                  </p>
                 </div>
               )}
+              </div>
             </div>
           </div>
 
