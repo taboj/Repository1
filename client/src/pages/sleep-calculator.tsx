@@ -1534,19 +1534,48 @@ export default function SleepCalculator() {
                   {ageGroup === 'newborn' && (
                     <div className="space-y-3">
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
-                        <p className="font-medium mb-2">Sleep State Terminology:</p>
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🌙</span> Unique Sleep Start
+                        </p>
                         <ul className="space-y-1 pl-4">
-                          <li>• Research uses **"Active Sleep"** and **"Quiet Sleep"** rather than REM/NREM</li>
-                          <li>• These terms reflect observable behavioral states in newborns</li>
-                          <li>• More accurate for this developmental stage than adult sleep categories</li>
+                          <li>• **Newborns are the only age group** that start sleep in Active Sleep (their version of REM)</li>
+                          <li>• As they grow, they'll **shift to starting in quiet sleep** like older kids and adults</li>
+                          <li>• This unique pattern supports **critical brain development** during this crucial period</li>
                         </ul>
                       </div>
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
-                        <p className="font-medium mb-2">Neural Development Focus:</p>
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🔁</span> What Are "Proto-Cycles"?
+                        </p>
                         <ul className="space-y-1 pl-4">
-                          <li>• Active Sleep supports **rapid synaptogenesis** (brain connection formation)</li>
-                          <li>• Critical for **neural plasticity** during this crucial period</li>
-                          <li>• Essential for **sensory system development**</li>
+                          <li>• Your baby sleeps in **short cycles (~40–60 minutes)** that alternate between:</li>
+                          <li className="pl-4">- **Active Sleep (AS)**: lots of movement, brain activity</li>
+                          <li className="pl-4">- **Quiet Sleep (QS)**: still and restful</li>
+                          <li>• These early cycles are the **building blocks of healthy sleep**</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>⏱️</span> The 45-Minute Wake-Up (aka "The Intruder")
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Common for newborns to wake fully** after just one cycle — especially around **30–45 minutes**</li>
+                          <li>• This can happen if:</li>
+                          <li className="pl-4">- They're **hungry**</li>
+                          <li className="pl-4">- They're **overtired or overstimulated**</li>
+                          <li className="pl-4">- They're **practicing new milestones** like rolling</li>
+                          <li className="pl-4">- Their **bedtime routine is inconsistent**</li>
+                          <li>• **What to do**: Before jumping in, pause. Your baby might settle back on their own. Try **gentle soothing**, check if they're hungry, and make sure the room is **cool, dark, and quiet**.</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
+                        <p className="font-medium mb-2 flex items-center gap-2">
+                          <span>🌞</span> Day vs. Night: Not Yet!
+                        </p>
+                        <ul className="space-y-1 pl-4">
+                          <li>• **Newborns don't have a circadian rhythm yet** — their internal clock hasn't kicked in</li>
+                          <li>• They sleep in **short bursts** and wake **every 2–3 hours to feed**</li>
+                          <li>• By **2–3 months**, you may start noticing **longer nighttime stretches** as their rhythm matures</li>
                         </ul>
                       </div>
                     </div>
