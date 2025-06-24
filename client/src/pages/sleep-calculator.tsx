@@ -1551,7 +1551,7 @@ export default function SleepCalculator() {
                           <li>• Your baby sleeps in short cycles (~40–60 minutes) that alternate between:</li>
                           <li className="pl-4">- Active Sleep (AS): lots of movement, brain activity</li>
                           <li className="pl-4">- Quiet Sleep (QS): still and restful</li>
-                          <li>• These early cycles are the **building blocks of healthy sleep**</li>
+                          <li>• These early cycles are the building blocks of healthy sleep</li>
                         </ul>
                       </div>
                       <div className="bg-white/60 dark:bg-slate-800/60 rounded-lg p-3">
@@ -1559,12 +1559,12 @@ export default function SleepCalculator() {
                           <span>⏱️</span> The 45-Minute Wake-Up (aka "The Intruder")
                         </p>
                         <ul className="space-y-1 pl-4">
-                          <li>• **Common for newborns to wake fully** after just one cycle — especially around **30–45 minutes**</li>
+                          <li>• Common for newborns to wake fully after just one cycle — especially around 30–45 minutes</li>
                           <li>• This can happen if:</li>
-                          <li className="pl-4">- They're **hungry**</li>
-                          <li className="pl-4">- They're **overtired or overstimulated**</li>
-                          <li className="pl-4">- They're **practicing new milestones** like rolling</li>
-                          <li className="pl-4">- Their **bedtime routine is inconsistent**</li>
+                          <li className="pl-4">- They're hungry</li>
+                          <li className="pl-4">- They're overtired or overstimulated</li>
+                          <li className="pl-4">- They're practicing new milestones like rolling</li>
+                          <li className="pl-4">- Their bedtime routine is inconsistent</li>
                           <li>• **What to do**: Before jumping in, pause. Your baby might settle back on their own. Try **gentle soothing**, check if they're hungry, and make sure the room is **cool, dark, and quiet**.</li>
                         </ul>
                       </div>
