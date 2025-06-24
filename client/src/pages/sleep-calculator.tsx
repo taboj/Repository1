@@ -181,7 +181,7 @@ export default function SleepCalculator() {
         >
           <ChevronUp className="h-4 w-4" />
         </Button>
-        <div className="text-2xl md:text-3xl font-bold my-2 min-w-[60px] text-center select-none">
+        <div className="text-[30px] font-bold my-2 min-w-[60px] text-center select-none">
           {type === 'hour' || type === 'minute' ? value.toString().padStart(2, '0') : value}
         </div>
         <Button
@@ -212,7 +212,7 @@ export default function SleepCalculator() {
         >
           <ChevronUp className="h-6 w-6" />
         </Button>
-        <div className="md:text-6xl font-bold my-4 min-w-[80px] text-center select-none text-[30px]">
+        <div className="text-[30px] font-bold my-4 min-w-[80px] text-center select-none">
           {selectedTime.period}
         </div>
         <Button
