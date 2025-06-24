@@ -1548,9 +1548,9 @@ export default function SleepCalculator() {
                           <span>🔁</span> What Are "Proto-Cycles"?
                         </p>
                         <ul className="space-y-1 pl-4">
-                          <li>• Your baby sleeps in **short cycles (~40–60 minutes)** that alternate between:</li>
-                          <li className="pl-4">- **Active Sleep (AS)**: lots of movement, brain activity</li>
-                          <li className="pl-4">- **Quiet Sleep (QS)**: still and restful</li>
+                          <li>• Your baby sleeps in short cycles (~40–60 minutes) that alternate between:</li>
+                          <li className="pl-4">- Active Sleep (AS): lots of movement, brain activity</li>
+                          <li className="pl-4">- Quiet Sleep (QS): still and restful</li>
                           <li>• These early cycles are the **building blocks of healthy sleep**</li>
                         </ul>
                       </div>
