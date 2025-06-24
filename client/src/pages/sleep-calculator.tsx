@@ -212,7 +212,7 @@ export default function SleepCalculator() {
         >
           <ChevronUp className="h-6 w-6" />
         </Button>
-        <div className="text-4xl md:text-6xl font-bold my-4 min-w-[80px] text-center select-none">
+        <div className="md:text-6xl font-bold my-4 min-w-[80px] text-center select-none text-[30px]">
           {selectedTime.period}
         </div>
         <Button
