@@ -859,9 +859,7 @@ export default function SleepCalculator() {
                       <strong>Quiet sleep (QS):</strong> stiller and more peaceful — similar to NREM in adults.
                     </div>
                   </div>
-                  <p className="font-normal">
-                    Each sleep cycle is **short — about 40–50 minutes** — and babies wake up often. This is **normal and helps protect them** while their brains and bodies grow rapidly.
-                  </p>
+                  <p className="font-normal">Each sleep cycle is short — about 40–50 minutes — and babies wake up often. This is normal and helps protect them while their brains and bodies grow rapidly.</p>
                 </div>
               )}
               {ageGroup === 'earlyInfant' && (
