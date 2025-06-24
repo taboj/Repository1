@@ -48,10 +48,10 @@ export default function SleepCalculator() {
   const [sleepArchitectureExpanded, setSleepArchitectureExpanded] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
 
-  // Scroll tracking for back-to-top button
+  // Scroll tracking for back-to-top button - shows after 400px as requested
   useEffect(() => {
     const handleScroll = () => {
-      setShowBackToTop(window.scrollY > 500);
+      setShowBackToTop(window.scrollY > 400);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -255,6 +255,9 @@ export default function SleepCalculator() {
           <button
             onClick={() => setSleepArchitectureExpanded(!sleepArchitectureExpanded)}
             className="w-full flex items-center justify-between p-3 bg-muted/20 rounded-lg hover:bg-muted/30 transition-colors"
+            aria-expanded={sleepArchitectureExpanded}
+            aria-controls="sleep-architecture-content"
+            aria-describedby="sleep-architecture-summary"
           >
             <h4 className="font-semibold text-left">Sleep Architecture: {ageData.name}</h4>
             {sleepArchitectureExpanded ? (
@@ -263,19 +266,31 @@ export default function SleepCalculator() {
               <ChevronDown className="h-5 w-5 text-muted-foreground" />
             )}
           </button>
+
+          {/* Summary paragraph for Sleep Architecture */}
+          <div id="sleep-architecture-summary" className="mt-3 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg border-l-4 border-blue-500">
+            <p className="text-sm text-slate-700 dark:text-slate-200">
+              <strong>Quick Overview:</strong> {ageData.name} sleep cycles last {getCycleLength(settings.age)} minutes with {ageData.remSleepPercentage}% REM sleep. 
+              {getAgeGroup(settings.age) === 'newborn' && ' Newborns uniquely start sleep in REM phase for neural development.'}
+              {getAgeGroup(settings.age) === 'olderAdult' && ' Sleep becomes lighter with more frequent awakenings.'}
+              {(getAgeGroup(settings.age) === 'schoolAge' || getAgeGroup(settings.age) === 'preschooler') && ' High deep sleep supports growth and learning.'}
+              {getAgeGroup(settings.age) === 'adolescent' && ' Natural circadian delay shifts bedtime later.'}
+              {(getAgeGroup(settings.age) === 'youngAdult' || getAgeGroup(settings.age) === 'adult') && ' Mature sleep architecture with consistent cycles.'}
+            </p>
+          </div>
           
           {sleepArchitectureExpanded && (
-            <div className="mt-6">
+            <div id="sleep-architecture-content" className="mt-6">
           
           {/* Key Sleep Metrics */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <div className="text-center p-3 bg-muted/30 rounded-lg">
-              <div className="text-xs text-muted-foreground mb-1">Total Sleep Duration</div>
-              <div className="font-semibold text-primary">{ageData.sleepRange}</div>
+            <div className="text-center p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
+              <div className="text-xs text-slate-600 dark:text-slate-300 mb-1">Total Sleep Duration</div>
+              <div className="font-semibold text-slate-800 dark:text-slate-100">{ageData.sleepRange}</div>
             </div>
-            <div className="text-center p-3 bg-muted/30 rounded-lg">
-              <div className="text-xs text-muted-foreground mb-1">Cycle Length Range</div>
-              <div className="font-semibold text-primary">
+            <div className="text-center p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
+              <div className="text-xs text-slate-600 dark:text-slate-300 mb-1">Cycle Length Range</div>
+              <div className="font-semibold text-slate-800 dark:text-slate-100">
                 {ageGroup === 'newborn' ? '40–50 mins' : 
                  ageGroup === 'earlyInfant' ? '45–55 mins' :
                  ageGroup === 'lateInfant' ? '50–65 mins' :
@@ -287,20 +302,30 @@ export default function SleepCalculator() {
                  ageGroup === 'adult' ? '90–120 mins' : '90–110 mins'}
               </div>
             </div>
-            <div className="text-center p-3 bg-muted/30 rounded-lg">
-              <div className="text-xs text-muted-foreground mb-1">Average Cycle Duration</div>
-              <div className="font-semibold text-primary">{cycleLength} mins</div>
+            <div className="text-center p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
+              <div className="text-xs text-slate-600 dark:text-slate-300 mb-1">Average Cycle Duration</div>
+              <div className="font-semibold text-slate-800 dark:text-slate-100">{cycleLength} mins</div>
             </div>
-            <div className="text-center p-3 bg-muted/30 rounded-lg">
-              <div className="text-xs text-muted-foreground mb-1">Fall Asleep Time</div>
-              <div className="font-semibold text-primary">~{settings.fallAsleepTime} mins</div>
+            <div className="text-center p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
+              <div className="text-xs text-slate-600 dark:text-slate-300 mb-1">Fall Asleep Time</div>
+              <div className="font-semibold text-slate-800 dark:text-slate-100">~{settings.fallAsleepTime} mins</div>
             </div>
           </div>
 
-          {/* Sleep Onset Time */}
-          <div className="mb-6 p-4 bg-muted/20 rounded-lg">
-            <div className="text-sm font-medium mb-2">Sleep Onset Time:</div>
-            <div className="text-primary font-semibold">
+          {/* Sleep Onset Time with tooltip accessibility */}
+          <div className="mb-6 p-4 bg-slate-100 dark:bg-slate-700 rounded-lg">
+            <div className="text-sm font-medium mb-2 text-slate-800 dark:text-slate-100">
+              <span 
+                tabIndex="0"
+                role="tooltip"
+                aria-describedby="sleep-onset-tooltip"
+                className="border-b border-dotted border-slate-400 cursor-help"
+              >
+                Sleep Onset Time:
+              </span>
+              <div id="sleep-onset-tooltip" className="sr-only">The time it takes to transition from wake to the first sleep stage</div>
+            </div>
+            <div className="text-slate-800 dark:text-slate-100 font-semibold">
               {ageGroup === 'newborn' ? 'Often begins in Active Sleep' :
                ageGroup === 'earlyInfant' ? 'Transitions to NREM, though REM-onset still possible' :
                ageGroup === 'lateInfant' ? 'Technically begins in NREM stage N1, but this stage is very short. Most observable sleep begins in N2.' :
@@ -316,10 +341,20 @@ export default function SleepCalculator() {
 
 
 
-          {/* Sleep Stage Composition Bar */}
+          {/* Sleep Stage Composition Bar with improved contrast */}
           <div className="mb-6">
-            <h5 className="font-medium text-sm mb-3">Sleep Stage Composition:</h5>
-            <div className="w-full bg-muted rounded-full h-8 overflow-hidden mb-4">
+            <h5 className="font-medium text-sm mb-3 text-slate-800 dark:text-slate-100">
+              <span 
+                tabIndex="0"
+                role="tooltip"
+                aria-describedby="sleep-stages-tooltip"
+                className="border-b border-dotted border-slate-400 cursor-help"
+              >
+                Sleep Stage Composition:
+              </span>
+              <div id="sleep-stages-tooltip" className="sr-only">Visual breakdown of time spent in each sleep stage during a typical night</div>
+            </h5>
+            <div className="w-full bg-slate-200 dark:bg-slate-600 rounded-full h-8 overflow-hidden mb-4">
               <div className="flex h-full">
                 {ageGroup === 'newborn' ? (
                   <>
@@ -1645,8 +1680,8 @@ export default function SleepCalculator() {
               </div>
               
               <div className="space-y-3">
-                <h4 className="font-semibold">Key Characteristics</h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <h4 className="font-semibold text-slate-800 dark:text-slate-100">Key Characteristics</h4>
+                <ul className="text-sm text-slate-700 dark:text-slate-200 space-y-1">
                   {ageData.characteristics.map((characteristic, index) => (
                     <li key={index}>• {characteristic}</li>
                   ))}
@@ -1654,36 +1689,44 @@ export default function SleepCalculator() {
               </div>
             </div>
 
-            <div className="text-center p-4 bg-background/50 rounded-lg">
-              <p className="text-sm text-slate-700 dark:text-slate-200">
-                <strong>Research-based insights:</strong> Sleep architecture evolves dramatically across the lifespan. {' '}
-                {getAgeGroup(settings.age) === 'newborn' && 'Newborns enter sleep through REM (unique pattern) with 50% active sleep and 30-60 minute cycles for critical neural development.'}
-                {(getAgeGroup(settings.age) === 'earlyInfant' || getAgeGroup(settings.age) === 'lateInfant') && 'By 3 months, circadian rhythms establish and sleep onset shifts to NREM. Cycles lengthen from 60-90 minutes as brain matures.'}
-                {getAgeGroup(settings.age) === 'toddler' && 'Sleep cycles solidify to adult-like 90 minutes with NREM reaching 75-80%. Sleep becomes more consolidated at night.'}
-                {getAgeGroup(settings.age) === 'preschooler' && 'Sleep architecture becomes increasingly adult-like while maintaining high N3 deep sleep essential for rapid growth and immune development.'}
-                {getAgeGroup(settings.age) === 'schoolAge' && 'Cycles extend to 90-110 minutes with continued prioritization of deep sleep for physical development and learning consolidation.'}
-                {getAgeGroup(settings.age) === 'adolescent' && 'Biological circadian shift causes natural 1-2 hour delay in sleepiness. Brain becomes more sensitive to blue light disruption.'}
-                {(getAgeGroup(settings.age) === 'youngAdult' || getAgeGroup(settings.age) === 'adult') && 'Complete 90-110 minute cycles with 75-80% NREM sleep. Deep sleep concentrates in first third, REM increases later in night.'}
-                {getAgeGroup(settings.age) === 'olderAdult' && 'Deep sleep declines 2% per decade after age 20. Sleep becomes fragmented with 3-4 awakenings per night and advanced circadian phase.'}
-              </p>
-            </div>
+            {/* Research insights with improved contrast for WCAG AA compliance */}
+            <details className="mt-4">
+              <summary className="cursor-pointer p-3 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                <span className="font-semibold text-slate-800 dark:text-slate-100">Research-Based Sleep Insights</span>
+              </summary>
+              <div className="mt-3 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-600">
+                <p className="text-sm text-slate-800 dark:text-slate-100 leading-relaxed">
+                  <strong>Scientific Overview:</strong> Sleep architecture evolves dramatically across the lifespan. {' '}
+                  {getAgeGroup(settings.age) === 'newborn' && 'Newborns enter sleep through REM (unique pattern) with 50% active sleep and 30-60 minute cycles for critical neural development.'}
+                  {(getAgeGroup(settings.age) === 'earlyInfant' || getAgeGroup(settings.age) === 'lateInfant') && 'By 3 months, circadian rhythms establish and sleep onset shifts to NREM. Cycles lengthen from 60-90 minutes as brain matures.'}
+                  {getAgeGroup(settings.age) === 'toddler' && 'Sleep cycles solidify to adult-like 90 minutes with NREM reaching 75-80%. Sleep becomes more consolidated at night.'}
+                  {getAgeGroup(settings.age) === 'preschooler' && 'Sleep architecture becomes increasingly adult-like while maintaining high N3 deep sleep essential for rapid growth and immune development.'}
+                  {getAgeGroup(settings.age) === 'schoolAge' && 'Cycles extend to 90-110 minutes with continued prioritization of deep sleep for physical development and learning consolidation.'}
+                  {getAgeGroup(settings.age) === 'adolescent' && 'Biological circadian shift causes natural 1-2 hour delay in sleepiness. Brain becomes more sensitive to blue light disruption.'}
+                  {(getAgeGroup(settings.age) === 'youngAdult' || getAgeGroup(settings.age) === 'adult') && 'Complete 90-110 minute cycles with 75-80% NREM sleep. Deep sleep concentrates in first third, REM increases later in night.'}
+                  {getAgeGroup(settings.age) === 'olderAdult' && 'Deep sleep declines 2% per decade after age 20. Sleep becomes fragmented with 3-4 awakenings per night and advanced circadian phase.'}
+                </p>
+              </div>
+            </details>
           </CardContent>
         </Card>
 
         {/* Sleep Architecture Component is now embedded within the Sleep Cycle Visualization */}
       </div>
 
-      {/* Back to Top Button */}
-      {showBackToTop && (
-        <Button
-          onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-50 rounded-full w-12 h-12 shadow-lg"
-          size="icon"
-          title="Back to top"
-        >
-          <ArrowUp className="h-5 w-5" />
-        </Button>
-      )}
+      {/* Back to Top Button with fade transition */}
+      <Button
+        onClick={scrollToTop}
+        className={`fixed bottom-6 right-6 z-50 rounded-full w-12 h-12 shadow-lg transition-opacity duration-300 ${
+          showBackToTop ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        size="icon"
+        title="Back to top"
+        aria-label="Scroll to top of page"
+        tabIndex={showBackToTop ? 0 : -1}
+      >
+        <ArrowUp className="h-5 w-5" />
+      </Button>
     </div>
   );
 }
