@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Moon, Sun, AlarmClock, Bell, RotateCcw, ChevronUp, ChevronDown, ArrowUp, Clock, Info, Star, CheckCircle, AlertCircle, XCircle } from "lucide-react";
+import { Moon, Sun, AlarmClock, Bell, RotateCcw, ChevronUp, ChevronDown, ArrowUp, Clock, Info, Star, CheckCircle, AlertCircle, XCircle, Target, Bed } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
