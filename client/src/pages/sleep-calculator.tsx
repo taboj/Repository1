@@ -1381,7 +1381,7 @@ export default function SleepCalculator() {
       </div>
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-8">
         {/* Main Input Section - Redesigned 3-Step Flow */}
-        <Card className="shadow-xl border-0 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-2xl transition-all duration-300 hover:shadow-2xl">
+        <Card className="shadow-xl border-0 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-2xl transition-all duration-300 hover:shadow-2xl" data-main-input>
           <CardContent className="p-8 md:p-12">
             {/* Section Header */}
             <div className="text-center mb-10">
